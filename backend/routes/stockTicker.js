@@ -1,23 +1,24 @@
-const express = require("express");
+import express from 'express';
+import dbo from '../db/conn.cjs';
+import ObjectId from 'mongoose';
+
+
 
 // recordRoutes is an instance of the express router.
 // We use it to define our routes.
 // The router will be added as a middleware and will take control of requests starting with path /record.
 const stockTickerRoute = express.Router();
 
-// This will help us connect to the database
-const dbo = require("../db/conn");
 
 // This help convert the id from string to ObjectId for the _id.
-const ObjectId = require("mongodb").ObjectId;
 
 
 // This section will help you get a list of all the records.
-stockTickerRoute.route("/ticker").get(function (req, res) {
+stockTickerRoute.route("/ticker").get(async function (req, res) {
   let db_connect = dbo.getDb();
-  db_connect
-    .collection("stockTicker")
-    .find({})
+  await db_connect
+    .collection("ticker")
+    .find()
     .toArray(function (err, result) {
       if (err) throw err;
       res.json(result);
@@ -54,8 +55,8 @@ stockTickerRoute.route("/event/add").post(function (req, response) {
 });
 
 // This section will help you update a record by id.
-stockTickerRoute.route("/update/:id").post(function (req, response) {
-  let db_connect = dbo.getDb();
+stockTickerRoute.route("/update/:id").post(async function (req, response) {
+  let db_connect = await dbo.getDb();
   let myquery = { _id: ObjectId( req.params.id )};
   let changeEvent = {
     $set: {
@@ -95,4 +96,4 @@ stockTickerRoute.route("/getEvent/:id").get((req, response) => {
   });
 });
 
-module.exports = stockTickerRoute;
+export default stockTickerRoute;
