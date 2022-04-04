@@ -5,9 +5,15 @@ import StockChart from './StockChart';
 import axios from 'axios'
 
 
+<<<<<<< HEAD
 export default function ProfilePortfolio(props) {
     const[typeOfTrade, setTypeOfTrade] = useState('Stocks');
     const [tradesArray, setTradesArray] = useState(props.tradesArray)
+=======
+export default function ProfilePortfolio() {
+    const[typeOfTrade, setTypeOfTrade] = useState('Stocks');
+    const [tradesArray, setTradesArray] = useState(['UWMC', 'SPCE'])
+>>>>>>> f910b918a3db3b758fe26264ebdb2fb9e482e607
     const[priceArray,setPriceArray] = useState([])
     function changeRange(newRange) {
         setTypeOfTrade(newRange);
