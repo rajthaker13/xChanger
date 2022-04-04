@@ -15,13 +15,26 @@ const styles = StyleSheet.create({
         justifyContent:'center',
         alignItems: 'center',
     },
+    stockTickerTextUp: {
+        fontSize: 15, 
+        color:'white',
+        fontWeight:'200',
+    },
+    stockTickerTextDown: {
+        fontSize: 15, 
+        color:'red',
+        fontWeight:'200',
+    },
     stockCard: {
-        marginTop: 20,
+        marginTop: height*.2,
         width: width * .9,
         height: height * .62,
         backgroundColor: '#0A0909',
         borderRadius: 20,
         flexDirection: 'column',
+        position:'absolute',
+        left: -width*.45,
+        bottom: -height*.05
     },
     header_large: {
         marginTop: 0,
@@ -29,6 +42,7 @@ const styles = StyleSheet.create({
         width: width,
         backgroundColor: '#0A0909',
         flexDirection: 'row',
+        alignItems:'center'
     },
     header_medium: {
         marginTop: 0,
@@ -189,7 +203,6 @@ const styles = StyleSheet.create({
         backgroundColor: '#0A0909',
     },
     hubHeaderText: {
-        marginTop: '5%',
         fontSize: 30,
         color: 'white',
         fontWeight: 'bold',

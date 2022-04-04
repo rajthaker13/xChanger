@@ -33,7 +33,7 @@ export default function ProfileScreen() {
                   <Button title="View All" color="white"></Button>
               </View>
             </View>
-          <ProfilePortfolio/>
+          <ProfilePortfolio tradesArray={[['UWMC', 'SPCE']]}/>
       </ScrollView>
       </LinearGradient>
     );
