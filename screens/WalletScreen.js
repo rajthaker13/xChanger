@@ -26,11 +26,7 @@ export default function WalletScreen() {
           <WalletChart/>
           <WalletTournamentHistory/>
           <View style={{marginTop:height * .02}}>
-<<<<<<< HEAD
             <ProfilePortfolio tradesArray={[['UWMC', 'SPCE']]}/>
-=======
-            <ProfilePortfolio/>
->>>>>>> f910b918a3db3b758fe26264ebdb2fb9e482e607
           </View>
         </ScrollView>
       </LinearGradient>
