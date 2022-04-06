@@ -210,6 +210,7 @@ export default class StockCard extends React.Component {
               const curAPIResponse = response.data.quoteResponse.result;
               if(Array.isArray(curAPIResponse)) {
                   curAPIResponse.forEach(curStockData => {
+                    console.log(curStockData)
                       axios.request(sucOptions).then((res) => {
                         const sucAPIResponse = res.data.quoteResponse.result;
                         if(Array.isArray(sucAPIResponse)) {

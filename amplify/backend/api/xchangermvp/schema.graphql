@@ -1,0 +1,120 @@
+type Stock {
+  id: ID
+  stockName: String
+  stockData: [StockData]
+  amtInvested: Float
+  numShares: Float
+}
+
+type TournamentPerformance {
+  id: ID
+  user_id: ID
+  tourney_id: ID
+  portfolio: Stock
+}
+
+type Tournament @model @auth(rules: [{allow: public}]) {
+  id: ID!
+  name: String
+  buy_in: Float
+  pot_total: Float
+  num_users: Int
+  max_users: Int
+  tourney_image: String
+  leaderboard: TournamentPerformance
+  start_time: AWSTimestamp
+  end_time: AWSTimestamp
+}
+
+type User @model @auth(rules: [{allow: public}]) {
+  id: ID!
+  username: String
+  followers: [ID]
+  following: [ID]
+  level: Float
+  firstName: String
+  lastName: String
+  watchList: String
+}
+
+type StockData {
+  ask: Float
+  askSize: Float
+  averageAnalystRating: String
+  averageDailyVolume10Day: Int
+  averageDailyVolume3Month: Int
+  bidSize: Int
+  bookValue: Float
+  currency: String
+  customerPriceAlertConfidence: String
+  displayName: String
+  dividendDate: AWSTimestamp
+  earningsTimestamp: AWSTimestamp
+  earningsTimestampEnd: AWSTimestamp
+  earningsTimestampStart: AWSTimestamp
+  epsCurrentYear: Float
+  epsForward: Float
+  epsTrailingTwelveMonths: AWSTimestamp
+  esqPopulated: Boolean
+  exchange: String
+  exchangeDataDelayedBy: Float
+  exchangeTimezoneName: String
+  exchangeTimezoneShortName: String
+  fiftyDayAverage: Float
+  fiftyDayAverageChange: Float
+  fiftyDayAverageChangePercent: Float
+  fiftyTwoWeekHigh: Float
+  fiftyTwoWeekHighChange: Float
+  fiftyTwoWeekHighChangePercent: Float
+  fiftyTwoWeekLow: Float
+  fiftyTwoWeekLowChange: Float
+  fiftyTwoWeekLowPercent: Float
+  fiftyTwoWeekRange: Float
+  financialCurrency: String
+  firstTradeDateMilliseconds: Int
+  forwardPE: Float
+  fullExchangeName: String
+  gmtOffSetMilliseconds: Int
+  language: String
+  longName: String
+  market: String
+  marketCap: Int
+  marketState: String
+  messageBoardId: String
+  pageViewGrowthWeekly: Float
+  postMarketChange: Float
+  postMarketChangePercent: Float
+  postMarketPrice: Float
+  postMarketTime: AWSTimestamp
+  priceEpsCurrentYear: Float
+  priceHint: Float
+  priceToBook: Float
+  quoteSourceName: String
+  quoteType: String
+  region: String
+  regularMarketChange: Float
+  regularMarketChangePercent: Float
+  regularMarketDayHigh: Float
+  regularMarketDayLow: Float
+  regularMarketDayRange: String
+  regularMarketOpen: Float
+  regularMarketPreviousClose: Float
+  regularMarketPrice: Float
+  regularMarketTime: AWSTimestamp
+  regularMarketVolume: Int
+  sharesOutstanding: Int
+  shortName: String
+  sourceInterval: Int
+  symbol: String
+  tradeable: Boolean
+  trailingAnnualDividendRate: Float
+  trailingAnnualDividendYield: Float
+  trailingPE: Float
+  triggerable: Boolean
+  twoHundredDayAverage: Float
+  twoHundredDayAverageChange: Float
+  twoHundredDayAverageChangePercent: Float
+  typeDisp: String
+  bid: Float
+}
+ 

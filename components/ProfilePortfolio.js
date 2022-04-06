@@ -26,7 +26,9 @@ export default function ProfilePortfolio(props) {
                   const apiResponse = response.data.quoteResponse.result;
                   if(Array.isArray(apiResponse)) {
                       apiResponse.forEach(stockData => {
+                          console.log(stockData)
                           const price = stockData['regularMarketPrice']
+                          console.log(price)
                           setPriceArray(oldPriceArray => [...oldPriceArray, price]);
                           
                       })
