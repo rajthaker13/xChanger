@@ -11,6 +11,7 @@ import SearchScreen from './SearchScreen';
 import WalletScreen from './WalletScreen';
 import { DataStore } from '@aws-amplify/datastore';
 import {User} from '../src/models';
+import '../global';
 
 export default function LoginScreen({navigation}) {
     async function onPress() {

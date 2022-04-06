@@ -6,6 +6,8 @@ import SearchBar from '../components/search/SearchBar';
 import List from '../components/search/List';
 import Dropdown from '../components/search/Dropdown';
 import StockSlide from '../components/search/StockSlide';
+import '../global';
+import XChangerNews from "../components/search/XChangerNews";
 export default function SearchScreen() {
   const [searchPhrase, setSearchPhrase] = useState("");
   const [clicked, setClicked] = useState(false);
@@ -40,6 +42,7 @@ export default function SearchScreen() {
       }
       <Dropdown/>
       <StockSlide/>
+      <XChangerNews/>
       </ScrollView>
     )
   }

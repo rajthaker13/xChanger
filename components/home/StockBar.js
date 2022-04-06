@@ -22,6 +22,7 @@ export default class StockBar extends PureComponent {
      axios
     .get("http://localhost:5000/ticker")
     .then((res) => {
+      let newTickerText = "";
       const data = res.data
       data.forEach(stock => {
         for(let i = 0; i < 100; i++) {
@@ -44,25 +45,13 @@ export default class StockBar extends PureComponent {
                     const sameAddedText = tick + " ~ " + percentChange + "%   "
                     const negativeAddedText = tick+ " - " + (-1 *percentChange) + "%   "
                     if(percentChange > 0) {
-                      this.setState((state) => {
-                        return {
-                            tickerText: this.state.tickerText + positiveAddedText,
-                          };
-                    })
+                      newTickerText = newTickerText + positiveAddedText
                     }
                     else if(percentChange == 0) {
-                      this.setState((state) => {
-                        return {
-                            tickerText: this.state.tickerText + sameAddedText,
-                          };
-                    })
+                      newTickerText = newTickerText + sameAddedText;
                     }
                     else {
-                      this.setState((state) => {
-                        return {
-                            tickerText: this.state.tickerText + negativeAddedText,
-                          };
-                    })
+                      newTickerText = newTickerText + negativeAddedText;
                     }
       
                   })
@@ -73,6 +62,11 @@ export default class StockBar extends PureComponent {
          }
         
       });
+      this.setState((state) => {
+        return {
+            tickerText: newTickerText,
+          };
+    })
       
     }
     )

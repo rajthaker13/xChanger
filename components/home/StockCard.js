@@ -25,6 +25,10 @@ export default class StockCard extends React.Component {
           currentIndex: 0,
           curStockName:cardData[0].stockName,
           sucStockName:cardData[1].stockName, 
+          curStockDisplayName: "",
+          sucStockDisplayName:"",
+          curStockSrc:"",
+          sucStockSrc:"",
           curStockPrice: 0.00,
           sucStockPrice: 0.00,
           range: '1d',
@@ -69,7 +73,8 @@ export default class StockCard extends React.Component {
 
     }
     componentDidMount() {
-        this.getStockPrices()
+        this.getStockData()
+
         
     }
     UNSAFE_componentWillMount() {
@@ -93,12 +98,12 @@ export default class StockCard extends React.Component {
                       curStockName: this.state.sucStockName,
                       sucStockName: newSuc
                   }, () => {
-                    this.getStockPrices()
+                    this.getStockData()
                   })
                   
                 })
               })
-              this.getStockPrices()
+              this.getStockData()
             }
             else if (gestureState.dx < -120) {
               Animated.spring(this.position, {
@@ -111,7 +116,7 @@ export default class StockCard extends React.Component {
                     curStockName: this.state.sucStockName,
                     sucStockName: newSuc
                 }, () => {
-                    this.getStockPrices()
+                    this.getStockData()
 
                 })
                 })
@@ -189,7 +194,7 @@ export default class StockCard extends React.Component {
         }
     }
 
-     getStockPrices() {
+     async getStockData() {
         var curOptions = {
             method: 'GET',
             url: `https://yfapi.net/v6/finance/quote?region=US&lang=en&symbols=${this.state.curStockName}`,
@@ -210,7 +215,6 @@ export default class StockCard extends React.Component {
               const curAPIResponse = response.data.quoteResponse.result;
               if(Array.isArray(curAPIResponse)) {
                   curAPIResponse.forEach(curStockData => {
-                    console.log(curStockData)
                       axios.request(sucOptions).then((res) => {
                         const sucAPIResponse = res.data.quoteResponse.result;
                         if(Array.isArray(sucAPIResponse)) {
@@ -218,8 +222,55 @@ export default class StockCard extends React.Component {
                                 this.setState((state) => {
                                   return {
                                       curStockPrice: curStockData['regularMarketPrice'],
+                                      curStockDisplayName: curStockData['displayName'],
                                       sucStockPrice: sucStockData['regularMarketPrice'],
+                                      sucStockDisplayName: sucStockData['displayName'],
                                     };
+                              }, () => {
+
+                                var curPicOptions = {
+                                  method: 'GET',
+                                  url: `https://api.brandfetch.io/v2/brands/${this.state.curStockDisplayName}.com`,
+                                  headers: {
+                                    Authorization: `Bearer ${brandAPI}`
+
+                                  }
+                                };
+                                var sucPicOptions = {
+                                  method: 'GET',
+                                  url: `https://api.brandfetch.io/v2/brands/${this.state.sucStockDisplayName}.com`,
+                                  headers: {
+                                    Authorization: `Bearer ${brandAPI}`
+
+                                  }
+                                };
+                                axios.request(curPicOptions).then((response) => {
+                                  let curStockRes = ""
+                                  const curResArray = JSON.parse(JSON.stringify(response)).data.logos[0].formats;
+                                  curResArray.forEach((curFormat) => {
+                                    if(!curFormat.format.includes('svg')) {
+                                      curStockRes = curFormat.src
+                                    }
+
+                                  })
+
+                                  axios.request(sucPicOptions).then((res) => {
+                                    let sucStockRes = ""
+                                    const sucStockArray = JSON.parse(JSON.stringify(res)).data.logos[0].formats;
+                                    sucStockArray.forEach((sucFormat) => {
+                                      if(!sucFormat.format.includes('svg')) {
+                                        sucStockRes = sucFormat.src
+                                      }
+                                    })
+                                    this.setState((state) => {
+                                      return {
+                                        curStockSrc: curStockRes,
+                                        sucStockSrc: sucStockRes,
+                                      }
+                                    })
+                                  })
+                                  
+                                })
                               })
                             })
                         }
@@ -232,6 +283,7 @@ export default class StockCard extends React.Component {
             console.error(error);
         });
     }
+
     renderCards = () => {
 
         return cardData.map((item, i) => {
@@ -258,7 +310,7 @@ export default class StockCard extends React.Component {
                 </Animated.View>
     
                 <View style={styles.stockCardLogoContainer}>
-                    <Image source={item.src} resizeMode='contain' style={styles.stockCardLogo}></Image>
+                    <Image source={{uri: `${this.state.curStockSrc}`}} resizeMode='contain' style={styles.stockCardLogo}></Image>
                 </View>
                     <Text style={styles.stockCardName}>{item.fullName}</Text>
                 <Text style={styles.stockCardPrice}>${this.state.curStockPrice.toFixed(2)}</Text>
@@ -309,7 +361,7 @@ export default class StockCard extends React.Component {
 
     
                 <View style={styles.stockCardLogoContainer}>
-                    <Image source={item.src} resizeMode='contain' style={styles.stockCardLogo}></Image>
+                    <Image source={{uri:`${this.state.sucStockSrc}`}} resizeMode='contain' style={styles.stockCardLogo}></Image>
                 </View>
                     <Text style={styles.stockCardName}>{item.fullName}</Text>
                 <Text style={styles.stockCardPrice}>${this.state.sucStockPrice.toFixed(2)}</Text>

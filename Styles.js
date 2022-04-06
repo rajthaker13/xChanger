@@ -149,6 +149,27 @@ const styles = StyleSheet.create({
         fontWeight: "bold",
         marginLeft: "10%",
       },
+      news_header: {
+        marginTop: 0,
+        height: height * .06,
+        width: width,
+        backgroundColor: '#0A0909',
+        flexDirection:'row',
+        borderColor: 'white',
+        borderBottomWidth: 1,
+        alignItems: 'center'
+      },
+      news_header_logo: {
+        width: height*.04, 
+        height: height*.04,
+        marginLeft: width * .05,
+      },
+      news_header_text: {
+          fontSize: 20,
+          color: 'white',
+          fontWeight:'200',
+          right: width * .02
+      },
       button_sel: {
         backgroundColor:'grey', 
         height:'15%', 
@@ -161,6 +182,43 @@ const styles = StyleSheet.create({
         alignItems:'center', 
         borderRadius:10
       },
+      news_slide: {
+        marginTop: 0,
+        height: height * .15,
+        width: width,
+        backgroundColor: 'black',
+        flexDirection:'row',
+        borderColor: 'white',
+        borderBottomWidth: 1,
+
+      },
+      news_slide_text_view: {
+          flexDirection: 'column'
+
+      },
+      news_slide_title: {
+          color: 'white',
+          fontWeight:'bold',
+          fontSize: 20,
+          textAlign:'center',
+          width: undefined,
+          marginTop: height * .02
+      },
+      news_slide_text: {
+        color: 'white',
+        fontSize: 15,
+        textAlign:'center',
+        width: width * .6,
+        flex:1,
+        marginTop: height * .02
+    },
+    news_slide_pic_container: {
+        backgroundColor: 'black',
+        width: width * .3,
+        height: width * .3,
+        marginLeft: width * .1,
+        borderRadius:20
+    },
       button_text: {
           color:'white',
           fontWeight:'bold',
