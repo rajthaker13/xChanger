@@ -791,7 +791,87 @@ const styles = StyleSheet.create({
       registerLink: {
         fontWeight: 'bold',
         color: '#560CCE',
-      }
+      },
+      tournamnetInfoPicContainer: {
+          height: width * .4,
+          width: width * .4,
+          backgroundColor: 'white',
+          marginTop: 30,
+          borderRadius: 30
+      },
+      tournamentInfoHeaderName: {
+          color: 'white',
+          fontSize: 30,
+          textAlign: 'center',
+          fontWeight:'bold',
+          marginTop: 30
+      },
+      tournamentInfoMoneyContainer: {
+        marginTop: 20,
+        width: width * .4,
+        height: height * .12,
+        marginHorizontal: width * .05,
+        backgroundColor: '#0A0909',
+        borderRadius:20,
+        flexDirection: 'column',
+        alignItems: 'center',
+    },
+    tournamentInfoMoneyContainerSingle: {
+        marginTop: 20,
+        width: width * .8,
+        height: height * .12,
+        alignSelf:'center',
+        backgroundColor: '#0A0909',
+        borderRadius:20,
+        flexDirection: 'column',
+        alignItems: 'center',
+    },
+    tournamentInfoLeaderboardHeader: {
+        color: 'white',
+        fontSize: 30,
+        textAlign: 'center',
+        fontWeight:'bold',
+        marginTop: 30
+    },
+    tournamentInfoLeaderboard: {
+        backgroundColor: '#0A0909',
+        flex: 1,
+        marginTop: 20,
+        width: width* .95,
+        borderRadius: 20
+    },
+    tournamentInfoLeaderboardSlide: {
+        height: height * .1,
+        backgroundColor:'#0A0909',
+        borderRadius: 20,
+        marginTop: 20,
+        flexDirection:'row',
+        alignItems:'center',
+        borderBottomWidth: 1,
+        borderColor: 'white'
+    },
+    tournamentInfoLeaderboardSlideRank: {
+        color:'#18FE04',
+        fontSize: 35,
+        fontWeight:'200',
+        marginLeft: width * .05
+    },
+    tournamentLeaderboardProfilePic: {
+        width: 60,
+        height: 60,
+        backgroundColor:'black',
+        borderRadius:60,
+        marginLeft: width * .05
+    },
+    tournamentLeaderboardName: {
+        color:'white',
+        fontSize: 15,
+        fontWeight:'bold',
+        marginLeft: width * .05,
+        marginRight: width * .1,
+        width: width * .4,
+        flex:1
+    },
 
 
 

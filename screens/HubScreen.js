@@ -6,7 +6,10 @@ import {styles} from '../Styles';
 import HubHeader from '../components/hub/HubHeader';
 import Tournaments from '../components/hub/Tournaments';
 import Posts from '../components/hub/Posts';
-export default function HubScreen() {
+import { createStackNavigator } from '@react-navigation/stack';
+import { NavigationContainer } from '@react-navigation/native';
+
+export default function HubScreen({navigation}) {
     return (
       <LinearGradient 
         colors={['#18FE04', '#121111']} 
@@ -21,7 +24,7 @@ export default function HubScreen() {
         style={styles.background}>
         <ScrollView>
             <HubHeader />
-            <Tournaments />
+            <Tournaments navigation={navigation}/>
             <Posts />
         </ScrollView>
       </LinearGradient>

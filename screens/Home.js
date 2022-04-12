@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { Image } from 'react-native';
 import HomeScreen from './HomeScreen';
-import HubScreen from './HubScreen';
+import HubNavigation from '../navigation/HubNavigation'
 import ProfileScreen from './ProfileScreen';
 import SearchScreen from './SearchScreen';
 import WalletScreen from './WalletScreen';
@@ -70,7 +70,7 @@ export default function Home() {
         >
           <Tab.Screen name="Home" component={HomeScreen} />
           <Tab.Screen name="Search" component={SearchScreen} />
-          <Tab.Screen name="Hub" component={HubScreen} />
+          <Tab.Screen name="Hub" component={HubNavigation} />
           <Tab.Screen name="Wallet" component={WalletScreen} />
           <Tab.Screen name="Profile" component={ProfileScreen} />
         </Tab.Navigator>
