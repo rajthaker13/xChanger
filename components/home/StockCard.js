@@ -9,13 +9,10 @@ import StockChart from '../StockChart';
 
 const SCREEN_HEIGHT = Dimensions.get('window').height
 const SCREEN_WIDTH = Dimensions.get('window').width
-const cardData = [
-    {id:'1', src:require('../../assets/images/apple.png'),fullName:'Apple Inc. (AAPL)', stockName:'AAPL'}, 
-    {id:'2', src:require('../../assets/images/tesla.jpeg'),stockName:'TSLA',fullName:'Tesla Inc (TSLA)', }, 
-    {id:'3', src:require('../../assets/images/abc.png'),stockName:'GOOG',fullName:'Alphabet Inc (GOOG)', },
-    {id:'4', src:require('../../assets/images/apple.png'),fullName:'Apple Inc. (AAPL)', stockName:'AAPL'}, 
-    {id:'5', src:require('../../assets/images/tesla.jpeg'),stockName:'TSLA',fullName:'Tesla Inc (TSLA)', }, 
-    {id:'6', src:require('../../assets/images/abc.png'),stockName:'GOOG',fullName:'Alphabet Inc (GOOG)', }
+const testCardData = [
+    {id:'0', fullName:'Apple', stockName:'AAPL'}, 
+    {id:'1', stockName:'TSLA',fullName:'Tesla', }, 
+
 ]
 export default class StockCard extends React.Component {
     constructor(props) {
@@ -23,10 +20,11 @@ export default class StockCard extends React.Component {
         this.position = new Animated.ValueXY()
         this.state = {
           currentIndex: 0,
-          curStockName:cardData[0].stockName,
-          sucStockName:cardData[1].stockName, 
-          curStockDisplayName: "",
-          sucStockDisplayName:"",
+          cardDataLength: 2,
+          curStockName:testCardData[0].stockName,
+          sucStockName:testCardData[1].stockName, 
+          curStockDisplayName: testCardData[0].fullName,
+          sucStockDisplayName:testCardData[1].fullName, 
           curStockSrc:"",
           sucStockSrc:"",
           curStockPrice: 0.00,
@@ -34,6 +32,7 @@ export default class StockCard extends React.Component {
           range: '1d',
           interval: '15m',
           buttonSel:'1D',
+          cardData : testCardData
         }
         this.rotate = this.position.x.interpolate({
             inputRange: [-SCREEN_WIDTH /2 ,0, SCREEN_WIDTH /2],
@@ -73,11 +72,12 @@ export default class StockCard extends React.Component {
 
     }
     componentDidMount() {
-        this.getStockData()
-
+        if(this.state.currentIndex == 0) {
+          this.getStockData()
+        }
         
     }
-    UNSAFE_componentWillMount() {
+    async UNSAFE_componentWillMount() {
         this.PanResponder = PanResponder.create({
     
           onStartShouldSetPanResponder: (evt, gestureState) => true,
@@ -90,36 +90,30 @@ export default class StockCard extends React.Component {
             if (gestureState.dx > 120) {
               Animated.spring(this.position, {
                 toValue: { x: SCREEN_WIDTH + 100, y: gestureState.dy }
-              }).start(() => {
-                this.setState({ currentIndex: this.state.currentIndex + 1 }, () => {
+              }).start(async () => {
+                // this.setState((state) => {
+                //   return {
+                //     currentIndex: this.state.currentIndex + 1 
+                //   }
+                // }, async () => {
                   this.position.setValue({ x: 0, y: 0 })
-                  const newSuc = cardData[this.state.currentIndex + 1].stockName
-                  this.setState({
-                      curStockName: this.state.sucStockName,
-                      sucStockName: newSuc
-                  }, () => {
-                    this.getStockData()
-                  })
+                  await this.getStockRecs(true)
                   
-                })
+                // })
               })
-              this.getStockData()
             }
             else if (gestureState.dx < -120) {
               Animated.spring(this.position, {
                 toValue: { x: -SCREEN_WIDTH - 100, y: gestureState.dy }
-              }).start(() => {
-                this.setState({ currentIndex: this.state.currentIndex + 1 }, () => {
+              }).start(async () => {
+                // this.setState((state) => {
+                //   return {
+                //     currentIndex: this.state.currentIndex + 1 
+                //   }
+                // }, async () => {
                   this.position.setValue({ x: 0, y: 0 })
-                  const newSuc = cardData[this.state.currentIndex + 1].stockName
-                  this.setState({
-                    curStockName: this.state.sucStockName,
-                    sucStockName: newSuc
-                }, () => {
-                    this.getStockData()
-
-                })
-                })
+                  await this.getStockRecs(false)
+                // })
               })
             }
             else {
@@ -192,6 +186,172 @@ export default class StockCard extends React.Component {
             })
 
         }
+    }
+
+
+
+
+    async getStockRecs(didSwipeRight) {
+      let curCardData = this.state.cardData
+      let stockName = ""
+      let start_id = this.state.cardDataLength
+      let added = 0
+      if(this.state.currentIndex == 1) {
+        start_id = 2
+      }
+      if(didSwipeRight) {
+        stockName = curCardData[0].stockName
+      }
+      else {
+        stockName = curCardData[1].stockName
+      }
+      curCardData.shift()
+      var options  = {
+        method: 'GET',
+        url: `https://yfapi.net/v6/finance/recommendationsbysymbol/${stockName}`,
+        params: {modules: 'defaultKeyStatistics,assetProfile'},
+        headers: {
+          'x-api-key': apiKey,
+        }
+        
+      };
+      try{
+        await axios.request(options).then((response) => {
+          const apiResponse = response.data.finance.result[0]['recommendedSymbols']
+          if(Array.isArray(apiResponse)) {
+            apiResponse.forEach(async (rec) => {
+              const symbol = rec.symbol
+              var optionsJr = {
+                method: 'GET',
+                url: `https://yfapi.net/v6/finance/quote?region=US&lang=en&symbols=${symbol}`,
+                params: {modules: 'defaultKeyStatistics,assetProfile'},
+                headers: {
+                  'x-api-key': apiKey,
+                }
+              }
+              await axios.request(optionsJr).then((res) => {
+                const apiResponseJr = res.data.quoteResponse.result;
+                if(Array.isArray(apiResponseJr)) {
+                  apiResponseJr.forEach(async (stock) => {
+                    const displayName = stock['displayName']
+                    curCardData.push({id: start_id, stockName: symbol, fullName: displayName})
+                    start_id += 1
+                    added += 1
+
+                  })
+                }
+                
+              })
+              this.setState((state) => {
+                return {
+                  cardData: curCardData,
+                  curStockName: curCardData[0].stockName,
+                  sucStockName: curCardData[1].stockName,
+                  cardDataLength: this.state.cardDataLength + added
+
+                }
+              }, async () => {
+                var curOptions = {
+                  method: 'GET',
+                  url: `https://yfapi.net/v6/finance/quote?region=US&lang=en&symbols=${this.state.curStockName}`,
+                  params: {modules: 'defaultKeyStatistics,assetProfile'},
+                  headers: {
+                    'x-api-key': apiKey,
+                  }
+                };
+                var sucOptions = {
+                  method: 'GET',
+                  url: `https://yfapi.net/v6/finance/quote?region=US&lang=en&symbols=${this.state.sucStockName}`,
+                  params: {modules: 'defaultKeyStatistics,assetProfile'},
+                  headers: {
+                    'x-api-key': apiKey,
+                  }
+                };
+                await axios.request(curOptions).then((response) => {
+                    const curAPIResponse = response.data.quoteResponse.result;
+                    if(Array.isArray(curAPIResponse)) {
+                        curAPIResponse.forEach(async (curStockData) => {
+                            await axios.request(sucOptions).then(async (res) => {
+                              const sucAPIResponse = res.data.quoteResponse.result;
+                              if(Array.isArray(sucAPIResponse)) {
+                                  await sucAPIResponse.forEach((sucStockData) => {
+                                      this.setState((state) => {
+                                        return {
+                                            curStockPrice: curStockData['regularMarketPrice'],
+                                            curStockDisplayName: curStockData['displayName'],
+                                            sucStockPrice: sucStockData['regularMarketPrice'],
+                                            sucStockDisplayName: sucStockData['displayName'],
+                                          };
+                                    }, async () => {
+      
+                                      var curPicOptions = {
+                                        method: 'GET',
+                                        url: `https://api.brandfetch.io/v2/brands/${this.state.curStockDisplayName}.com`,
+                                        headers: {
+                                          Authorization: `Bearer ${brandAPI}`
+      
+                                        }
+                                      };
+                                      var sucPicOptions = {
+                                        method: 'GET',
+                                        url: `https://api.brandfetch.io/v2/brands/${this.state.sucStockDisplayName}.com`,
+                                        headers: {
+                                          Authorization: `Bearer ${brandAPI}`
+      
+                                        }
+                                      };
+                                      await axios.request(curPicOptions).then(async (response) => {
+                                        let curStockRes = ""
+                                        const curResArray = JSON.parse(JSON.stringify(response)).data.logos[0].formats;
+                                        curResArray.forEach(async (curFormat) => {
+                                          if(!curFormat.format.includes('svg')) {
+                                            curStockRes = curFormat.src
+                                          }
+      
+                                        })
+      
+                                        await axios.request(sucPicOptions).then(async (res) => {
+                                          let sucStockRes = ""
+                                          const sucStockArray = JSON.parse(JSON.stringify(res)).data.logos[0].formats;
+                                          sucStockArray.forEach(async (sucFormat) => {
+                                            if(!sucFormat.format.includes('svg')) {
+                                              sucStockRes = sucFormat.src
+                                            }
+                                          })
+                                          this.setState((state) => {
+                                            return {
+                                              curStockSrc: curStockRes,
+                                              sucStockSrc: sucStockRes,
+                                              currentIndex: this.state.currentIndex + 1
+                                            }
+                                          })
+                                        })
+                                        
+                                      })
+                                    })
+                                  })
+                              }
+                        }).catch(function (error) {
+                            console.error(error);
+                        });
+                        })
+                    }
+              }).catch(function (error) {
+                  console.error(error);
+              });
+              })
+
+              
+            })
+          }
+        })
+
+      }catch(err) {
+        console.log(err)
+
+      }
+
+
     }
 
      async getStockData() {
@@ -286,7 +446,7 @@ export default class StockCard extends React.Component {
 
     renderCards = () => {
 
-        return cardData.map((item, i) => {
+        return this.state.cardData.map((item, i) => {
     
     
           if (i < this.state.currentIndex) {

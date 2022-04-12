@@ -2,6 +2,93 @@ import {StyleSheet} from 'react-native';
 import './global';
 
 const styles = StyleSheet.create({
+    backgroundVideo: {
+        height: height,
+        position: "absolute",
+        top: 0,
+        left: 0,
+        alignItems: "stretch",
+        bottom: 0,
+        right: 0
+    },
+    start_screen_wrapper: {
+        padding: 20,
+        alignItems: 'center',
+        justifyContent: 'space-between',
+        flexDirection:'column'
+    },
+    start_screen_logo: {
+        maxWidth: 100,
+        width:100,
+        height:100,
+        marginTop: height * .1
+    },
+    start_screen_description_text: {
+        letterSpacing:3,
+        color: '#f4f4f4',
+        textAlign:'center',
+        textTransform: 'uppercase',
+        marginTop: height * .01
+    },
+    start_screen_button_wrapper: {
+        justifyContent:'center',
+        flexDirection:'column',
+        alignItems:'center',
+        marginTop:100
+    },
+    start_screen_logo_text: {
+        color:'#f4f4f4',
+        fontSize:30,
+        textAlign:'center',
+        fontWeight:'300',
+        textTransform:'uppercase',
+        letterSpacing:3,
+        marginTop: height * .12,
+        right: width * .06
+    },
+    start_screen_title: {
+        color:'#f4f4f4',
+        fontSize:30,
+        textAlign:'center',
+        fontWeight:'bold',
+        textTransform:'uppercase',
+        letterSpacing:3,
+        marginTop: height * .12,
+    },
+    start_screen_styled_button_normal: {
+        width: 250,
+        backgroundColor:'#f3f8ff',
+        padding:15,
+        justifyContent:'center',
+        marginBottom:20,
+        borderRadius:24,
+    },
+    start_screen_styled_button_transparent: {
+        width: 250,
+        backgroundColor:'transparent',
+        padding:15,
+        borderWidth:1,
+        borderColor:'#f3f8ff',
+        justifyContent:'center',
+        marginBottom:20,
+        borderRadius:24,
+    },
+    start_screen_styled_title_normal: {
+        textTransform:'uppercase',
+        textAlign:'center',
+        fontWeight:"bold",
+        letterSpacing:3,
+        color:'#666'
+    },
+    start_screen_styled_title_transparent: {
+        textTransform:'uppercase',
+        textAlign:'center',
+        fontWeight:"bold",
+        letterSpacing:3,
+        color:'#f3f8ff'
+    },
+
+
     background: {
         height: height,
         width: width,
@@ -683,6 +770,28 @@ const styles = StyleSheet.create({
         marginTop:height * .04
 
     },
+    textInputContainer: {
+        width: '100%',
+        marginVertical: 12,
+    },
+    textInputDescription: {
+        fontSize: 13,
+        color: '#414757',
+        paddingTop: 8,
+    },
+    textInputError: {
+        fontSize: 13,
+        color: '#f13a59',
+        paddingTop: 8,
+      },
+      registerRow: {
+        flexDirection: 'row',
+        marginTop: 4,
+      },
+      registerLink: {
+        fontWeight: 'bold',
+        color: '#560CCE',
+      }
 
 
 

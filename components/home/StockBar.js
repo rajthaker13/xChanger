@@ -6,6 +6,7 @@ import axios from 'axios'
 import '../../global';
 
 
+
 export default class StockBar extends PureComponent {
   constructor(props) {
     super(props)
