@@ -9,3 +9,4 @@ global.baseURL = 'https://yfapi/net';
 global.polyAPI = 'w7OgDXxxBpZhrJ5_OwxUmp7c9Nv2s0Ej';
 global.newsAPI = 'xlmtyq67lawhqiap5pdwmv5q3hzgwshf57ki4b67';
 global.brandAPI = 'N+R3JW9ofOX5vBKAwkAOfZbrYMrjwcav21GqexKk/Bk=';
+global.logoAPI = 'sk_274058af1bcb8b03b8d9413cd6478840';

@@ -91,29 +91,31 @@ export default class StockCard extends React.Component {
               Animated.spring(this.position, {
                 toValue: { x: SCREEN_WIDTH + 100, y: gestureState.dy }
               }).start(async () => {
-                // this.setState((state) => {
-                //   return {
-                //     currentIndex: this.state.currentIndex + 1 
-                //   }
-                // }, async () => {
                   this.position.setValue({ x: 0, y: 0 })
-                  await this.getStockRecs(true)
+                  this.setState((state) => {
+                    return {
+                      currentIndex: this.state.currentIndex + 1
+                    }
+                  }, async() => {
+                    await this.getStockRecs(false)
+
+                  })
                   
-                // })
               })
             }
             else if (gestureState.dx < -120) {
               Animated.spring(this.position, {
                 toValue: { x: -SCREEN_WIDTH - 100, y: gestureState.dy }
               }).start(async () => {
-                // this.setState((state) => {
-                //   return {
-                //     currentIndex: this.state.currentIndex + 1 
-                //   }
-                // }, async () => {
                   this.position.setValue({ x: 0, y: 0 })
-                  await this.getStockRecs(false)
-                // })
+                  this.setState((state) => {
+                    return {
+                      currentIndex: this.state.currentIndex + 1
+                    }
+                  }, async() => {
+                    await this.getStockRecs(false)
+
+                  })
               })
             }
             else {
@@ -194,10 +196,23 @@ export default class StockCard extends React.Component {
     async getStockRecs(didSwipeRight) {
       let curCardData = this.state.cardData
       let stockName = ""
-      let start_id = this.state.cardDataLength
+      let cur_id = this.state.currentIndex + 1
       let added = 0
-      if(this.state.currentIndex == 1) {
-        start_id = 2
+      let newRec = ""
+      let displayName = ""
+      let curStockNameNew = ""
+      let sucStockNameNew = ""
+      let curStockDisplayNew = ""
+      let sucStockDisplayNew = ""
+      let curStockSrcNew = ""
+      let sucStockSrcNew = ""
+      let curStockPriceNew = 0
+      let sucStockPriceNew = 0
+      let curDomain = ""
+      let sucDomain = ""
+      console.log("IDDD" + cur_id)
+      if(cur_id == 1) {
+       cur_id = 2
       }
       if(didSwipeRight) {
         stockName = curCardData[0].stockName
@@ -216,139 +231,150 @@ export default class StockCard extends React.Component {
         
       };
       try{
-        await axios.request(options).then((response) => {
+        await axios.request(options).then(async (response) => {
           const apiResponse = response.data.finance.result[0]['recommendedSymbols']
           if(Array.isArray(apiResponse)) {
-            apiResponse.forEach(async (rec) => {
-              const symbol = rec.symbol
-              var optionsJr = {
-                method: 'GET',
-                url: `https://yfapi.net/v6/finance/quote?region=US&lang=en&symbols=${symbol}`,
-                params: {modules: 'defaultKeyStatistics,assetProfile'},
-                headers: {
-                  'x-api-key': apiKey,
-                }
+            var random = Math.floor(Math.random() * apiResponse.length) + 1
+            newRec = apiResponse[random].symbol
+            var optionsJr = {
+              method: 'GET',
+              url: `https://yfapi.net/v6/finance/quote?region=US&lang=en&symbols=${newRec}`,
+              params: {modules: 'defaultKeyStatistics,assetProfile'},
+              headers: {
+                'x-api-key': apiKey,
               }
-              await axios.request(optionsJr).then((res) => {
-                const apiResponseJr = res.data.quoteResponse.result;
-                if(Array.isArray(apiResponseJr)) {
-                  apiResponseJr.forEach(async (stock) => {
-                    const displayName = stock['displayName']
-                    curCardData.push({id: start_id, stockName: symbol, fullName: displayName})
-                    start_id += 1
-                    added += 1
-
-                  })
-                }
-                
-              })
-              this.setState((state) => {
-                return {
-                  cardData: curCardData,
-                  curStockName: curCardData[0].stockName,
-                  sucStockName: curCardData[1].stockName,
-                  cardDataLength: this.state.cardDataLength + added
-
-                }
-              }, async () => {
-                var curOptions = {
-                  method: 'GET',
-                  url: `https://yfapi.net/v6/finance/quote?region=US&lang=en&symbols=${this.state.curStockName}`,
-                  params: {modules: 'defaultKeyStatistics,assetProfile'},
-                  headers: {
-                    'x-api-key': apiKey,
-                  }
-                };
-                var sucOptions = {
-                  method: 'GET',
-                  url: `https://yfapi.net/v6/finance/quote?region=US&lang=en&symbols=${this.state.sucStockName}`,
-                  params: {modules: 'defaultKeyStatistics,assetProfile'},
-                  headers: {
-                    'x-api-key': apiKey,
-                  }
-                };
-                await axios.request(curOptions).then((response) => {
-                    const curAPIResponse = response.data.quoteResponse.result;
-                    if(Array.isArray(curAPIResponse)) {
-                        curAPIResponse.forEach(async (curStockData) => {
-                            await axios.request(sucOptions).then(async (res) => {
-                              const sucAPIResponse = res.data.quoteResponse.result;
-                              if(Array.isArray(sucAPIResponse)) {
-                                  await sucAPIResponse.forEach((sucStockData) => {
-                                      this.setState((state) => {
-                                        return {
-                                            curStockPrice: curStockData['regularMarketPrice'],
-                                            curStockDisplayName: curStockData['displayName'],
-                                            sucStockPrice: sucStockData['regularMarketPrice'],
-                                            sucStockDisplayName: sucStockData['displayName'],
-                                          };
-                                    }, async () => {
-      
-                                      var curPicOptions = {
-                                        method: 'GET',
-                                        url: `https://api.brandfetch.io/v2/brands/${this.state.curStockDisplayName}.com`,
-                                        headers: {
-                                          Authorization: `Bearer ${brandAPI}`
-      
-                                        }
-                                      };
-                                      var sucPicOptions = {
-                                        method: 'GET',
-                                        url: `https://api.brandfetch.io/v2/brands/${this.state.sucStockDisplayName}.com`,
-                                        headers: {
-                                          Authorization: `Bearer ${brandAPI}`
-      
-                                        }
-                                      };
-                                      await axios.request(curPicOptions).then(async (response) => {
-                                        let curStockRes = ""
-                                        const curResArray = JSON.parse(JSON.stringify(response)).data.logos[0].formats;
-                                        curResArray.forEach(async (curFormat) => {
-                                          if(!curFormat.format.includes('svg')) {
-                                            curStockRes = curFormat.src
-                                          }
-      
-                                        })
-      
-                                        await axios.request(sucPicOptions).then(async (res) => {
-                                          let sucStockRes = ""
-                                          const sucStockArray = JSON.parse(JSON.stringify(res)).data.logos[0].formats;
-                                          sucStockArray.forEach(async (sucFormat) => {
-                                            if(!sucFormat.format.includes('svg')) {
-                                              sucStockRes = sucFormat.src
-                                            }
-                                          })
-                                          this.setState((state) => {
-                                            return {
-                                              curStockSrc: curStockRes,
-                                              sucStockSrc: sucStockRes,
-                                              currentIndex: this.state.currentIndex + 1
-                                            }
-                                          })
-                                        })
-                                        
-                                      })
-                                    })
-                                  })
-                              }
-                        }).catch(function (error) {
-                            console.error(error);
-                        });
-                        })
-                    }
-              }).catch(function (error) {
-                  console.error(error);
-              });
-              })
-
+            }
+            await axios.request(optionsJr).then((res) => {
+              const apiResponseJr = res.data.quoteResponse.result;
+              if(Array.isArray(apiResponseJr)) {
+                apiResponseJr.forEach(async (stock) => {
+                  displayName = stock['displayName']
+                })
+              }
               
             })
-          }
-        })
+            curCardData.push({id: cur_id, stockName: newRec, fullName: displayName})
+            curStockNameNew = curCardData[0].stockName
+            curStockDisplayNew = curCardData[0].displayName
+            sucStockNameNew = curCardData[1].stockName
+            sucStockDisplayNew = curCardData[1].displayName
+            var curOptions = {
+              method: 'GET',
+              url: `https://yfapi.net/v6/finance/quote?region=US&lang=en&symbols=${curStockNameNew}`,
+              params: {modules: 'defaultKeyStatistics,assetProfile'},
+              headers: {
+                'x-api-key': apiKey,
+              }
+            };
+            var sucOptions = {
+              method: 'GET',
+              url: `https://yfapi.net/v6/finance/quote?region=US&lang=en&symbols=${sucStockNameNew}`,
+              params: {modules: 'defaultKeyStatistics,assetProfile'},
+              headers: {
+                'x-api-key': apiKey,
+              }
+            };
 
+            await axios.request(curOptions).then(async (curRes) => {
+              const curAPIResponse = curRes.data.quoteResponse.result
+              if(Array.isArray(curAPIResponse)) {
+                curAPIResponse.forEach((curStockData) => {
+                  curStockPriceNew = curStockData['regularMarketPrice']
+                })
+              }
+            })
+            await axios.request(sucOptions).then(async(sucRes) => {
+              const sucAPIResponse = sucRes.data.quoteResponse.result
+              if(Array.isArray(sucAPIResponse)) {
+                sucAPIResponse.forEach((sucStockData) => {
+                  sucStockPriceNew = sucStockData['regularMarketPrice']
+                })
+              }
+            })
+            var curDomainOptions = {
+              method: 'GET',
+              url: `https://yfapi.net/v11/finance/quoteSummary/${curStockNameNew}?lang=en&region=US&modules=defaultKeyStatistics%2CassetProfile`,
+              headers: {
+                'x-api-key': apiKey,
+
+              }
+            };
+            var sucDomainOptions = {
+              method: 'GET',
+              url: `https://yfapi.net/v11/finance/quoteSummary/${sucStockNameNew}?lang=en&region=US&modules=defaultKeyStatistics%2CassetProfile`,
+              headers: {
+                'x-api-key': apiKey,
+
+              }
+            };
+            await axios.request(curDomainOptions).then((curDRes) => {
+              const curDResponse = (curDRes.data.quoteSummary.result)
+              if(Array.isArray(curDResponse)) {
+                curDResponse.forEach((c) => {
+                  let tempCurDomain = (c['assetProfile'].website)
+                  curDomain = tempCurDomain.substring(tempCurDomain.indexOf('.') + 1, tempCurDomain.lastIndexOf('.'))
+                })
+              }
+            })
+            await axios.request(sucDomainOptions).then((sucDRes) => {
+              const sucDResponse = (sucDRes.data.quoteSummary.result)
+              if(Array.isArray(sucDResponse)) {
+                sucDResponse.forEach((s) => {
+                  let tempSucDomain = (s['assetProfile'].website)
+                  sucDomain = tempSucDomain.substring(tempSucDomain.indexOf('.') + 1, tempSucDomain.lastIndexOf('.'))
+                })
+              }
+            })
+            var curPicOptions = {
+              method: 'GET',
+              url: `https://api.brandfetch.io/v2/brands/${curDomain}.com`,
+              headers: {
+                Authorization: `Bearer ${brandAPI}`
+
+              }
+            };
+            var sucPicOptions = {
+              method: 'GET',
+              url: `https://api.brandfetch.io/v2/brands/${sucDomain}.com`,
+              headers: {
+                Authorization: `Bearer ${brandAPI}`
+
+              }
+            };
+            await axios.request(curPicOptions).then(async (curPicRes) => {
+              const curResArray = JSON.parse(JSON.stringify(curPicRes)).data.logos[0].formats;
+              curResArray.forEach(async (curFormat) => {
+                if(!curFormat.format.includes('svg')) {
+                  curStockSrcNew = curFormat.src
+                }
+              })
+            })
+            await axios.request(sucPicOptions).then(async (sucPicRes) => {
+              const sucResArray = JSON.parse(JSON.stringify(sucPicRes)).data.logos[0].formats;
+              sucResArray.forEach(async (sucFormat) => {
+                if(!sucFormat.format.includes('svg')) {
+                  sucStockSrcNew = sucFormat.src
+                }
+              })
+            })
+            this.setState((state) => {
+              return {
+                cardData: curCardData,
+                curStockName: curStockNameNew,
+                curStockDisplayName: curStockDisplayNew,
+                sucStockName: sucStockNameNew,
+                sucStockDisplayName: sucStockDisplayNew,
+                curStockPrice: curStockPriceNew,
+                sucStockPrice: sucStockPriceNew,
+                curStockSrc: curStockSrcNew,
+                sucStockSrc: sucStockSrcNew,
+              }
+            })
+          }
+        }
+        )
       }catch(err) {
         console.log(err)
-
       }
 
 
@@ -446,13 +472,13 @@ export default class StockCard extends React.Component {
 
     renderCards = () => {
 
-        return this.state.cardData.map((item, i) => {
+        return this.state.cardData.map((item) => {
     
     
-          if (i < this.state.currentIndex) {
+          if (item.id < this.state.currentIndex) {
             return null
           }
-          else if (i == this.state.currentIndex) {
+          else if (item.id == this.state.currentIndex) {
     
             return (
               <Animated.View
@@ -501,7 +527,7 @@ export default class StockCard extends React.Component {
               </Animated.View>
             )
           }
-          else {
+          else if(item.id - 1 == this.state.currentIndex) {
             return (
               <Animated.View
     

@@ -872,6 +872,93 @@ const styles = StyleSheet.create({
         width: width * .4,
         flex:1
     },
+    watchListChoiceTextSelected: {
+        color:'#0A0909',
+        fontSize:18,
+        fontWeight:'bold',
+        marginHorizontal: width * .07,
+        marginTop: height * .01
+    },
+    watchListChoiceTextUnselected: {
+        color:'white',
+        fontSize:18,
+        fontWeight:'bold',
+        marginHorizontal: width * .07,
+        marginTop: height * .01
+    },
+    watchListChoiceContainerSelected: {
+        backgroundColor: '#18FE04',
+        width: width * .5,
+        height: width * .1,
+        borderRadius: width * .2,
+        alignItems:'center',
+    },
+    watchListChoiceContainerUnselected: {
+        backgroundColor: '#0A0909',
+        width: width * .5,
+        height: width * .1,
+        borderRadius: width * .2,
+        alignItems:'center',
+    },
+    watchListTourneyHeader: {
+        backgroundColor: '#18FE04',
+        width: width,
+        height: width * .15,
+        flexDirection:'row',
+        borderBottomWidth:1,
+        borderColor:'white'
+    },
+    watchListTourneyProfileContainer: {
+        width: 50,
+        height: 50,
+        backgroundColor:'white',
+        borderRadius:40,
+        marginTop: height * .005,
+        marginLeft: width * .05
+    },
+    watchListTourneyName: {
+        fontWeight:'500',
+        fontSize:15,
+        color: '#0A0909',
+        marginLeft: width * .05,
+        marginTop: height * .02,
+        width: width * .5
+    },
+    watchListTourneyRank: {
+        fontWeight:'bold',
+        fontSize:12,
+        color: '#0A0909',
+        marginTop: height * .025
+    },
+    watchListTourneyStockSlide: {
+        backgroundColor: '#0A0909',
+        width: width,
+        height: width * .15,
+        flexDirection:'row',
+        borderBottomWidth:1,
+        borderColor:'white'
+    },
+    watchListStockName: {
+        fontWeight:'500',
+        fontSize:15,
+        color: 'white',
+        marginLeft: width * .05,
+        marginTop: height * .02,
+    },
+    watchListStockInfo: {
+        fontWeight:'300',
+        fontSize:12,
+        color: '#18FE04',
+        marginLeft: width * .02,
+        marginTop: height * .023,
+    },
+    watchListEditButton: {
+        backgroundColor: "#0E6ACE",
+        height: height * .04,
+        width: width * .2,
+        marginLeft: width * .03,
+        borderRadius: 20
+    },
 
 
 

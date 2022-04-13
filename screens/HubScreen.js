@@ -23,7 +23,7 @@ export default function HubScreen({navigation}) {
         }} 
         style={styles.background}>
         <ScrollView>
-            <HubHeader />
+            <HubHeader navigation={navigation}/>
             <Tournaments navigation={navigation}/>
             <Posts />
         </ScrollView>

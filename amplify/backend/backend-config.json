@@ -21,37 +21,7 @@
       }
     }
   },
-  "auth": {
-    "xchangermvpeacdb1afeacdb1af": {
-      "service": "Cognito",
-      "providerPlugin": "awscloudformation",
-      "dependsOn": [],
-      "customAuth": false,
-      "frontendAuthConfig": {
-        "socialProviders": [],
-        "usernameAttributes": [],
-        "signupAttributes": [
-          "BIRTHDATE",
-          "EMAIL",
-          "GENDER",
-          "NAME",
-          "PREFERRED_USERNAME",
-          "PICTURE"
-        ],
-        "passwordProtectionSettings": {
-          "passwordPolicyMinLength": 8,
-          "passwordPolicyCharacters": []
-        },
-        "mfaConfiguration": "OFF",
-        "mfaTypes": [
-          "SMS"
-        ],
-        "verificationMechanisms": [
-          "EMAIL"
-        ]
-      }
-    }
-  },
+  "auth": {},
   "storage": {
     "xchangermvp872128e2": {
       "service": "S3",
