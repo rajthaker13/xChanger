@@ -2,6 +2,12 @@ import {StyleSheet} from 'react-native';
 import './global';
 
 const styles = StyleSheet.create({
+    input: {
+        height: 40,
+        margin: 12,
+        borderWidth: 1,
+        padding: 10,
+      },
     backgroundVideo: {
         height: height,
         position: "absolute",
@@ -944,6 +950,7 @@ const styles = StyleSheet.create({
         color: 'white',
         marginLeft: width * .05,
         marginTop: height * .02,
+        flex:1
     },
     watchListStockInfo: {
         fontWeight:'300',
@@ -954,12 +961,28 @@ const styles = StyleSheet.create({
     },
     watchListEditButton: {
         backgroundColor: "#0E6ACE",
-        height: height * .04,
-        width: width * .2,
-        marginLeft: width * .03,
-        borderRadius: 20
+        height: height * .03,
+        width: width * .15,
+        marginLeft: width * .1,
+        marginTop: height * .02,
+        borderRadius: 20,
+        justifyContent:'center',
     },
-
+    watchListAddButton: {
+        backgroundColor: "#18FE04",
+        height: height * .03,
+        width: width * .15,
+        marginLeft: width * .1,
+        marginTop: height * .02,
+        borderRadius: 20,
+        justifyContent:'center',
+    },
+    watchListEditButtonText: {
+        color:'white',
+        fontWeight:'bold',
+        fontSize: 12,
+        marginLeft: width * .045
+    },
 
 
 });

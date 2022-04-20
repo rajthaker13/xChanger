@@ -1,25 +1,19 @@
 {
-  "dev": {
+  "staging": {
     "awscloudformation": {
-      "AuthRoleName": "amplify-xchangermvp-dev-205126-authRole",
-      "UnauthRoleArn": "arn:aws:iam::847580148735:role/amplify-xchangermvp-dev-205126-unauthRole",
-      "AuthRoleArn": "arn:aws:iam::847580148735:role/amplify-xchangermvp-dev-205126-authRole",
+      "AuthRoleName": "amplify-xchangerproject-staging-212453-authRole",
+      "UnauthRoleArn": "arn:aws:iam::847580148735:role/amplify-xchangerproject-staging-212453-unauthRole",
+      "AuthRoleArn": "arn:aws:iam::847580148735:role/amplify-xchangerproject-staging-212453-authRole",
       "Region": "us-east-1",
-      "DeploymentBucketName": "amplify-xchangermvp-dev-205126-deployment",
-      "UnauthRoleName": "amplify-xchangermvp-dev-205126-unauthRole",
-      "StackName": "amplify-xchangermvp-dev-205126",
-      "StackId": "arn:aws:cloudformation:us-east-1:847580148735:stack/amplify-xchangermvp-dev-205126/1388ff10-b54c-11ec-96c9-0e8b25234f59",
-      "AmplifyAppId": "d2q59otopsok20"
+      "DeploymentBucketName": "amplify-xchangerproject-staging-212453-deployment",
+      "UnauthRoleName": "amplify-xchangerproject-staging-212453-unauthRole",
+      "StackName": "amplify-xchangerproject-staging-212453",
+      "StackId": "arn:aws:cloudformation:us-east-1:847580148735:stack/amplify-xchangerproject-staging-212453/fd18afc0-bf5d-11ec-9c38-0efbf6f92cb5",
+      "AmplifyAppId": "d1oe5lw19ml3fr"
     },
     "categories": {
       "auth": {
-        "xchangermvpeacdb1afeacdb1af": {}
-      },
-      "storage": {
-        "xchangermvp872128e2": {
-          "bucketName": "amplify-xchangermvp-dev-205126-deployment",
-          "region": "us-east-1"
-        }
+        "XChangerProject": {}
       }
     }
   }

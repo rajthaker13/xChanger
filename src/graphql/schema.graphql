@@ -1,0 +1,378 @@
+﻿schema {
+  query: Query
+  mutation: Mutation
+  subscription: Subscription
+}
+
+type Blog {
+  createdAt: AWSDateTime!
+  id: ID!
+  name: String!
+  posts(filter: ModelPostFilterInput, limit: Int, nextToken: String, sortDirection: ModelSortDirection): ModelPostConnection
+  updatedAt: AWSDateTime!
+}
+
+type Comment {
+  content: String!
+  createdAt: AWSDateTime!
+  id: ID!
+  post: Post
+  postCommentsId: ID
+  updatedAt: AWSDateTime!
+}
+
+type ModelBlogConnection {
+  items: [Blog]!
+  nextToken: String
+}
+
+type ModelCommentConnection {
+  items: [Comment]!
+  nextToken: String
+}
+
+type ModelPostConnection {
+  items: [Post]!
+  nextToken: String
+}
+
+type Mutation {
+  createBlog(condition: ModelBlogConditionInput, input: CreateBlogInput!): Blog
+  createComment(condition: ModelCommentConditionInput, input: CreateCommentInput!): Comment
+  createPost(condition: ModelPostConditionInput, input: CreatePostInput!): Post
+  createUser(input: CreateUserInput!): User
+  deleteBlog(condition: ModelBlogConditionInput, input: DeleteBlogInput!): Blog
+  deleteComment(condition: ModelCommentConditionInput, input: DeleteCommentInput!): Comment
+  deletePost(condition: ModelPostConditionInput, input: DeletePostInput!): Post
+  deleteUser(input: DeleteUserInput!): User
+  updateBlog(condition: ModelBlogConditionInput, input: UpdateBlogInput!): Blog
+  updateComment(condition: ModelCommentConditionInput, input: UpdateCommentInput!): Comment
+  updatePost(condition: ModelPostConditionInput, input: UpdatePostInput!): Post
+  updateUser(input: UpdateUserInput!): User
+}
+
+type Post {
+  blog: Blog
+  blogPostsId: ID
+  comments(filter: ModelCommentFilterInput, limit: Int, nextToken: String, sortDirection: ModelSortDirection): ModelCommentConnection
+  createdAt: AWSDateTime!
+  id: ID!
+  title: String!
+  updatedAt: AWSDateTime!
+}
+
+type Query {
+  getBlog(id: ID!): Blog
+  getComment(id: ID!): Comment
+  getPost(id: ID!): Post
+  getUser(username: String!): User
+  listBlogs(filter: ModelBlogFilterInput, limit: Int, nextToken: String): ModelBlogConnection
+  listComments(filter: ModelCommentFilterInput, limit: Int, nextToken: String): ModelCommentConnection
+  listPosts(filter: ModelPostFilterInput, limit: Int, nextToken: String): ModelPostConnection
+  listUsers(filter: TableUserFilterInput, limit: Int, nextToken: String): UserConnection
+}
+
+type Subscription {
+  onCreateBlog: Blog @aws_subscribe(mutations : ["createBlog"])
+  onCreateComment: Comment @aws_subscribe(mutations : ["createComment"])
+  onCreatePost: Post @aws_subscribe(mutations : ["createPost"])
+  onCreateUser(birthdate: String, email: String, gender: String, id: ID, name: String): User @aws_subscribe(mutations : ["createUser"])
+  onDeleteBlog: Blog @aws_subscribe(mutations : ["deleteBlog"])
+  onDeleteComment: Comment @aws_subscribe(mutations : ["deleteComment"])
+  onDeletePost: Post @aws_subscribe(mutations : ["deletePost"])
+  onDeleteUser(birthdate: String, email: String, gender: String, id: ID, name: String): User @aws_subscribe(mutations : ["deleteUser"])
+  onUpdateBlog: Blog @aws_subscribe(mutations : ["updateBlog"])
+  onUpdateComment: Comment @aws_subscribe(mutations : ["updateComment"])
+  onUpdatePost: Post @aws_subscribe(mutations : ["updatePost"])
+  onUpdateUser(birthdate: String, email: String, gender: String, id: ID, name: String): User @aws_subscribe(mutations : ["updateUser"])
+}
+
+type User {
+  birthdate: String!
+  email: String!
+  gender: String
+  id: ID!
+  name: String!
+  picture: String!
+  username: String!
+}
+
+type UserConnection {
+  items: [User]
+  nextToken: String
+}
+
+enum ModelAttributeTypes {
+  _null
+  binary
+  binarySet
+  bool
+  list
+  map
+  number
+  numberSet
+  string
+  stringSet
+}
+
+enum ModelSortDirection {
+  ASC
+  DESC
+}
+
+input CreateBlogInput {
+  id: ID
+  name: String!
+}
+
+input CreateCommentInput {
+  content: String!
+  id: ID
+  postCommentsId: ID
+}
+
+input CreatePostInput {
+  blogPostsId: ID
+  id: ID
+  title: String!
+}
+
+input CreateUserInput {
+  birthdate: String!
+  email: String!
+  gender: String
+  id: ID!
+  name: String!
+  picture: String!
+  username: String!
+}
+
+input DeleteBlogInput {
+  id: ID!
+}
+
+input DeleteCommentInput {
+  id: ID!
+}
+
+input DeletePostInput {
+  id: ID!
+}
+
+input DeleteUserInput {
+  username: String!
+}
+
+input ModelBlogConditionInput {
+  and: [ModelBlogConditionInput]
+  name: ModelStringInput
+  not: ModelBlogConditionInput
+  or: [ModelBlogConditionInput]
+}
+
+input ModelBlogFilterInput {
+  and: [ModelBlogFilterInput]
+  id: ModelIDInput
+  name: ModelStringInput
+  not: ModelBlogFilterInput
+  or: [ModelBlogFilterInput]
+}
+
+input ModelBooleanInput {
+  attributeExists: Boolean
+  attributeType: ModelAttributeTypes
+  eq: Boolean
+  ne: Boolean
+}
+
+input ModelCommentConditionInput {
+  and: [ModelCommentConditionInput]
+  content: ModelStringInput
+  not: ModelCommentConditionInput
+  or: [ModelCommentConditionInput]
+  postCommentsId: ModelIDInput
+}
+
+input ModelCommentFilterInput {
+  and: [ModelCommentFilterInput]
+  content: ModelStringInput
+  id: ModelIDInput
+  not: ModelCommentFilterInput
+  or: [ModelCommentFilterInput]
+  postCommentsId: ModelIDInput
+}
+
+input ModelFloatInput {
+  attributeExists: Boolean
+  attributeType: ModelAttributeTypes
+  between: [Float]
+  eq: Float
+  ge: Float
+  gt: Float
+  le: Float
+  lt: Float
+  ne: Float
+}
+
+input ModelIDInput {
+  attributeExists: Boolean
+  attributeType: ModelAttributeTypes
+  beginsWith: ID
+  between: [ID]
+  contains: ID
+  eq: ID
+  ge: ID
+  gt: ID
+  le: ID
+  lt: ID
+  ne: ID
+  notContains: ID
+  size: ModelSizeInput
+}
+
+input ModelIntInput {
+  attributeExists: Boolean
+  attributeType: ModelAttributeTypes
+  between: [Int]
+  eq: Int
+  ge: Int
+  gt: Int
+  le: Int
+  lt: Int
+  ne: Int
+}
+
+input ModelPostConditionInput {
+  and: [ModelPostConditionInput]
+  blogPostsId: ModelIDInput
+  not: ModelPostConditionInput
+  or: [ModelPostConditionInput]
+  title: ModelStringInput
+}
+
+input ModelPostFilterInput {
+  and: [ModelPostFilterInput]
+  blogPostsId: ModelIDInput
+  id: ModelIDInput
+  not: ModelPostFilterInput
+  or: [ModelPostFilterInput]
+  title: ModelStringInput
+}
+
+input ModelSizeInput {
+  between: [Int]
+  eq: Int
+  ge: Int
+  gt: Int
+  le: Int
+  lt: Int
+  ne: Int
+}
+
+input ModelStringInput {
+  attributeExists: Boolean
+  attributeType: ModelAttributeTypes
+  beginsWith: String
+  between: [String]
+  contains: String
+  eq: String
+  ge: String
+  gt: String
+  le: String
+  lt: String
+  ne: String
+  notContains: String
+  size: ModelSizeInput
+}
+
+input TableBooleanFilterInput {
+  eq: Boolean
+  ne: Boolean
+}
+
+input TableFloatFilterInput {
+  between: [Float]
+  contains: Float
+  eq: Float
+  ge: Float
+  gt: Float
+  le: Float
+  lt: Float
+  ne: Float
+  notContains: Float
+}
+
+input TableIDFilterInput {
+  beginsWith: ID
+  between: [ID]
+  contains: ID
+  eq: ID
+  ge: ID
+  gt: ID
+  le: ID
+  lt: ID
+  ne: ID
+  notContains: ID
+}
+
+input TableIntFilterInput {
+  between: [Int]
+  contains: Int
+  eq: Int
+  ge: Int
+  gt: Int
+  le: Int
+  lt: Int
+  ne: Int
+  notContains: Int
+}
+
+input TableStringFilterInput {
+  beginsWith: String
+  between: [String]
+  contains: String
+  eq: String
+  ge: String
+  gt: String
+  le: String
+  lt: String
+  ne: String
+  notContains: String
+}
+
+input TableUserFilterInput {
+  birthdate: TableStringFilterInput
+  email: TableStringFilterInput
+  gender: TableStringFilterInput
+  id: TableIDFilterInput
+  name: TableStringFilterInput
+  picture: TableStringFilterInput
+  username: TableStringFilterInput
+}
+
+input UpdateBlogInput {
+  id: ID!
+  name: String
+}
+
+input UpdateCommentInput {
+  content: String
+  id: ID!
+  postCommentsId: ID
+}
+
+input UpdatePostInput {
+  blogPostsId: ID
+  id: ID!
+  title: String
+}
+
+input UpdateUserInput {
+  birthdate: String
+  email: String
+  gender: String
+  id: ID
+  name: String
+  picture: String
+  username: String!
+}

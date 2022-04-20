@@ -3,13 +3,12 @@ import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import Home from './screens/Home';
 import StartScreen from './screens/StartScreen';
 import { createStackNavigator } from '@react-navigation/stack';
-import Amplify, {Storage} from 'aws-amplify';
-import awsconfig from './src/aws-exports';
 import LoginScreen from './screens/LoginScreen';
-import { withAuthenticator } from 'aws-amplify-react-native';
 import RegisterScreen from './screens/RegisterScreen'
+import awsExports from './src/aws-exports';
+import { Amplify } from 'aws-amplify';
+Amplify.configure(awsExports);
 
-Amplify.configure(awsconfig);
 const Stack = createStackNavigator();
 
 function App() {

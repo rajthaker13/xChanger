@@ -279,6 +279,7 @@ export default class StockCard extends React.Component {
               const curAPIResponse = curRes.data.quoteResponse.result
               if(Array.isArray(curAPIResponse)) {
                 curAPIResponse.forEach((curStockData) => {
+                  console.log(curStockData)
                   curStockPriceNew = curStockData['regularMarketPrice']
                 })
               }
@@ -307,6 +308,23 @@ export default class StockCard extends React.Component {
 
               }
             };
+            var curDomainOptions2 = {
+              method: 'GET',
+              url: `https://api.ritekit.com/v2/company-insights/name-to-domain?name=${curStockNameNew}&client_id=${riteKitKey}`,
+              headers: {}
+            };
+            var sucDomainOptions2 = {
+              method: 'GET',
+              url: `https://api.ritekit.com/v2/company-insights/name-to-domain?name=${sucStockNameNew}&client_id=${riteKitKey}`,
+              headers: {}
+            };
+            // console.log("YUHHHHH")
+            // await axios.request(curDomainOptions2).then((curDRes) => {
+            //  curDomain = JSON.stringify(curDRes.data.data[0])
+            // })
+            // await axios.request(sucDomainOptions2).then((curDRes) => {
+            //   sucDomain = JSON.stringify(curDRes.data.data[0])
+            //  })
             await axios.request(curDomainOptions).then((curDRes) => {
               const curDResponse = (curDRes.data.quoteSummary.result)
               if(Array.isArray(curDResponse)) {
@@ -329,7 +347,7 @@ export default class StockCard extends React.Component {
               method: 'GET',
               url: `https://api.brandfetch.io/v2/brands/${curDomain}.com`,
               headers: {
-                Authorization: `Bearer ${brandAPI}`
+                Authorization: `Bearer ${brandAPI2}`
 
               }
             };
@@ -337,10 +355,26 @@ export default class StockCard extends React.Component {
               method: 'GET',
               url: `https://api.brandfetch.io/v2/brands/${sucDomain}.com`,
               headers: {
-                Authorization: `Bearer ${brandAPI}`
+                Authorization: `Bearer ${brandAPI2}`
 
               }
             };
+            console.log("DHIHE" + curDomain)
+            var curPicOptions2 = {
+              method: 'GET',
+              url: `https://api.ritekit.com/v2/company-insights/logo?client_id=${riteKitKey}&domain=${curDomain}&generateFallbackLogo=0&squareLogoSize=256&squareLogoBackground=original`,
+              headers: {}
+
+            }
+            var sucPicOptions2 = {
+              method: 'GET',
+              url: `https://api.ritekit.com/v2/company-insights/logo?client_id=${riteKitKey}&domain=${sucDomain}&generateFallbackLogo=0&squareLogoSize=256&squareLogoBackground=original`,
+              headers: {}
+
+            }
+            // await axios.request(curPicOptions2).then(async (curPicRes) => {
+            //   console.log(JSON.stringify(curPicRes.data))
+            // })
             await axios.request(curPicOptions).then(async (curPicRes) => {
               const curResArray = JSON.parse(JSON.stringify(curPicRes)).data.logos[0].formats;
               curResArray.forEach(async (curFormat) => {
@@ -418,7 +452,7 @@ export default class StockCard extends React.Component {
                                   method: 'GET',
                                   url: `https://api.brandfetch.io/v2/brands/${this.state.curStockDisplayName}.com`,
                                   headers: {
-                                    Authorization: `Bearer ${brandAPI}`
+                                    Authorization: `Bearer ${brandAPI2}`
 
                                   }
                                 };
@@ -426,7 +460,7 @@ export default class StockCard extends React.Component {
                                   method: 'GET',
                                   url: `https://api.brandfetch.io/v2/brands/${this.state.sucStockDisplayName}.com`,
                                   headers: {
-                                    Authorization: `Bearer ${brandAPI}`
+                                    Authorization: `Bearer ${brandAPI2}`
 
                                   }
                                 };
