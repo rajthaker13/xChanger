@@ -16,5 +16,41 @@
         "XChangerProject": {}
       }
     }
+  },
+  "dev": {
+    "awscloudformation": {
+      "AuthRoleName": "amplify-xchangerproject-dev-134910-authRole",
+      "UnauthRoleArn": "arn:aws:iam::437500357357:role/amplify-xchangerproject-dev-134910-unauthRole",
+      "AuthRoleArn": "arn:aws:iam::437500357357:role/amplify-xchangerproject-dev-134910-authRole",
+      "Region": "us-east-2",
+      "DeploymentBucketName": "amplify-xchangerproject-dev-134910-deployment",
+      "UnauthRoleName": "amplify-xchangerproject-dev-134910-unauthRole",
+      "StackName": "amplify-xchangerproject-dev-134910",
+      "StackId": "arn:aws:cloudformation:us-east-2:437500357357:stack/amplify-xchangerproject-dev-134910/d70e2370-f192-11ec-bd52-0253c5901f52",
+      "AmplifyAppId": "d5yoj9isndsry"
+    },
+    "categories": {
+      "auth": {
+        "XChangerProject": {}
+      }
+    }
+  },
+  "prod": {
+    "awscloudformation": {
+      "AuthRoleName": "amplify-xchangerproject-prod-135732-authRole",
+      "UnauthRoleArn": "arn:aws:iam::847580148735:role/amplify-xchangerproject-prod-135732-unauthRole",
+      "AuthRoleArn": "arn:aws:iam::847580148735:role/amplify-xchangerproject-prod-135732-authRole",
+      "Region": "us-east-2",
+      "DeploymentBucketName": "amplify-xchangerproject-prod-135732-deployment",
+      "UnauthRoleName": "amplify-xchangerproject-prod-135732-unauthRole",
+      "StackName": "amplify-xchangerproject-prod-135732",
+      "StackId": "arn:aws:cloudformation:us-east-2:847580148735:stack/amplify-xchangerproject-prod-135732/02a53cc0-f194-11ec-8e24-0a226f182564",
+      "AmplifyAppId": "d22bqvem45w2gz"
+    },
+    "categories": {
+      "auth": {
+        "XChangerProject": {}
+      }
+    }
   }
 }

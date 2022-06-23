@@ -7,20 +7,8 @@ export type AmplifyDependentResourcesAttributes = {
             "UserPoolArn": "string",
             "UserPoolName": "string",
             "AppClientIDWeb": "string",
-            "AppClientID": "string"
-        }
-    },
-    "storage": {
-        "s3xchangerprojectmvp": {
-            "BucketName": "string",
-            "Region": "string"
-        }
-    },
-    "api": {
-        "xchangerproject": {
-            "GraphQLAPIKeyOutput": "string",
-            "GraphQLAPIIdOutput": "string",
-            "GraphQLAPIEndpointOutput": "string"
+            "AppClientID": "string",
+            "CreatedSNSRole": "string"
         }
     }
 }
