@@ -1,50 +1,72 @@
-import React, {Component, Fragment} from 'react';
-import { Text, View, StyleSheet, Dimensions, Button, KeyboardAvoidingView, Image, TouchableHighlight} from 'react-native';
-import { LinearGradient } from 'expo-linear-gradient';
-import {styles} from '../Styles';
-import { DataStore } from '@aws-amplify/datastore';
-import {User} from '../src/models';
-import '../global';
-import { Video, AVPlaybackStatus } from 'expo-av';
+import React, { useState, useEffect } from 'react'
+import { View, StyleSheet, TouchableOpacity, TextInput, Button, SafeAreaView, Input } from 'react-native'
+import DatePicker from 'react-native-date-picker'
+import { Video } from 'expo-av';
+import { styles } from '../Styles'
+import { AmplifyTheme } from '../AmplifyTheme';
+import { AmplifyAuthenticator, AmplifySignIn, AmplifySignUp, AmplifySignOut } from "@aws-amplify/ui-react";
+import Amplify, { API, Auth, Hub, graphqlOperation } from 'aws-amplify';
+import { Storage } from "@aws-amplify/storage"
 
+const initialLoginForm = { username: '', password: '' }
 
-export default function LoginScreen({navigation}) {
+function LoginScreen({ navigation }) {
+
+    /*
     function onPress() {
         navigation.navigate('HomeScreen');
     }
+    */
+
+    const [loginForm, setLoginForm] = useState(initialLoginForm)
+
     const video = React.useRef(null);
     const [status, setStatus] = React.useState({});
+
+    async function setAuthListener() {
+        Hub.listen('auth', (data) => {
+            switch (data.payload.event) {
+                case 'signOut':
+                    console.log('user signed out');
+                    console.log('data from event: ', data)
+                    setFormInputState(() => ({ ...formInputState }))
+                    break;
+            }
+        });
+    }
+
+    function onChange(e) {
+        e.persist()
+        setLoginForm(() => ({ ...loginForm, [e.target.name]: e.target.value }))
+    }
+
+    async function signIn() {
+        try {
+            const { username, password } = loginForm
+            await Auth.signIn(username, password);
+        } catch (error) {
+            console.log('error signing in', error);
+        }
+    }
+
     return (
         <View>
             <Video
-            ref={video}
-            style={styles.backgroundVideo}
-            source={require('../assets/videos/playbackvideo.mp4')}
-            resizeMode="cover"
-            isLooping={true}
-            shouldPlay={true}
-            onPlaybackStatusUpdate={status => setStatus(() => status)}
+                ref={video}
+                style={styles.backgroundVideo}
+                source={require('../assets/videos/playbackvideo.mp4')}
+                resizeMode="cover"
+                isLooping={true}
+                shouldPlay={true}
+                onPlaybackStatusUpdate={status => setStatus(() => status)}
             />
-                <View style={styles.start_screen_wrapper}>
-                    <View style={{flexDirection:'row'}}>
-                        <Image style={styles.start_screen_logo} source={require('../assets/images/XChanger.png')} resizeMode='contain' width={75} height={75}></Image>
-                        <Text style={styles.start_screen_logo_text}>Changer</Text>
-                    </View>
-                    <Text style={styles.start_screen_title}>Login</Text>
-                    <Text style={styles.start_screen_description_text}>With a revolutionary way to invest right here, right now</Text>
-                    <View style={styles.start_screen_button_wrapper}>
-                        <Fragment>
-                            <TouchableHighlight style={styles.start_screen_styled_button_normal}>
-                                <Text style={styles.start_screen_styled_title_normal}>Create Account</Text>
-                            </TouchableHighlight>
-                            <TouchableHighlight style={styles.start_screen_styled_button_transparent}>
-                                <Text style={styles.start_screen_styled_title_transparent}>Log In</Text>
-                            </TouchableHighlight>
-                        </Fragment>
-
-                    </View>
-
-                </View>
+            <SafeAreaView style={{ backgroundColor: "white", justifyContent: "center", alignContent: "center", alignItems: "center" }}>
+                <TextInput style={{ styling }} name="username" onChange={onChange} placeholder="username"></TextInput>
+                <TextInput style={{ styling }} name="password" type="password" onChange={onChange} placeholder="password" secureTextEntry={true}></TextInput>
+                <Button onClick={async () => { signIn() }} title="Log In"></Button>
+            </SafeAreaView>
         </View>
     );
-  }
+}
+
+export default LoginScreen;

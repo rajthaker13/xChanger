@@ -2,15 +2,18 @@
 const { getDefaultConfig } = require('expo/metro-config');
 
 module.exports = {
-    resolver: {
-      blacklistRE: /#current-cloud-backend\/.*/,
-    },
-    transformer: {
-      getTransformOptions: async () => ({
-        transform: {
-          experimentalImportSupport: false,
-          inlineRequires: false,
-        },
-      }),
-    },
-  };
+  resolver: {
+    blacklistRE: /#current-cloud-backend\/.*/,
+  },
+  transformer: {
+    getTransformOptions: async () => ({
+      transform: {
+        experimentalImportSupport: false,
+        inlineRequires: false,
+      },
+    }),
+  },
+  resolver: {
+    sourceExts: ['jsx', 'js', 'ts', 'tsx'], //add here
+  },
+};
