@@ -10,5 +10,17 @@ export type AmplifyDependentResourcesAttributes = {
             "AppClientID": "string",
             "CreatedSNSRole": "string"
         }
+    },
+    "storage": {
+        "s3profilePictures": {
+            "BucketName": "string",
+            "Region": "string"
+        }
+    },
+    "api": {
+        "xchangerproject": {
+            "GraphQLAPIIdOutput": "string",
+            "GraphQLAPIEndpointOutput": "string"
+        }
     }
 }

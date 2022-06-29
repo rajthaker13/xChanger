@@ -7,22 +7,20 @@ import { AmplifyTheme } from '../AmplifyTheme';
 import { AmplifyAuthenticator, AmplifySignIn, AmplifySignUp, AmplifySignOut } from "@aws-amplify/ui-react";
 import Amplify, { API, Auth, Hub, graphqlOperation } from 'aws-amplify';
 import { Storage } from "@aws-amplify/storage"
+import { NavigationContainerRefContext } from '@react-navigation/native';
 
-const initialLoginForm = { username: '', password: '' }
+const initialLoginUser = { username: '' }
+const initialLoginPassword = { password: '' }
 
 function LoginScreen({ navigation }) {
+    const [loginUser, setLoginUser] = useState(initialLoginUser)
+    const [loginPassword, setLoginPassword] = useState(initialLoginPassword)
 
-    /*
-    function onPress() {
-        navigation.navigate('HomeScreen');
-    }
-    */
-
-    const [loginForm, setLoginForm] = useState(initialLoginForm)
-
+    //VIDEO BACKGROUND
     const video = React.useRef(null);
     const [status, setStatus] = React.useState({});
 
+    //HUB LISTENER
     async function setAuthListener() {
         Hub.listen('auth', (data) => {
             switch (data.payload.event) {
@@ -35,15 +33,20 @@ function LoginScreen({ navigation }) {
         });
     }
 
+    //ONCHANGE HANDLER
     function onChange(e) {
         e.persist()
         setLoginForm(() => ({ ...loginForm, [e.target.name]: e.target.value }))
     }
 
+    //AUTH SIGNIN
     async function signIn() {
         try {
-            const { username, password } = loginForm
+            const { username } = loginUser;
+            const { password } = loginPassword;
             await Auth.signIn(username, password);
+            console.log("logged in?")
+            navigation.navigate('HomeScreen');
         } catch (error) {
             console.log('error signing in', error);
         }
@@ -61,9 +64,9 @@ function LoginScreen({ navigation }) {
                 onPlaybackStatusUpdate={status => setStatus(() => status)}
             />
             <SafeAreaView style={{ backgroundColor: "white", justifyContent: "center", alignContent: "center", alignItems: "center" }}>
-                <TextInput style={{ styling }} name="username" onChange={onChange} placeholder="username"></TextInput>
-                <TextInput style={{ styling }} name="password" type="password" onChange={onChange} placeholder="password" secureTextEntry={true}></TextInput>
-                <Button onClick={async () => { signIn() }} title="Log In"></Button>
+                <TextInput style={{}} name="username" onChange={(val) => setLoginUser(val)} placeholder="username"></TextInput>
+                <TextInput style={{}} name="password" type="password" onChange={(val => setLoginPassword(val))} placeholder="password" secureTextEntry={true}></TextInput>
+                <Button onPress={async () => { signIn() }} title="Log In"></Button>
             </SafeAreaView>
         </View>
     );

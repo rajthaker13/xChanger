@@ -1,0 +1,12 @@
+{
+  "version": 1,
+  "serviceConfiguration": {
+    "apiName": "xchangerproject",
+    "serviceName": "AppSync",
+    "gqlSchemaPath": "/Users/jaykim/Documents/GitHub/xChanger/amplify/backend/api/xchangerproject/schema.graphql",
+    "defaultAuthType": {
+      "mode": "AMAZON_COGNITO_USER_POOLS",
+      "cognitoUserPoolId": "authXChangerProject"
+    }
+  }
+}

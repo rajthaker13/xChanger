@@ -1,0 +1,14 @@
+{
+  "resourceName": "s3profilePictures",
+  "policyUUID": "7caa1830",
+  "bucketName": "xchangerprojectprofilepictures",
+  "storageAccess": "auth",
+  "guestAccess": [],
+  "authAccess": [
+    "CREATE_AND_UPDATE",
+    "READ",
+    "DELETE"
+  ],
+  "triggerFunction": "NONE",
+  "groupAccess": {}
+}

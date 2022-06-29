@@ -10,28 +10,27 @@ import SelectDropdown from 'react-native-select-dropdown';
 import ImagePicker from 'react-native-image-picker';
 import { Storage } from "@aws-amplify/storage"
 
+//INITIAL FORMS
+const initialLoginForm = { code: '' }
+const initialUsername = { username: '' }
+const initialPassword = { password: '' }
+const initialName = { name: '' }
+const initialFamilyName = { familyname: '' }
+const initialPhoneNumber = { phone: '' }
+const initialProfilePicture = { picture: '' }
+const initialFormState = { formType: 'signUp' }
+const initialPreferredUsername = { preferredUsername: '' }
 
-const initialLoginForm = {
-  username: '', password: '', name: '', familyname: '', code: ''
-}
-
-const initialPhoneNumber = {
-  phone: ''
-}
-
-const initialProfilePicture = {
-  picture: ''
-}
-
-const initialFormState = {
-  formType: 'signUp'
-}
-
-function RegisterScreen() {
+function RegisterScreen(navigation) {
   //STATES
   const [loginForm, setLoginForm] = useState(initialLoginForm)
+  const [usernameForm, setUsernameForm] = useState(initialUsername)
+  const [passwordForm, setPasswordForm] = useState(initialPassword)
+  const [nameForm, setNameForm] = useState(initialName)
+  const [familyNameForm, setFamilyNameForm] = useState(initialFamilyName)
   const [phoneNumber, setPhoneNumber] = useState(initialPhoneNumber)
   const [profilePicture, setProfilePicture] = useState(initialProfilePicture)
+  const [preferredUsername, setPreferredUsername] = useState(initialPreferredUsername)
 
   //Birthday
   const [date, setDate] = useState(new Date())
@@ -50,6 +49,10 @@ function RegisterScreen() {
     setAuthListener()
   }, [])
 
+  async function onChange() {
+
+  }
+
   async function setAuthListener() {
     Hub.listen('auth', (data) => {
       switch (data.payload.event) {
@@ -62,18 +65,7 @@ function RegisterScreen() {
     });
   }
 
-  //onChange Handler (Update formState)
-  function onChange(e) {
-    console.log("changes are being made")
-    e.persist()
-    setLoginForm(() => ({ ...loginForm, [e.target.name]: e.target.value }))
-  }
-
-  function onChangePhone(e) {
-    e.persist()
-    setPhoneNumber(() => ({ ...phoneNumber, [e.target.name]: e.target.value }))
-  }
-
+  //DATE HANDLER
   const onChangeDate = (event, selectedDate) => {
     const currentDate = selectedDate;
     setShow(false);
@@ -83,22 +75,16 @@ function RegisterScreen() {
   //AUTH FUNCTIONS
   async function signUp() {
     try {
-      const { username, password, name, familyname } = loginForm;
-      const { phone } = phoneNumber;
-      //const { picture } = profilePicture;
-      const { birthday } = date;
-
-      console.log(loginForm)
-      console.log(phoneNumber)
-
       await Auth.signUp({
-        username,
-        password,
+        username: usernameForm,
+        password: passwordForm,
         attributes: {
-          name,
-          familyname,
-          phone,
-          birthday
+          name: nameForm,
+          family_name: familyNameForm,
+          phone_number: phoneNumber,
+          birthdate: date.toISOString().substring(0, 10),
+          preferred_username: preferredUsername,
+          picture: ''
         }
       });
       setFormState(() => ({ ...formState, formType: "confirmSignUp" }))
@@ -107,10 +93,18 @@ function RegisterScreen() {
     }
   }
 
+  async function debug() {
+    console.log(usernameForm)
+    console.log(passwordForm)
+    console.log(nameForm)
+    console.log(familyNameForm)
+    console.log(date)
+  }
+
   async function confirmSignUp() {
     try {
-      const { username, code } = loginForm;
-      await Auth.confirmSignUp(username, code);
+      console.log(loginForm)
+      await Auth.confirmSignUp(usernameForm, loginForm);
       navigation.navigate('LoginScreen');
     } catch (error) {
       console.log('Error Confirming Sign Up', error);
@@ -118,18 +112,6 @@ function RegisterScreen() {
   }
 
   //SET PROFILE PICTURE
-  async function pickImage() {
-    // No permissions request is necessary for launching the image library
-    let result = await ImagePicker.launchImageLibraryAsync({
-      mediaTypes: ImagePicker.MediaTypeOptions.All,
-      allowsEditing: true,
-      aspect: [4, 3],
-      quality: 1,
-    });
-    if (!result.cancelled) {
-      setProfilePicture(result.uri);
-    }
-  };
 
   //DATEPICKER
   const showMode = (currentMode) => {
@@ -152,7 +134,6 @@ function RegisterScreen() {
     }
   })
 
-
   return (
 
     <View className="Register">
@@ -174,11 +155,12 @@ function RegisterScreen() {
             flexDirection: 'column'
           }}>
             <SafeAreaView style={{ backgroundColor: "white", justifyContent: "center", alignContent: "center", alignItems: "center" }}>
-              <TextInput style={{ styling }} name="username" onChange={onChange} placeholder="username"></TextInput>
-              <TextInput style={{ styling }} name="password" type="password" onChange={onChange} placeholder="password" secureTextEntry={true}></TextInput>
-              <TextInput style={{ styling }} name="name" onChange={onChange} placeholder="First Name"></TextInput>
-              <TextInput style={{ styling }} name="familyname" onChange={onChange} placeholder="Last name"></TextInput>
-              <TextInput styles={{ styling }} name="phone" onChange={onChangePhone} placeholder="Phone Number"></TextInput>
+              <TextInput name="username" onChangeText={(val) => setUsernameForm(val)} placeholder="username"></TextInput>
+              <TextInput name="password" type="password" onChangeText={(val) => setPasswordForm(val)} placeholder="password" secureTextEntry={true}></TextInput>
+              <TextInput name="name" onChangeText={(val) => setNameForm(val)} placeholder="First Name"></TextInput>
+              <TextInput name="familyname" onChangeText={(val) => setFamilyNameForm(val)} placeholder="Last name"></TextInput>
+              <TextInput name="phone" onChangeText={(val) => setPhoneNumber(val)} placeholder="Phone Number"></TextInput>
+              <TextInput name="preferred_username" onChangeText={(val) => setPreferredUsername(val)} placeholder="Preferred Username"></TextInput>
               <View>
                 <View>
                   <Button onPress={showDatepicker} title="Birthday" />
@@ -194,16 +176,19 @@ function RegisterScreen() {
                 )}
               </View>
               <Button onPress={async () => { signUp() }} title="Register"></Button>
+              <Button onPress={async () => { debug() }} title="Debug"></Button>
             </SafeAreaView >
           </View >
         )
       }
       {
         formState.formType === 'confirmSignUp' && (
-          <View>
-            <Input name="code" onChange={onChange} placeholder="Confirmation Code"></Input>
-            <Button onClick={async () => { confirmSignUp() }} title="Complete SignUp"></Button>
-          </View>
+          <SafeAreaView style={{ backgroundColor: "white", justifyContent: "center", alignContent: "center", alignItems: "center" }}>
+            <View>
+              <TextInput name="code" onChangeText={(val) => setLoginForm(val)} placeholder="Confirmation Code"></TextInput>
+              <Button onPress={async () => { confirmSignUp() }} title="Complete SignUp"></Button>
+            </View>
+          </SafeAreaView>
         )
       }
       {
@@ -215,14 +200,9 @@ function RegisterScreen() {
   );
 }
 
-
-
 export default RegisterScreen;
 
 /*
-
-
-
 const signUpConfig = {
   header: 'My Customized Sign Up',
   hideAllDefaults: true,
@@ -266,6 +246,7 @@ const signUpConfig = {
   ]
 
 }
+
 const usernameAttributes = 'My user name';
 
  const RegisterScreen = ({navigation}) => {
