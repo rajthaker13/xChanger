@@ -12,6 +12,13 @@ const SCREEN_WIDTH = Dimensions.get('window').width
 const testCardData = [
     {id:'0', fullName:'Apple', stockName:'AAPL'}, 
     {id:'1', stockName:'TSLA',fullName:'Tesla', }, 
+    // {id:'1', stockName:'ANZN',fullName:'Amazon', }, 
+    // {id:'1', stockName:'MSFT',fullName:'Microsoft', }, 
+    // {id:'1', stockName:'NFLX',fullName:'Netflix', }, 
+    // {id:'1', stockName:'NKE',fullName:'Nike', }, 
+    // {id:'1', stockName:'BA',fullName:'Boeing', }, 
+    // {id:'1', stockName:'JPM',fullName:'JP Morgan', }, 
+
 
 ]
 export default class StockCard extends React.Component {
@@ -409,12 +416,20 @@ export default class StockCard extends React.Component {
         )
       }catch(err) {
         console.log(err)
+        console.log(err)
       }
 
 
     }
 
      async getStockData() {
+       let newCurStockPrice = 0
+       let newSucStockPrice = 0
+       let newCurStockDisplayName = ""
+       let newSucStockDisplayName = ""
+       let newCurStockRes = ""
+       let newSucStockRes = ""
+
         var curOptions = {
             method: 'GET',
             url: `https://yfapi.net/v6/finance/quote?region=US&lang=en&symbols=${this.state.curStockName}`,
@@ -431,77 +446,67 @@ export default class StockCard extends React.Component {
               'x-api-key': apiKey,
             }
           };
-          axios.request(curOptions).then((response) => {
-              const curAPIResponse = response.data.quoteResponse.result;
-              if(Array.isArray(curAPIResponse)) {
-                  curAPIResponse.forEach(curStockData => {
-                      axios.request(sucOptions).then((res) => {
-                        const sucAPIResponse = res.data.quoteResponse.result;
-                        if(Array.isArray(sucAPIResponse)) {
-                            sucAPIResponse.forEach(sucStockData => {
-                                this.setState((state) => {
-                                  return {
-                                      curStockPrice: curStockData['regularMarketPrice'],
-                                      curStockDisplayName: curStockData['displayName'],
-                                      sucStockPrice: sucStockData['regularMarketPrice'],
-                                      sucStockDisplayName: sucStockData['displayName'],
-                                    };
-                              }, () => {
+          await axios.request(curOptions).then(async(response) => {
+            const curAPIResponse = response.data.quoteResponse.result;
+            if(Array.isArray(curAPIResponse)) {
+              curAPIResponse.forEach(async (curStockData) => {
+                newCurStockPrice = curStockData['regularMarketPrice']
+                newCurStockDisplayName = curStockData['displayName']
+              })
+            }
+          })
+          await axios.request(sucOptions).then(async(res) => {
+            const sucAPIResponse = res.data.quoteResponse.result;
+            if(Array.isArray(sucAPIResponse)) {
+              sucAPIResponse.forEach(async (sucStockData) => {
+                newSucStockPrice = sucStockData['regularMarketPrice']
+                newSucStockDisplayName = sucStockData['displayName']
+              })
+            }
+          })
+          var curPicOptions = {
+            method: 'GET',
+            url: `https://api.brandfetch.io/v2/brands/${this.state.curStockDisplayName}.com`,
+            headers: {
+              Authorization: `Bearer ${brandAPI}`
 
-                                var curPicOptions = {
-                                  method: 'GET',
-                                  url: `https://api.brandfetch.io/v2/brands/${this.state.curStockDisplayName}.com`,
-                                  headers: {
-                                    Authorization: `Bearer ${brandAPI2}`
+            }
+          };
+          var sucPicOptions = {
+            method: 'GET',
+            url: `https://api.brandfetch.io/v2/brands/${this.state.sucStockDisplayName}.com`,
+            headers: {
+              Authorization: `Bearer ${brandAPI}`
 
-                                  }
-                                };
-                                var sucPicOptions = {
-                                  method: 'GET',
-                                  url: `https://api.brandfetch.io/v2/brands/${this.state.sucStockDisplayName}.com`,
-                                  headers: {
-                                    Authorization: `Bearer ${brandAPI2}`
-
-                                  }
-                                };
-                                axios.request(curPicOptions).then((response) => {
-                                  let curStockRes = ""
-                                  const curResArray = JSON.parse(JSON.stringify(response)).data.logos[0].formats;
-                                  curResArray.forEach((curFormat) => {
-                                    if(!curFormat.format.includes('svg')) {
-                                      curStockRes = curFormat.src
-                                    }
-
-                                  })
-
-                                  axios.request(sucPicOptions).then((res) => {
-                                    let sucStockRes = ""
-                                    const sucStockArray = JSON.parse(JSON.stringify(res)).data.logos[0].formats;
-                                    sucStockArray.forEach((sucFormat) => {
-                                      if(!sucFormat.format.includes('svg')) {
-                                        sucStockRes = sucFormat.src
-                                      }
-                                    })
-                                    this.setState((state) => {
-                                      return {
-                                        curStockSrc: curStockRes,
-                                        sucStockSrc: sucStockRes,
-                                      }
-                                    })
-                                  })
-                                  
-                                })
-                              })
-                            })
-                        }
-                  }).catch(function (error) {
-                      console.error(error);
-                  });
-                  })
+            }
+          };
+          await axios.request(curPicOptions).then(async (response) => {
+            const curResArray = JSON.parse(JSON.stringify(response)).data.logos[0].formats;
+            curResArray.forEach((curFormat) => {
+              if(!curFormat.format.includes('svg')) {
+                newCurStockRes = curFormat.src
               }
-        }).catch(function (error) {
-            console.error(error);
-        });
+
+            })
+          })
+          await axios.request(sucPicOptions).then(async (res) => {
+            const sucStockArray = JSON.parse(JSON.stringify(res)).data.logos[0].formats;
+            sucStockArray.forEach((sucFormat) => {
+              if(!sucFormat.format.includes('svg')) {
+                newSucStockRes = sucFormat.src
+              }
+            })
+          })
+          this.setState((state) => {
+            return{
+              curStockPrice: newCurStockPrice,
+              sucStockPrice: newSucStockPrice,
+              curStockDisplayName: newCurStockDisplayName,
+              sucStockDisplayName: newSucStockDisplayName,
+              curStockSrc: newCurStockRes,
+              sucStockSrc: newSucStockRes
+            }
+          })
     }
 
     renderCards = () => {
