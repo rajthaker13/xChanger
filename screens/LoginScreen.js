@@ -44,12 +44,20 @@ function LoginScreen({ navigation }) {
         try {
             const { username } = loginUser;
             const { password } = loginPassword;
-            await Auth.signIn(username, password);
+            console.log("username: " + username)
+            console.log("password: " + password)
+            console.log("loginUser: " + loginUser)
+            console.log("loginPassword: " + loginPassword)
+            await Auth.signIn(loginUser, loginPassword);
             console.log("logged in?")
             navigation.navigate('HomeScreen');
         } catch (error) {
             console.log('error signing in', error);
         }
+    }
+
+    async function returnHome() {
+        navigation.navigate('StartScreen')
     }
 
     return (
@@ -64,11 +72,12 @@ function LoginScreen({ navigation }) {
                 onPlaybackStatusUpdate={status => setStatus(() => status)}
             />
             <SafeAreaView style={{ backgroundColor: "white", justifyContent: "center", alignContent: "center", alignItems: "center" }}>
-                <TextInput style={{}} name="username" onChange={(val) => setLoginUser(val)} placeholder="username"></TextInput>
-                <TextInput style={{}} name="password" type="password" onChange={(val => setLoginPassword(val))} placeholder="password" secureTextEntry={true}></TextInput>
+                <TextInput name="username" onChangeText={(val) => setLoginUser(val)} placeholder="username"></TextInput>
+                <TextInput name="password" type="password" onChangeText={(val) => setLoginPassword(val)} placeholder="password" secureTextEntry={true}></TextInput>
                 <Button onPress={async () => { signIn() }} title="Log In"></Button>
+                <Button onPress={async () => { returnHome() }} title="Back"></Button>
             </SafeAreaView>
-        </View>
+        </View >
     );
 }
 

@@ -4,7 +4,8 @@
       [
         "expo-image-picker",
         {
-          "photosPermission": "The app accesses your photos to let you share them with your friends."
+          "photosPermission": "Allow XChanger to access your photos.",
+          "cameraPermission": "Allow XChanger to access your camera."
         }
       ]
     ],

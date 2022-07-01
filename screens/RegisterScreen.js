@@ -21,7 +21,7 @@ const initialProfilePicture = { picture: '' }
 const initialFormState = { formType: 'signUp' }
 const initialPreferredUsername = { preferredUsername: '' }
 
-function RegisterScreen(navigation) {
+function RegisterScreen({ navigation }) {
   //STATES
   const [loginForm, setLoginForm] = useState(initialLoginForm)
   const [usernameForm, setUsernameForm] = useState(initialUsername)
@@ -134,6 +134,11 @@ function RegisterScreen(navigation) {
     }
   })
 
+  //BACK
+  async function returnHome() {
+    navigation.navigate('StartScreen')
+  }
+
   return (
 
     <View className="Register">
@@ -177,6 +182,7 @@ function RegisterScreen(navigation) {
               </View>
               <Button onPress={async () => { signUp() }} title="Register"></Button>
               <Button onPress={async () => { debug() }} title="Debug"></Button>
+              <Button onPress={async () => { returnHome() }} title="Back"></Button>
             </SafeAreaView >
           </View >
         )
