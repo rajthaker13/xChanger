@@ -3,52 +3,75 @@ import Amplify from "@aws-amplify/core";
 import Storage from "@aws-amplify/storage";
 import * as Clipboard from "expo-clipboard";
 import Constants from "expo-constants";
-import * as ImagePicker from 'react-native-image-picker';
-//import { launchImageLibrary } from 'react-native-image-picker'
-//import * as ImagePicker from "expo-image-picker";
+//import * as ImagePicker from 'react-native-image-picker';
+import { launchImageLibrary } from 'react-native-image-picker'
+import * as ImagePicker from "expo-image-picker";
 import { useEffect, useState } from "react";
 import { Button, Image, Pressable, StyleSheet, Text, View } from "react-native";
 import { TouchableOpacity } from "react-native-gesture-handler";
 
 function UploadImage() {
+    const [image, setImage] = useState(null);
 
-    launchImageLibrary = async () => {
-        let options = {
-            storageOptions: {
-                skipBackup: true,
-                path: 'images',
-            },
-        };
-
-        console.log("inside function")
-
-        ImagePicker.launchImageLibrary(options, (response) => {
-            console.log('Response = ', response);
-
-            if (response.didCancel) {
-                console.log('User cancelled image picker');
-            } else if (response.error) {
-                console.log('ImagePicker Error: ', response.error);
-            } else if (response.customButton) {
-                console.log('User tapped custom button: ', response.customButton);
-                alert(response.customButton);
-            } else {
-                const source = { uri: response.uri };
-                console.log('response', JSON.stringify(response));
-                this.setState({
-                    filePath: response,
-                    fileData: response.data,
-                    fileUri: response.uri
-                });
+    useEffect(() => {
+        (async () => {
+            if (Constants.platform.ios) {
+                const cameraRollStatus =
+                    await ImagePicker.requestMediaLibraryPermissionsAsync();
             }
+        })();
+    }, []);
+
+    //PICK IMAGE FUNCTION
+    const pickImage = async () => {
+        let result = await ImagePicker.launchImageLibraryAsync({
+            mediaTypes: "Images",
+            aspect: [4, 3],
+            quality: 1,
         });
 
-    }
+        this.handleImagePicked(result);
+    };
+
+    const handleImagePicked = async (pickerResult) => {
+        console.log("Handling Picked Image")
+        try {
+            if (pickerResult.cancelled) {
+                alert("Upload cancelled");
+                return;
+            } else {
+                setPercentage(0);
+                const img = await fetchImageFromUri(pickerResult.uri);
+                const uploadUrl = await uploadImage("demo.jpg", img);
+            }
+        } catch (e) {
+            console.log(e);
+            alert("Upload failed");
+            this.setState({ errorMessage: error.message })
+        }
+    };
+
+    const uploadImage = (filename, img) => {
+        Auth.currentCredentials();
+        return Storage.put(filename, img, {
+            level: "private",
+            contentType: "image/jpeg",
+            progressCallback(progress) {
+                setLoading(progress);
+            },
+        })
+            .then((response) => {
+                return response.key;
+            })
+            .catch((error) => {
+                console.log(error);
+                return error.response;
+            });
+    };
 
     return (
         <View>
-            <Button onPress={() => { console.log("pressed") }} title="Upload Profile" />
-            <Button style={{}} onPress={launchImageLibrary} title="Take A Profile Pic" />
+            <Button onPress={pickImage} title="Pick an image from camera roll" />
         </View>
     );
 }
@@ -56,6 +79,9 @@ function UploadImage() {
 export default UploadImage;
 
 /*
+
+REACT NATIVE IMAGE PICKER
+
     const [percentage, setPercentage] = useState(0);
 
     useEffect(() => {
@@ -151,3 +177,51 @@ export default UploadImage;
         return blob;
     };
     */
+
+/*
+
+EXPO IMAGE PICKER
+
+function UploadImage() {
+
+async function pickFromCameraRoll() {
+    let options = {
+        storageOptions: {
+            skipBackup: true,
+            path: 'images',
+        },
+    };
+
+    console.log("inside function")
+
+    launchImageLibrary(options, (response) => {
+        console.log('Response = ', response);
+
+        if (response.didCancel) {
+            console.log('User cancelled image picker');
+        } else if (response.error) {
+            console.log('ImagePicker Error: ', response.error);
+        } else if (response.customButton) {
+            console.log('User tapped custom button: ', response.customButton);
+            alert(response.customButton);
+        } else {
+            const source = { uri: response.uri };
+            console.log('response', JSON.stringify(response));
+            this.setState({
+                filePath: response,
+                fileData: response.data,
+                fileUri: response.uri
+            });
+        }
+    });
+
+}
+
+return (
+    <View>
+        <Button onPress={() => { console.log("pressed") }} title="Upload Profile" />
+        <Button style={{}} onPress={async () => { pickFromCameraRoll() }} title="Take A Profile Pic" />
+    </View>
+);
+}
+*/
