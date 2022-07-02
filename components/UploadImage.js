@@ -30,7 +30,7 @@ function UploadImage() {
             quality: 1,
         });
 
-        this.handleImagePicked(result);
+        handleImagePicked(result);
     };
 
     const handleImagePicked = async (pickerResult) => {
@@ -40,15 +40,19 @@ function UploadImage() {
                 alert("Upload cancelled");
                 return;
             } else {
-                setPercentage(0);
                 const img = await fetchImageFromUri(pickerResult.uri);
                 const uploadUrl = await uploadImage("demo.jpg", img);
             }
         } catch (e) {
             console.log(e);
             alert("Upload failed");
-            this.setState({ errorMessage: error.message })
         }
+    };
+
+    const fetchImageFromUri = async (uri) => {
+        const response = await fetch(uri);
+        const blob = await response.blob();
+        return blob;
     };
 
     const uploadImage = (filename, img) => {
@@ -56,9 +60,6 @@ function UploadImage() {
         return Storage.put(filename, img, {
             level: "private",
             contentType: "image/jpeg",
-            progressCallback(progress) {
-                setLoading(progress);
-            },
         })
             .then((response) => {
                 return response.key;
