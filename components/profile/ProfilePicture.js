@@ -16,10 +16,10 @@ export default function ProfilePicture() {
         fetchImage();
     }, [])
 
-    function fetchImage() {
+    async function fetchImage() {
         const profilePics = [];
 
-        Storage.list('')
+        await Storage.list('')
             .then(result => {
                 console.log("Storage List: " + result)
                 result.forEach(item => profilePics.push(item));
@@ -29,7 +29,7 @@ export default function ProfilePicture() {
             .catch(err => console.log(err));
     }
 
-    function processStorageList(result) {
+    async function processStorageList(result) {
         let files = []
         let folders = new Set()
         console.log("Storage List Intake: " + result)
@@ -49,13 +49,13 @@ export default function ProfilePicture() {
         console.log("Key: " + files[0].key)
     }
 
-    function getProfile(key) {
+    async function getProfile(key) {
         console.log("Get Profile Key: " + key)
-        const file = Storage.get(key, {
+        const file = await Storage.get(key, {
             level: "public"
         });
         console.log("File: " + file)
-        setProfile(profile)
+        setProfile(file)
     }
 
     /*
@@ -66,7 +66,7 @@ export default function ProfilePicture() {
 
     return (
         <View style={styles.profilePictureProfile}>
-            <Image source={{ profile }} resizeMode='contain' style={styles.stockCardLogo}></Image>
+            <Image source={{ uri: profile }} resizeMode='contain' style={styles.stockCardLogo}></Image>
             <UploadImage></UploadImage>
         </View >
     )
