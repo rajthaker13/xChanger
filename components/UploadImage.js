@@ -2,6 +2,7 @@ import Auth from "@aws-amplify/auth";
 import Amplify from "@aws-amplify/core";
 import Storage from "@aws-amplify/storage";
 import * as Clipboard from "expo-clipboard";
+//import { styles } from '../../Styles';
 import Constants from "expo-constants";
 //import * as ImagePicker from 'react-native-image-picker';
 import { launchImageLibrary } from 'react-native-image-picker'
@@ -58,7 +59,7 @@ function UploadImage() {
     const uploadImage = (filename, img) => {
         Auth.currentCredentials();
         return Storage.put(filename, img, {
-            level: "private",
+            level: "public",
             contentType: "image/jpeg",
         })
             .then((response) => {
@@ -72,6 +73,9 @@ function UploadImage() {
 
     return (
         <View>
+            <Image
+                source={{ uri: image }}
+            />
             <Button onPress={pickImage} title="Pick an image from camera roll" />
         </View>
     );
