@@ -9,30 +9,35 @@ import StockChart from '../StockChart';
 
 const SCREEN_HEIGHT = Dimensions.get('window').height
 const SCREEN_WIDTH = Dimensions.get('window').width
-const testCardData = [
-  { id: '0', fullName: 'Apple', stockName: 'AAPL' },
-  { id: '1', stockName: 'TSLA', fullName: 'Tesla', },
-  { id: '2', stockName: 'ANZN', fullName: 'Amazon', },
-  { id: '3', stockName: 'MSFT', fullName: 'Microsoft', },
-  { id: '4', stockName: 'NFLX', fullName: 'Netflix', },
-  { id: '5', stockName: 'NKE', fullName: 'Nike', },
-  { id: '6', stockName: 'BA', fullName: 'Boeing', },
-  { id: '7', stockName: 'JPM', fullName: 'JP Morgan', },
-  { id: '8', stockName: 'META', fullName: 'Meta Platforms' },
-  { id: '9', stockName: 'JNJ', fullName: 'Johnson & Johnson' },
-  { id: '10', stockName: 'V', fullName: 'Visa Inc.' },
-  { id: '11', stockName: 'WMT', fullName: 'Walmart Inc.' },
-  { id: '12', stockName: 'MA', fullName: 'Mastercard Inc.' },
-  { id: '13', stockName: 'HD', fullName: 'Home Depot' },
-  { id: '14', stockName: 'BAC', fullName: 'Bank of America' },
-  { id: '15', stockName: 'PEP', fullName: 'PepsiCo Inc.' },
-  { id: '16', stockName: 'ORCL', fullName: 'Oracle Corporation' },
-  { id: '17', stockName: 'ADBE', fullName: 'Adobe Inc.' },
-  { id: '18', stockName: 'T', fullName: '' },
-]
 
 const demoDayData = [
-  { id: '0', fullName: 'Apple', stockName: 'AAPL' },
+  { id: '0', fullName: 'Apple', stockName: 'AAPL', src: require('../../assets/demoLogos/apple.png') },
+  { id: '1', stockName: 'TSLA', fullName: 'Tesla', src: require('../../assets/demoLogos/tesla.png') },
+  { id: '2', stockName: 'AMZN', fullName: 'Amazon', src: require('../../assets/demoLogos/amazon.png') },
+  { id: '3', stockName: 'MSFT', fullName: 'Microsoft', src: require('../../assets/demoLogos/microsoft.png') },
+  { id: '4', stockName: 'NFLX', fullName: 'Netflix', src: require('../../assets/demoLogos/netflix.jpeg') },
+  { id: '5', stockName: 'NKE', fullName: 'Nike', src: require('../../assets/demoLogos/nike.png') },
+  { id: '6', stockName: 'BA', fullName: 'Boeing', src: require('../../assets/demoLogos/boeing.png') },
+  { id: '7', stockName: 'JPM', fullName: 'JP Morgan', src: require('../../assets/demoLogos/jpmorgan.png') },
+  { id: '8', stockName: 'META', fullName: 'Meta Platforms', src: require('../../assets/demoLogos/meta.png') },
+  { id: '9', stockName: 'JNJ', fullName: 'Johnson & Johnson', src: require('../../assets/demoLogos/johnson.jpeg') },
+  { id: '10', stockName: 'V', fullName: 'Visa Inc.', src: require('../../assets/demoLogos/visa.png') },
+  { id: '11', stockName: 'WMT', fullName: 'Walmart Inc.', src: require('../../assets/demoLogos/walmart.png') },
+  { id: '12', stockName: 'MA', fullName: 'Mastercard Inc.', src: require('../../assets/demoLogos/mastercard.png') },
+  { id: '13', stockName: 'HD', fullName: 'Home Depot', src: require('../../assets/demoLogos/homedepot.png') },
+  { id: '14', stockName: 'BAC', fullName: 'Bank of America', src: require('../../assets/demoLogos/boa.png') },
+  { id: '15', stockName: 'PEP', fullName: 'PepsiCo Inc.', src: require('../../assets/demoLogos/pepsi.png') },
+  { id: '16', stockName: 'ORCL', fullName: 'Oracle Corporation', src: require('../../assets/demoLogos/oracle.png') },
+  { id: '17', stockName: 'ADBE', fullName: 'Adobe Inc.', src: require('../../assets/demoLogos/adobe.png') },
+  { id: '18', stockName: 'T', fullName: 'AT&T Inc.', src: require('../../assets/demoLogos/atat.png') },
+  { id: '19', fullName: 'CVS', stockName: 'CVS Health Co.', src: require('../../assets/demoLogos/cvs.png') },
+  { id: '20', fullName: 'INTU', stockName: 'Intuit Inc.', src: require('../../assets/demoLogos/intuit.png') },
+  { id: '21', fullName: 'PG', stockName: 'Procter & Gamble', src: require('../../assets/demoLogos/pg.png') },
+  { id: '22', fullName: 'PYPL', stockName: 'PayPal Holdings', src: require('../../assets/demoLogos/paypal.png') },
+  { id: '23', fullName: 'DKNG', stockName: 'DraftKings Inc.', src: require('../../assets/demoLogos/draftKings.png') },
+  { id: '24', fullName: 'CMG', stockName: 'Chipotle Mexican Grill', src: require('../../assets/demoLogos/chipotle.png') },
+  { id: '25', fullName: 'M', stockName: `Macy's Inc.`, src: require('../../assets/demoLogos/macy.png') },
+
 ]
 export default class StockCard extends React.Component {
   constructor(props) {
@@ -41,18 +46,19 @@ export default class StockCard extends React.Component {
     this.state = {
       currentIndex: 0,
       cardDataLength: 2,
-      curStockName: testCardData[0].stockName,
-      sucStockName: testCardData[1].stockName,
-      curStockDisplayName: testCardData[0].fullName,
-      sucStockDisplayName: testCardData[1].fullName,
-      curStockSrc: "",
-      sucStockSrc: "",
+      curStockName: demoDayData[0].stockName,
+      sucStockName: demoDayData[1].stockName,
+      curStockDisplayName: demoDayData[0].fullName,
+      sucStockDisplayName: demoDayData[1].fullName,
+      curStockSrc: demoDayData[0].src,
+      sucStockSrc: demoDayData[1].src,
       curStockPrice: 0.00,
       sucStockPrice: 0.00,
       range: '1d',
       interval: '15m',
       buttonSel: '1D',
-      cardData: testCardData
+      cardData: demoDayData,
+      hasRendered: false,
     }
     this.rotate = this.position.x.interpolate({
       inputRange: [-SCREEN_WIDTH / 2, 0, SCREEN_WIDTH / 2],
@@ -91,15 +97,10 @@ export default class StockCard extends React.Component {
     })
 
   }
-  componentDidMount() {
-    if (this.state.currentIndex == 0) {
-      this.getStockData()
-    }
 
-  }
+
   async UNSAFE_componentWillMount() {
     this.PanResponder = PanResponder.create({
-
       onStartShouldSetPanResponder: (evt, gestureState) => true,
       onPanResponderMove: (evt, gestureState) => {
 
@@ -112,15 +113,7 @@ export default class StockCard extends React.Component {
             toValue: { x: SCREEN_WIDTH + 100, y: gestureState.dy }
           }).start(async () => {
             this.position.setValue({ x: 0, y: 0 })
-            this.setState((state) => {
-              return {
-                currentIndex: this.state.currentIndex + 1
-              }
-            }, async () => {
-              await this.getStockRecs(false)
-
-            })
-
+            await this.getStockRecsDemo(true)
           })
         }
         else if (gestureState.dx < -120) {
@@ -128,14 +121,8 @@ export default class StockCard extends React.Component {
             toValue: { x: -SCREEN_WIDTH - 100, y: gestureState.dy }
           }).start(async () => {
             this.position.setValue({ x: 0, y: 0 })
-            this.setState((state) => {
-              return {
-                currentIndex: this.state.currentIndex + 1
-              }
-            }, async () => {
-              await this.getStockRecs(false)
+            await this.getStockRecsDemo(true)
 
-            })
           })
         }
         else {
@@ -146,6 +133,9 @@ export default class StockCard extends React.Component {
         }
       }
     })
+    if (this.state.currentIndex == 0) {
+      await this.getStockRecsDemo(false)
+    }
   }
 
   changeRange(newRange) {
@@ -212,221 +202,86 @@ export default class StockCard extends React.Component {
 
 
 
-
-  async getStockRecs(didSwipeRight) {
+  async getStockRecsDemo(didSwipeRight) {
     let curCardData = this.state.cardData
-    let stockName = ""
-    let cur_id = this.state.currentIndex + 1
-    let added = 0
-    let newRec = ""
-    let displayName = ""
+    let cur_id = 0
     let curStockNameNew = ""
     let sucStockNameNew = ""
     let curStockDisplayNew = ""
     let sucStockDisplayNew = ""
-    let curStockSrcNew = ""
-    let sucStockSrcNew = ""
-    let curStockPriceNew = 0
     let sucStockPriceNew = 0
-    let curDomain = ""
-    let sucDomain = ""
-    console.log("IDDD" + cur_id)
-    if (cur_id == 1) {
-      cur_id = 2
-    }
-    if (didSwipeRight) {
-      stockName = curCardData[0].stockName
+    let curStockPriceNew = 0
+
+    if (!didSwipeRight) {
+      cur_id = this.state.currentIndex
+      curStockNameNew = curCardData[0].stockName
+      curStockDisplayNew = curCardData[0].fullName
+      sucStockNameNew = curCardData[1].stockName
+      sucStockDisplayName = curCardData[1].fullName
+      curStockSrcNew = curCardData[0].src
+      sucStockSrcNew = curCardData[1].src
     }
     else {
-      stockName = curCardData[1].stockName
+      cur_id = this.state.currentIndex + 1
+      curStockNameNew = this.state.sucStockName
+      curStockDisplayNew = this.state.sucStockDisplayName
+      sucStockNameNew = curCardData[cur_id + 1].stockName
+      sucStockDisplayName = curCardData[cur_id + 1].fullName
+      curStockSrcNew = curCardData[cur_id].src
+      sucStockSrcNew = curCardData[cur_id + 1].src
+
     }
-    curCardData.shift()
-    var options = {
-      method: 'GET',
-      url: `https://yfapi.net/v6/finance/recommendationsbysymbol/${stockName}`,
-      params: { modules: 'defaultKeyStatistics,assetProfile' },
-      headers: {
-        'x-api-key': apiKey,
-      }
 
-    };
+
     try {
-      await axios.request(options).then(async (response) => {
-        const apiResponse = response.data.finance.result[0]['recommendedSymbols']
-        if (Array.isArray(apiResponse)) {
-          var random = Math.floor(Math.random() * apiResponse.length) + 1
-          newRec = apiResponse[random].symbol
-          var optionsJr = {
-            method: 'GET',
-            url: `https://yfapi.net/v6/finance/quote?region=US&lang=en&symbols=${newRec}`,
-            params: { modules: 'defaultKeyStatistics,assetProfile' },
-            headers: {
-              'x-api-key': apiKey,
-            }
-          }
-          await axios.request(optionsJr).then((res) => {
-            const apiResponseJr = res.data.quoteResponse.result;
-            if (Array.isArray(apiResponseJr)) {
-              apiResponseJr.forEach(async (stock) => {
-                displayName = stock['displayName']
-              })
-            }
+      var curOptions = {
+        method: 'GET',
+        url: `https://yfapi.net/v6/finance/quote?region=US&lang=en&symbols=${curStockNameNew}`,
+        params: { modules: 'defaultKeyStatistics,assetProfile' },
+        headers: {
+          'x-api-key': apiKey,
+        }
+      };
+      var sucOptions = {
+        method: 'GET',
+        url: `https://yfapi.net/v6/finance/quote?region=US&lang=en&symbols=${sucStockNameNew}`,
+        params: { modules: 'defaultKeyStatistics,assetProfile' },
+        headers: {
+          'x-api-key': apiKey,
+        }
+      };
 
-          })
-          curCardData.push({ id: cur_id, stockName: newRec, fullName: displayName })
-          curStockNameNew = curCardData[0].stockName
-          curStockDisplayNew = curCardData[0].displayName
-          sucStockNameNew = curCardData[1].stockName
-          sucStockDisplayNew = curCardData[1].displayName
-          var curOptions = {
-            method: 'GET',
-            url: `https://yfapi.net/v6/finance/quote?region=US&lang=en&symbols=${curStockNameNew}`,
-            params: { modules: 'defaultKeyStatistics,assetProfile' },
-            headers: {
-              'x-api-key': apiKey,
-            }
-          };
-          var sucOptions = {
-            method: 'GET',
-            url: `https://yfapi.net/v6/finance/quote?region=US&lang=en&symbols=${sucStockNameNew}`,
-            params: { modules: 'defaultKeyStatistics,assetProfile' },
-            headers: {
-              'x-api-key': apiKey,
-            }
-          };
-
-          await axios.request(curOptions).then(async (curRes) => {
-            const curAPIResponse = curRes.data.quoteResponse.result
-            if (Array.isArray(curAPIResponse)) {
-              curAPIResponse.forEach((curStockData) => {
-                console.log(curStockData)
-                curStockPriceNew = curStockData['regularMarketPrice']
-              })
-            }
-          })
-          await axios.request(sucOptions).then(async (sucRes) => {
-            const sucAPIResponse = sucRes.data.quoteResponse.result
-            if (Array.isArray(sucAPIResponse)) {
-              sucAPIResponse.forEach((sucStockData) => {
-                sucStockPriceNew = sucStockData['regularMarketPrice']
-              })
-            }
-          })
-          var curDomainOptions = {
-            method: 'GET',
-            url: `https://yfapi.net/v11/finance/quoteSummary/${curStockNameNew}?lang=en&region=US&modules=defaultKeyStatistics%2CassetProfile`,
-            headers: {
-              'x-api-key': apiKey,
-
-            }
-          };
-          var sucDomainOptions = {
-            method: 'GET',
-            url: `https://yfapi.net/v11/finance/quoteSummary/${sucStockNameNew}?lang=en&region=US&modules=defaultKeyStatistics%2CassetProfile`,
-            headers: {
-              'x-api-key': apiKey,
-
-            }
-          };
-          var curDomainOptions2 = {
-            method: 'GET',
-            url: `https://api.ritekit.com/v2/company-insights/name-to-domain?name=${curStockNameNew}&client_id=${riteKitKey}`,
-            headers: {}
-          };
-          var sucDomainOptions2 = {
-            method: 'GET',
-            url: `https://api.ritekit.com/v2/company-insights/name-to-domain?name=${sucStockNameNew}&client_id=${riteKitKey}`,
-            headers: {}
-          };
-          // console.log("YUHHHHH")
-          // await axios.request(curDomainOptions2).then((curDRes) => {
-          //  curDomain = JSON.stringify(curDRes.data.data[0])
-          // })
-          // await axios.request(sucDomainOptions2).then((curDRes) => {
-          //   sucDomain = JSON.stringify(curDRes.data.data[0])
-          //  })
-          await axios.request(curDomainOptions).then((curDRes) => {
-            const curDResponse = (curDRes.data.quoteSummary.result)
-            if (Array.isArray(curDResponse)) {
-              curDResponse.forEach((c) => {
-                let tempCurDomain = (c['assetProfile'].website)
-                curDomain = tempCurDomain.substring(tempCurDomain.indexOf('.') + 1, tempCurDomain.lastIndexOf('.'))
-              })
-            }
-          })
-          await axios.request(sucDomainOptions).then((sucDRes) => {
-            const sucDResponse = (sucDRes.data.quoteSummary.result)
-            if (Array.isArray(sucDResponse)) {
-              sucDResponse.forEach((s) => {
-                let tempSucDomain = (s['assetProfile'].website)
-                sucDomain = tempSucDomain.substring(tempSucDomain.indexOf('.') + 1, tempSucDomain.lastIndexOf('.'))
-              })
-            }
-          })
-          var curPicOptions = {
-            method: 'GET',
-            url: `https://api.brandfetch.io/v2/brands/${curDomain}.com`,
-            headers: {
-              Authorization: `Bearer ${brandAPI2}`
-
-            }
-          };
-          var sucPicOptions = {
-            method: 'GET',
-            url: `https://api.brandfetch.io/v2/brands/${sucDomain}.com`,
-            headers: {
-              Authorization: `Bearer ${brandAPI2}`
-
-            }
-          };
-          console.log("DHIHE" + curDomain)
-          var curPicOptions2 = {
-            method: 'GET',
-            url: `https://api.ritekit.com/v2/company-insights/logo?client_id=${riteKitKey}&domain=${curDomain}&generateFallbackLogo=0&squareLogoSize=256&squareLogoBackground=original`,
-            headers: {}
-
-          }
-          var sucPicOptions2 = {
-            method: 'GET',
-            url: `https://api.ritekit.com/v2/company-insights/logo?client_id=${riteKitKey}&domain=${sucDomain}&generateFallbackLogo=0&squareLogoSize=256&squareLogoBackground=original`,
-            headers: {}
-
-          }
-          // await axios.request(curPicOptions2).then(async (curPicRes) => {
-          //   console.log(JSON.stringify(curPicRes.data))
-          // })
-          await axios.request(curPicOptions).then(async (curPicRes) => {
-            const curResArray = JSON.parse(JSON.stringify(curPicRes)).data.logos[0].formats;
-            curResArray.forEach(async (curFormat) => {
-              if (!curFormat.format.includes('svg')) {
-                curStockSrcNew = curFormat.src
-              }
-            })
-          })
-          await axios.request(sucPicOptions).then(async (sucPicRes) => {
-            const sucResArray = JSON.parse(JSON.stringify(sucPicRes)).data.logos[0].formats;
-            sucResArray.forEach(async (sucFormat) => {
-              if (!sucFormat.format.includes('svg')) {
-                sucStockSrcNew = sucFormat.src
-              }
-            })
-          })
-          this.setState((state) => {
-            return {
-              cardData: curCardData,
-              curStockName: curStockNameNew,
-              curStockDisplayName: curStockDisplayNew,
-              sucStockName: sucStockNameNew,
-              sucStockDisplayName: sucStockDisplayNew,
-              curStockPrice: curStockPriceNew,
-              sucStockPrice: sucStockPriceNew,
-              curStockSrc: curStockSrcNew,
-              sucStockSrc: sucStockSrcNew,
-            }
+      await axios.request(curOptions).then(async (curRes) => {
+        const curAPIResponse = curRes.data.quoteResponse.result
+        if (Array.isArray(curAPIResponse)) {
+          curAPIResponse.forEach((curStockData) => {
+            curStockPriceNew = curStockData['regularMarketPrice']
           })
         }
-      }
-      )
+      })
+
+      await axios.request(sucOptions).then(async (sucRes) => {
+        const sucAPIResponse = sucRes.data.quoteResponse.result
+        if (Array.isArray(sucAPIResponse)) {
+          sucAPIResponse.forEach((sucStockData) => {
+            sucStockPriceNew = sucStockData['regularMarketPrice']
+          })
+        }
+      })
+      this.setState((state) => {
+        return {
+          currentIndex: cur_id,
+          curStockName: curStockNameNew,
+          curStockDisplayName: curStockDisplayNew,
+          sucStockName: sucStockNameNew,
+          sucStockDisplayName: sucStockDisplayNew,
+          curStockPrice: curStockPriceNew,
+          sucStockPrice: sucStockPriceNew,
+          curStockSrc: curStockSrcNew,
+          sucStockSrc: sucStockSrcNew,
+          hasRendered: true,
+        }
+      })
     } catch (err) {
       console.log(err)
       console.log(err)
@@ -435,92 +290,7 @@ export default class StockCard extends React.Component {
 
   }
 
-  async getStockData() {
-    let newCurStockPrice = 0
-    let newSucStockPrice = 0
-    let newCurStockDisplayName = ""
-    let newSucStockDisplayName = ""
-    let newCurStockRes = ""
-    let newSucStockRes = ""
 
-    var curOptions = {
-      method: 'GET',
-      url: `https://yfapi.net/v6/finance/quote?region=US&lang=en&symbols=${this.state.curStockName}`,
-      params: { modules: 'defaultKeyStatistics,assetProfile' },
-      headers: {
-        'x-api-key': apiKey,
-      }
-    };
-    var sucOptions = {
-      method: 'GET',
-      url: `https://yfapi.net/v6/finance/quote?region=US&lang=en&symbols=${this.state.sucStockName}`,
-      params: { modules: 'defaultKeyStatistics,assetProfile' },
-      headers: {
-        'x-api-key': apiKey,
-      }
-    };
-    await axios.request(curOptions).then(async (response) => {
-      const curAPIResponse = response.data.quoteResponse.result;
-      if (Array.isArray(curAPIResponse)) {
-        curAPIResponse.forEach(async (curStockData) => {
-          newCurStockPrice = curStockData['regularMarketPrice']
-          newCurStockDisplayName = curStockData['displayName']
-        })
-      }
-    })
-    await axios.request(sucOptions).then(async (res) => {
-      const sucAPIResponse = res.data.quoteResponse.result;
-      if (Array.isArray(sucAPIResponse)) {
-        sucAPIResponse.forEach(async (sucStockData) => {
-          newSucStockPrice = sucStockData['regularMarketPrice']
-          newSucStockDisplayName = sucStockData['displayName']
-        })
-      }
-    })
-    var curPicOptions = {
-      method: 'GET',
-      url: `https://api.brandfetch.io/v2/brands/${this.state.curStockDisplayName}.com`,
-      headers: {
-        Authorization: `Bearer ${brandAPI}`
-
-      }
-    };
-    var sucPicOptions = {
-      method: 'GET',
-      url: `https://api.brandfetch.io/v2/brands/${this.state.sucStockDisplayName}.com`,
-      headers: {
-        Authorization: `Bearer ${brandAPI}`
-
-      }
-    };
-    await axios.request(curPicOptions).then(async (response) => {
-      const curResArray = JSON.parse(JSON.stringify(response)).data.logos[0].formats;
-      curResArray.forEach((curFormat) => {
-        if (!curFormat.format.includes('svg')) {
-          newCurStockRes = curFormat.src
-        }
-
-      })
-    })
-    await axios.request(sucPicOptions).then(async (res) => {
-      const sucStockArray = JSON.parse(JSON.stringify(res)).data.logos[0].formats;
-      sucStockArray.forEach((sucFormat) => {
-        if (!sucFormat.format.includes('svg')) {
-          newSucStockRes = sucFormat.src
-        }
-      })
-    })
-    this.setState((state) => {
-      return {
-        curStockPrice: newCurStockPrice,
-        sucStockPrice: newSucStockPrice,
-        curStockDisplayName: newCurStockDisplayName,
-        sucStockDisplayName: newSucStockDisplayName,
-        curStockSrc: newCurStockRes,
-        sucStockSrc: newSucStockRes
-      }
-    })
-  }
 
   renderCards = () => {
 
@@ -548,7 +318,7 @@ export default class StockCard extends React.Component {
             </Animated.View>
 
             <View style={styles.stockCardLogoContainer}>
-              <Image source={{ uri: `${this.state.curStockSrc}` }} resizeMode='contain' style={styles.stockCardLogo}></Image>
+              <Image source={this.state.curStockSrc} resizeMode='contain' style={styles.stockCardLogo}></Image>
             </View>
             <Text style={styles.stockCardName}>{item.fullName}</Text>
             <Text style={styles.stockCardPrice}>${this.state.curStockPrice.toFixed(2)}</Text>
@@ -599,7 +369,7 @@ export default class StockCard extends React.Component {
 
 
             <View style={styles.stockCardLogoContainer}>
-              <Image source={{ uri: `${this.state.sucStockSrc}` }} resizeMode='contain' style={styles.stockCardLogo}></Image>
+              <Image source={this.state.sucStockSrc} resizeMode='contain' style={styles.stockCardLogo}></Image>
             </View>
             <Text style={styles.stockCardName}>{item.fullName}</Text>
             <Text style={styles.stockCardPrice}>${this.state.sucStockPrice.toFixed(2)}</Text>
