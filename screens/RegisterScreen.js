@@ -49,10 +49,6 @@ function RegisterScreen({ navigation }) {
     setAuthListener()
   }, [])
 
-  async function onChange() {
-
-  }
-
   async function setAuthListener() {
     Hub.listen('auth', (data) => {
       switch (data.payload.event) {
@@ -111,7 +107,34 @@ function RegisterScreen({ navigation }) {
     }
   }
 
-  //SET PROFILE PICTURE
+  //Upload User Variables
+  const uploadUserVariables = (filename, file) => {
+    Auth.currentCredentials();
+    return Storage.put(filename, file, {
+      level: "private",
+      contentType: "application/json",
+    })
+      .then((response) => {
+        return response.key;
+      })
+      .catch((error) => {
+        console.log(error);
+        return error.response;
+      });
+  };
+
+  //FOR ONBOARDING
+  async function confirmSignUpAndSignIn() {
+    try {
+      await Auth.confirmSignUp(usernameForm, loginForm);
+      await Auth.signIn(usernameForm, passwordForm);
+      const userVariables = JSON.parse({ "hasOnboarded": false });
+      uploadUserVariables("userVariables.json", userVariables);
+      navigation.navigate('OnboardingScreen')
+    } catch (error) {
+      console.log("error signing up: " + error);
+    }
+  }
 
   //DATEPICKER
   const showMode = (currentMode) => {
@@ -127,20 +150,12 @@ function RegisterScreen({ navigation }) {
   const video = React.useRef(null);
   const [status, setStatus] = React.useState({});
 
-
-  const styling = StyleSheet.create({
-    text: {
-      borderColor: "gray"
-    }
-  })
-
   //BACK
   async function returnHome() {
     navigation.navigate('StartScreen')
   }
 
   return (
-
     <View className="Register">
       <Video
         ref={video}
@@ -159,30 +174,34 @@ function RegisterScreen({ navigation }) {
             justifyContent: 'space-between',
             flexDirection: 'column'
           }}>
-            <SafeAreaView style={{ backgroundColor: "white", justifyContent: "center", alignContent: "center", alignItems: "center" }}>
-              <TextInput name="username" onChangeText={(val) => setUsernameForm(val)} placeholder="username"></TextInput>
-              <TextInput name="password" type="password" onChangeText={(val) => setPasswordForm(val)} placeholder="password" secureTextEntry={true}></TextInput>
-              <TextInput name="name" onChangeText={(val) => setNameForm(val)} placeholder="First Name"></TextInput>
-              <TextInput name="familyname" onChangeText={(val) => setFamilyNameForm(val)} placeholder="Last name"></TextInput>
-              <TextInput name="phone" onChangeText={(val) => setPhoneNumber(val)} placeholder="Phone Number"></TextInput>
-              <TextInput name="preferred_username" onChangeText={(val) => setPreferredUsername(val)} placeholder="Preferred Username"></TextInput>
-              <View>
-                <View>
-                  <Button onPress={showDatepicker} title="Birthday" />
+            <SafeAreaView>
+              <View style={RegisterCard.container}>
+                <View style={RegisterCard.card}>
+                  <TextInput name="username" onChangeText={(val) => setUsernameForm(val)} placeholder="Username" placeholderTextColor="#FFFFFF" style={RegisterCard.textInput}></TextInput>
+                  <TextInput name="password" type="password" onChangeText={(val) => setPasswordForm(val)} placeholder="Password" placeholderTextColor="#FFFFFF" secureTextEntry={true} style={RegisterCard.textInput}></TextInput>
+                  <TextInput name="name" onChangeText={(val) => setNameForm(val)} placeholder="First Name" placeholderTextColor="#FFFFFF" style={RegisterCard.textInput}></TextInput>
+                  <TextInput name="familyname" onChangeText={(val) => setFamilyNameForm(val)} placeholder="Last name" placeholderTextColor="#FFFFFF" style={RegisterCard.textInput}></TextInput>
+                  <TextInput name="phone" onChangeText={(val) => setPhoneNumber(val)} placeholder="Phone Number" placeholderTextColor="#FFFFFF" style={RegisterCard.textInput}></TextInput>
+                  <TextInput name="preferred_username" onChangeText={(val) => setPreferredUsername(val)} placeholder="Preferred Username" placeholderTextColor="#FFFFFF" style={RegisterCard.textInput}></TextInput>
+                  <View>
+                    <View>
+                      <Button onPress={showDatepicker} style={RegisterCard.btn} title="Birthday" />
+                    </View>
+                    {show && (
+                      <DateTimePicker
+                        testID="dateTimePicker"
+                        value={date}
+                        mode={mode}
+                        is24Hour={true}
+                        onChange={onChangeDate}
+                      />
+                    )}
+                  </View>
+                  <Button onPress={async () => { signUp() }} style={RegisterCard.btn} title="Register"></Button>
+                  <Button onPress={async () => { debug() }} style={RegisterCard.btn} title="Debug"></Button>
+                  <Button onPress={async () => { returnHome() }} style={RegisterCard.btn} title="Back"></Button>
                 </View>
-                {show && (
-                  <DateTimePicker
-                    testID="dateTimePicker"
-                    value={date}
-                    mode={mode}
-                    is24Hour={true}
-                    onChange={onChangeDate}
-                  />
-                )}
               </View>
-              <Button onPress={async () => { signUp() }} title="Register"></Button>
-              <Button onPress={async () => { debug() }} title="Debug"></Button>
-              <Button onPress={async () => { returnHome() }} title="Back"></Button>
             </SafeAreaView >
           </View >
         )
@@ -197,14 +216,46 @@ function RegisterScreen({ navigation }) {
           </SafeAreaView>
         )
       }
-      {
-        formState.formType === 'setProfilePicture' && (
-          <View></View>
-        )
-      }
     </View >
   );
 }
+
+const RegisterCard = StyleSheet.create({
+  container: {
+    flex: 1,
+    margin: 16,
+    alignItems: 'center', // Centered horizontally
+    padding: 125
+  },
+  card: {
+    height: 500,
+    width: 200,
+    backgroundColor: '#202020',
+    justifyContent: 'center', //Centered vertically
+    alignItems: 'center', // Centered horizontally
+    borderRadius: 15,
+    borderColor: '#6495ED',
+    borderWidth: 3
+  },
+  textInput: {
+    borderColor: '#6495ED',
+    borderWidth: 1,
+    borderRadius: 10,
+    padding: 10,
+    color: 'white',
+    margin: 5,
+  },
+  btn: {
+    alignItems: 'center',
+    justifyContent: 'center',
+    paddingVertical: 12,
+    paddingHorizontal: 32,
+    borderRadius: 10,
+    elevation: 3,
+    backgroundColor: '#6495ED',
+    color: '#6495ED'
+  }
+});
 
 export default RegisterScreen;
 

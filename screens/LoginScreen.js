@@ -49,7 +49,7 @@ function LoginScreen({ navigation }) {
             console.log("loginUser: " + loginUser)
             console.log("loginPassword: " + loginPassword)
             await Auth.signIn(loginUser, loginPassword);
-            console.log("logged in?")
+            //CHECK USER VARIABLES
             navigation.navigate('HomeScreen');
         } catch (error) {
             console.log('error signing in', error);
@@ -60,25 +60,83 @@ function LoginScreen({ navigation }) {
         navigation.navigate('StartScreen')
     }
 
+    //USER VARIABLE CHECK
+    async function fetchUserVar() {
+        const file = await Storage.get("userVariables.json", {
+            level: "private"
+        })
+        loginPathway(file);
+    }
+
+    async function loginPathway(file) {
+        if (file.hasOnboarded == false) {
+            navigation.navigate('OnboardingScreen');
+        }
+        else {
+            navigation.navigate('HomeScreen')
+        }
+    }
+
     return (
         <View>
-            <Video
-                ref={video}
-                style={styles.backgroundVideo}
-                source={require('../assets/videos/playbackvideo.mp4')}
-                resizeMode="cover"
-                isLooping={true}
-                shouldPlay={true}
-                onPlaybackStatusUpdate={status => setStatus(() => status)}
-            />
             <SafeAreaView style={{ backgroundColor: "white", justifyContent: "center", alignContent: "center", alignItems: "center" }}>
-                <TextInput name="username" onChangeText={(val) => setLoginUser(val)} placeholder="username"></TextInput>
-                <TextInput name="password" type="password" onChangeText={(val) => setLoginPassword(val)} placeholder="password" secureTextEntry={true}></TextInput>
-                <Button onPress={async () => { signIn() }} title="Log In"></Button>
-                <Button onPress={async () => { returnHome() }} title="Back"></Button>
+                <Video
+                    ref={video}
+                    style={styles.backgroundVideo}
+                    source={require('../assets/videos/playbackvideo.mp4')}
+                    resizeMode="cover"
+                    isLooping={true}
+                    shouldPlay={true}
+                    onPlaybackStatusUpdate={status => setStatus(() => status)}
+                />
+                <View style={LoginCard.container}>
+                    <View style={LoginCard.card}>
+                        <TextInput name="username" onChangeText={(val) => setLoginUser(val)} placeholder="Username" placeholderTextColor="#FFFFFF" style={LoginCard.textInput} autoCorrect={false}></TextInput>
+                        <TextInput name="password" type="password" onChangeText={(val) => setLoginPassword(val)} placeholder="Password" placeholderTextColor="#FFFFFF" secureTextEntry={true} style={LoginCard.textInput} autoCorrect={false}></TextInput>
+                        <Button onPress={async () => { signIn() }} style={LoginCard.btn} title="Log In"></Button>
+                        <Button onPress={async () => { returnHome() }} style={LoginCard.btn} title="Back"></Button>
+                    </View>
+                </View>
             </SafeAreaView>
         </View >
     );
 }
+
+const LoginCard = StyleSheet.create({
+    container: {
+        flex: 1,
+        margin: 16,
+        alignItems: 'center', // Centered horizontally
+        padding: 125
+    },
+    card: {
+        height: 250,
+        width: 200,
+        backgroundColor: '#202020',
+        justifyContent: 'center', //Centered vertically
+        alignItems: 'center', // Centered horizontally
+        borderRadius: 15,
+        borderColor: '#6495ED',
+        borderWidth: 3
+    },
+    textInput: {
+        borderColor: '#6495ED',
+        borderWidth: 1,
+        borderRadius: 10,
+        padding: 10,
+        color: 'white',
+        margin: 15,
+    },
+    btn: {
+        alignItems: 'center',
+        justifyContent: 'center',
+        paddingVertical: 12,
+        paddingHorizontal: 32,
+        borderRadius: 10,
+        elevation: 3,
+        backgroundColor: '#6495ED',
+        color: '#6495ED'
+    }
+});
 
 export default LoginScreen;
