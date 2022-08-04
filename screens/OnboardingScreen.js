@@ -9,8 +9,8 @@ import Storage from "@aws-amplify/storage";
 export default function OnboardingScreen({ navigation }) {
   const allQuestions = quizData;
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
-  const [optionsSelected, setOptionsSelected] = useState(['']);
-  const [currentOptionSelected, setCurrentOptionSelected] = useState(false);
+  const [optionsSelected, setOptionsSelected] = useState('');
+  const [multipleOptionSelected, setMultipleOptionSelected] = useState([]);
   const [isOptionsDisabled, setIsOptionsDisabled] = useState(false);
   const [showNextButton, setShowNextButton] = useState(false)
 
@@ -43,25 +43,6 @@ export default function OnboardingScreen({ navigation }) {
   }
 
   //answerChoices = [];
-
-  const storeAnswer = (question, answer) => {
-    setOptionsSelected(...optionsSelected, answer);
-    console.log("Option selected: " + optionsSelected);
-    /*
-    const jsonData = { "question": question, "answer": answer };
-    userVar.quiz.push(JSON.stringify(jsonData));
-    console.log("JSON: " + jsonData)
-    console.log("QUIZ INPUT: " + JSON.stringify(userVar))
-    let optionsArray = [];
-    const answerChoices = allQuestions[currentQuestionIndex].options;
-    const options = Object.keys(answerChoices);
-    options.forEach(function (options) {
-      optionsArray.push(options)
-    })
-    console.log("Options: " + optionsArray);
-    setShowNextButton(true)
-    */
-  }
 
   const uploadQuiz = (filename, file) => {
     Auth.currentCredentials();
@@ -110,36 +91,66 @@ export default function OnboardingScreen({ navigation }) {
   const quiz = [];
   userVar.quiz = quiz;
 
-  const handleClick = () => {
-    //make it so that its a boolean true if pressed if not pressed before (you dont know whether its been pressed before)
-    //make it so that its boolean false if pressed but was before
-  }
-
-  const renderOption = () => {
+  const storeAnswer = (question, answer) => {
     /*
+    setOptionsSelected(...optionsSelected, answer);
+    console.log("Option selected: " + optionsSelected);
+
+    const jsonData = { "question": question, "answer": answer };
+    userVar.quiz.push(JSON.stringify(jsonData));
+    console.log("JSON: " + jsonData)
+    console.log("QUIZ INPUT: " + JSON.stringify(userVar))
     let optionsArray = [];
     const answerChoices = allQuestions[currentQuestionIndex].options;
     const options = Object.keys(answerChoices);
     options.forEach(function (options) {
       optionsArray.push(options)
     })
+    console.log("Options: " + optionsArray);
+    setShowNextButton(true)
     */
+    console.log("in Store answer")
+  }
+
+  const handleClick = (selectedOption) => {
+    //make it so that its a boolean true if pressed if not pressed before (you dont know whether its been pressed before)
+    //make it so that its boolean false if pressed but was before
+    //store pressed and change UI
+    //console.log()
+
+    setShowNextButton(true)
+  }
+
+  const setMCQ = (selected) => {
+    if (multipleOptionSelected.includes(selected)) {
+      const index = multipleOptionSelected.indexOf(selected)
+      multipleOptionSelected.splice(index, 1)
+    }
+    else {
+      setMultipleOptionSelected(current => [...current, selected])
+      console.log("Selected: " + selected)
+      console.log("MCQ: " + multipleOptionSelected)
+    }
+    setShowNextButton(true)
+  }
+
+  const renderOption = () => {
     const multipleChoice = allQuestions[currentQuestionIndex].multipleChoice;
     return (
       <View>
-        {multipleChoice
+        {multipleChoice == false
           ? allQuestions[currentQuestionIndex]?.options.map(option => (
             <TouchableOpacity
-              onPress={() => storeAnswer(allQuestions[currentQuestionIndex], option)}
+              onPress={() => { setOptionsSelected(option), handleClick(option) }}
               key={option}
-              selected={currentOptionSelected}
               style={{
                 borderWidth: 3,
                 height: 60, borderRadius: 20,
                 flexDirection: 'row',
                 alignItems: 'center', justifyContent: 'space-between',
                 paddingHorizontal: 20,
-                marginVertical: 10
+                marginVertical: 10,
+                backgroundColor: option == optionsSelected ? COLORS.selected : COLORS.unselected
               }}
             >
               <Text style={{ fontSize: 20, color: COLORS.white }}>{option}</Text>
@@ -147,8 +158,18 @@ export default function OnboardingScreen({ navigation }) {
           ))
           : allQuestions[currentQuestionIndex]?.options.map(option => (
             <TouchableOpacity
-              onPress={() => storeAnswer(allQuestions[currentQuestionIndex], option)}
-              selected={optionsSelected}
+              onPress={() => {
+                if (multipleOptionSelected.includes(option)) {
+                  const index = multipleOptionSelected.indexOf(option)
+                  multipleOptionSelected.splice(index, 1)
+                }
+                else {
+                  setMultipleOptionSelected(current => [...current, option])
+                  console.log("Selected: " + option)
+                  console.log("MCQ: " + multipleOptionSelected)
+                }
+                setShowNextButton(true)
+              }}
               key={option}
               style={{
                 borderWidth: 3,
@@ -156,7 +177,8 @@ export default function OnboardingScreen({ navigation }) {
                 flexDirection: 'row',
                 alignItems: 'center', justifyContent: 'space-between',
                 paddingHorizontal: 20,
-                marginVertical: 10
+                marginVertical: 10,
+                backgroundColor: option == multipleOptionSelected.includes(option) ? COLORS.selected : COLORS.unselected
               }}
             >
               <Text style={{ fontSize: 20, color: COLORS.white }}>{option}</Text>
@@ -173,10 +195,9 @@ export default function OnboardingScreen({ navigation }) {
       // Last Question
       //QUIZ COMPLETED
       finishQuiz();
-      //navigation.navigate('HomeScreen')
+      //navigation.navigate('HomeScreen')i
     } else {
       setCurrentQuestionIndex(currentQuestionIndex + 1);
-      setCurrentOptionSelected(null);
       setIsOptionsDisabled(false);
       setShowNextButton(false);
     }

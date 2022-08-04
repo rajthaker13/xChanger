@@ -6,8 +6,8 @@ export const COLORS = {
     secondary: '#1E90FF',
     accent: '#3498db',
 
-    success: '#00C851',
-    error: '#ff4444',
+    selected: '#00C851',
+    unselected: '#252C4A',
 
     black: "#171717",
     white: "#FFFFFF",
