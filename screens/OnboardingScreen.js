@@ -123,8 +123,11 @@ export default function OnboardingScreen({ navigation }) {
 
   const setMCQ = (selected) => {
     if (multipleOptionSelected.includes(selected)) {
+      /*
       const index = multipleOptionSelected.indexOf(selected)
       multipleOptionSelected.splice(index, 1)
+      */
+      setMultipleOptionSelected(current => current.filter(multipleOptionSelected => { return !selected }))
     }
     else {
       setMultipleOptionSelected(current => [...current, selected])
