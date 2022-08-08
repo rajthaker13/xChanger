@@ -1,13 +1,15 @@
-import React, { Component, useState, PropTypes } from 'react'
+import React, { Component, useState, useEffect, PropTypes } from 'react'
 import { View, Text, SafeAreaView, StatusBar, Image, TouchableOpacity, Modal, Animated, ScrollView } from 'react-native'
 import { COLORS, SIZES } from '../assets/onboarding/constants';
 import quizData from '../assets/onboarding/onboardingData';
 //import MultipleChoice from 'react-native-multiple-choice';
 import Amplify, { API, Auth, Hub, graphqlOperation } from 'aws-amplify';
 import Storage from "@aws-amplify/storage";
+import { components } from '@aws-amplify/ui-react';
 
 export default function OnboardingScreen({ navigation }) {
   const allQuestions = quizData;
+  const [onGoing, setOnGoing] = useState(true);
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
   const [optionsSelected, setOptionsSelected] = useState('');
   const [multipleOptionSelected, setMultipleOptionSelected] = useState([]);
@@ -21,6 +23,13 @@ export default function OnboardingScreen({ navigation }) {
     outputRange: ['0%', '100%']
   })
 
+  //INITIALIZE USERVARIABLES JSON
+  const userVar = {};
+  const variables = {};
+  const quiz = [];
+  userVar.variables = variables;
+  userVar.variables.quiz = quiz;
+
   const renderProgressBar = () => {
     return (
       <View style={{
@@ -28,7 +37,6 @@ export default function OnboardingScreen({ navigation }) {
         height: 20,
         borderRadius: 20,
         backgroundColor: '#00000020',
-
       }}>
         <Animated.View style={[{
           height: 20,
@@ -60,8 +68,10 @@ export default function OnboardingScreen({ navigation }) {
   };
 
   const finishQuiz = () => {
-    uploadQuiz("onboardingData.json", userVar);
-    console.log(quiz)
+    //uploadQuiz("onboardingData.json", userVar);
+    console.log(userVar);
+    console.log(quiz);
+    console.log("QUIZ IS FINISHED");
   }
 
   //RENDER QUIZ
@@ -86,47 +96,13 @@ export default function OnboardingScreen({ navigation }) {
     )
   }
 
-  //STORE QUIZ DATA
-  const userVar = {};
-  const quiz = [];
-  userVar.quiz = quiz;
-
-  const storeAnswer = (question, answer) => {
-    /*
-    setOptionsSelected(...optionsSelected, answer);
-    console.log("Option selected: " + optionsSelected);
-
-    const jsonData = { "question": question, "answer": answer };
-    userVar.quiz.push(JSON.stringify(jsonData));
-    console.log("JSON: " + jsonData)
-    console.log("QUIZ INPUT: " + JSON.stringify(userVar))
-    let optionsArray = [];
-    const answerChoices = allQuestions[currentQuestionIndex].options;
-    const options = Object.keys(answerChoices);
-    options.forEach(function (options) {
-      optionsArray.push(options)
-    })
-    console.log("Options: " + optionsArray);
-    setShowNextButton(true)
-    */
-    console.log("in Store answer")
-  }
-
   const handleClick = (selectedOption) => {
-    //make it so that its a boolean true if pressed if not pressed before (you dont know whether its been pressed before)
-    //make it so that its boolean false if pressed but was before
-    //store pressed and change UI
-    //console.log()
-
+    console.log(userVar)
     setShowNextButton(true)
   }
 
   const setMCQ = (selected) => {
     if (multipleOptionSelected.includes(selected)) {
-      /*
-      const index = multipleOptionSelected.indexOf(selected)
-      multipleOptionSelected.splice(index, 1)
-      */
       setMultipleOptionSelected(current => current.filter(multipleOptionSelected => { return !selected }))
     }
     else {
@@ -161,18 +137,7 @@ export default function OnboardingScreen({ navigation }) {
           ))
           : allQuestions[currentQuestionIndex]?.options.map(option => (
             <TouchableOpacity
-              onPress={() => {
-                if (multipleOptionSelected.includes(option)) {
-                  const index = multipleOptionSelected.indexOf(option)
-                  multipleOptionSelected.splice(index, 1)
-                }
-                else {
-                  setMultipleOptionSelected(current => [...current, option])
-                  console.log("Selected: " + option)
-                  console.log("MCQ: " + multipleOptionSelected)
-                }
-                setShowNextButton(true)
-              }}
+              onPress={() => { setMCQ(option), handleClick(option) }}
               key={option}
               style={{
                 borderWidth: 3,
@@ -194,6 +159,15 @@ export default function OnboardingScreen({ navigation }) {
 
   //NEXT RENDER/BUTTON
   const handleNext = () => {
+    if (allQuestions[currentQuestionIndex].multipleChoice == true) {
+      //const answer = {$currentQuestionIndex: };
+      quiz.push(multipleOptionSelected)
+      setMultipleOptionSelected([])
+    }
+    else {
+      quiz.push(optionsSelected)
+      setOptionsSelected('')
+    }
     if (currentQuestionIndex == allQuestions.length - 1) {
       // Last Question
       //QUIZ COMPLETED
