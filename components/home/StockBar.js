@@ -84,7 +84,7 @@ export default class StockBar extends PureComponent {
           repeatSpacer={50}
           marqueeDelay={0}
         >
-          Welcome to the XChanger Demo! Our team is excited to share our revolutionary financial tool making investing as simple as Swipe, Share and Play. Thank you to DePaul University for hosing Pitch Madness 2022, and remember to vote XChanger for Washington University in St. Louis!
+          Welcome to the XChanger Demo! Our team is excited to share our revolutionary financial tool making investing as simple as Swipe, Share and Play. Thank you to DePaul University for hosting Pitch Madness 2022, and remember to vote XChanger for Washington University in St. Louis!
         </TextTicker>
       </View>
     )
