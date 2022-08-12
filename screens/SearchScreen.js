@@ -8,22 +8,34 @@ import Dropdown from '../components/search/Dropdown';
 import StockSlide from '../components/search/StockSlide';
 import '../global';
 import XChangerNews from "../components/search/XChangerNews";
+import Button from "react-native";
+import { ComponentPropsToStylePropsMapKeys } from "@aws-amplify/ui-react";
+
 export default function SearchScreen() {
-  const [searchPhrase, setSearchPhrase] = useState("");
+
+  //STATES
+  const [searchPhrase, setSearchPhrase] = useState("AAPL");
   const [clicked, setClicked] = useState(false);
-  const [fakeData, setFakeData] = useState();
+  const [data, setData] = useState();
+
   useEffect(() => {
-    const getData = async () => {
-      const apiResponse = await fetch(
-        "https://my-json-server.typicode.com/kevintomas1995/logRocket_searchBar/languages"
-      );
-      const data = await apiResponse.json();
-      setFakeData(data);
+    const getData = () => {
+      const finnhub = require('finnhub');
+      const api_key = finnhub.ApiClient.instance.authentications['api_key'];
+      api_key.apiKey = "cbpmtp2ad3ieg7fassc0"
+      const finnhubClient = new finnhub.DefaultApi()
+
+      finnhubClient.symbolSearch(searchPhrase, (error, data, response) => {
+        const symbols = data.result
+        console.log(symbols)
+        setData(symbols)
+      });
     };
     getData();
   }, []);
-    return (
-      <ScrollView style={{backgroundColor:'#0A0909'}}>
+
+  return (
+    <ScrollView horizontal={false} style={{ backgroundColor: '#0A0909' }}>
       <SearchHeader />
       <SearchBar
         searchPhrase={searchPhrase}
@@ -32,17 +44,15 @@ export default function SearchScreen() {
         setClicked={setClicked}
       />
       {clicked &&
-
-          <List
-            searchPhrase={searchPhrase}
-            data={fakeData}
-            setClicked={setClicked}
-          />
-
+        <List
+          searchPhrase={searchPhrase}
+          data={data}
+          setClicked={setClicked}
+        />
       }
-      <Dropdown/>
-      <StockSlide/>
-      <XChangerNews/>
-      </ScrollView>
-    )
-  }
+      <Dropdown />
+      <StockSlide />
+      <XChangerNews />
+    </ScrollView>
+  )
+}

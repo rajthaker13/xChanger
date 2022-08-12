@@ -4,14 +4,18 @@ import {
   View,
   FlatList,
   SafeAreaView,
+  TouchableOpacity,
 } from "react-native";
-import {styles} from '../../Styles';
+import { ScrollView } from "react-native-gesture-handler";
+import { styles } from '../../Styles';
 
 // definition of the Item, which will be rendered in the FlatList
 const Item = ({ name, details }) => (
   <View style={styles.list_item}>
-    <Text style={styles.list_title}>{name}</Text>
-    <Text style={styles.details}>{details}</Text>
+    <TouchableOpacity>
+      <Text style={styles.list_title}>{name}</Text>
+      <Text style={styles.details}>{details}</Text>
+    </TouchableOpacity>
   </View>
 );
 
@@ -20,30 +24,27 @@ const List = (props) => {
   const renderItem = ({ item }) => {
     // when no input, show all
     if (props.searchPhrase === "") {
-      return <Item name={item.name} details={item.details} />;
+      return null;
     }
-    // filter of the name
-    if (item.name.toUpperCase().includes(props.searchPhrase.toUpperCase().trim().replace(/\s/g, ""))) {
-      return <Item name={item.name} details={item.details} />;
-    }
-    // filter of the description
-    if (item.details.toUpperCase().includes(props.searchPhrase.toUpperCase().trim().replace(/\s/g, ""))) {
-      return <Item name={item.name} details={item.details} />;
+    else {
+      return <Item name={item.symbol} details={item.description}></Item>
     }
   };
 
   return (
-    <SafeAreaView style={styles.list__container}>
+    <SafeAreaView horizontal={true} style={styles.list__container}>
       <View
         onStartShouldSetResponder={() => {
           props.setClicked(false);
         }}
       >
-        <FlatList
-          data={props.data}
-          renderItem={renderItem}
-          keyExtractor={(item) => item.id}
-        />
+        <ScrollView horizontal={true}>
+          <FlatList
+            data={props.data}
+            renderItem={renderItem}
+            keyExtractor={(item) => item.symbol}
+          />
+        </ScrollView>
       </View>
     </SafeAreaView>
   );

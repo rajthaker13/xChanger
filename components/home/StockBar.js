@@ -1,11 +1,9 @@
-import React, {PureComponent} from 'react';
+import React, { PureComponent } from 'react';
 import { Animated, View } from 'react-native';
-import {styles} from '../../Styles';
+import { styles } from '../../Styles';
 import TextTicker from 'react-native-text-ticker';
 import axios from 'axios'
 import '../../global';
-
-
 
 export default class StockBar extends PureComponent {
   constructor(props) {
@@ -19,62 +17,62 @@ export default class StockBar extends PureComponent {
   async componentDidMount() {
     await this.getTickerInfo()
   }
-   getTickerInfo() {
-     axios
-    .get("http://localhost:5000/ticker")
-    .then((res) => {
-      let newTickerText = "";
-      const data = res.data
-      data.forEach(stock => {
-        for(let i = 0; i < 100; i++) {
-          const tick = stock.results[i].ticker
-          console.log(tick)
-          var options = {
-            method: 'GET',
-            url: `https://yfapi.net/v6/finance/quote?region=US&lang=en&symbols=${tick}`,
-            params: {modules: 'defaultKeyStatistics,assetProfile'},
-            headers: {
-              'x-api-key': apiKey,
-            }
-          };
-           axios.request(options).then((response) => {
-              const apiResponse = response.data.quoteResponse.result;
-              if(Array.isArray(apiResponse)) {
-                  apiResponse.forEach(stockData => {
-                    const percentChange = stockData['regularMarketChangePercent'].toFixed(3)
-                    const positiveAddedText = tick + " + " + percentChange + "%   "
-                    const sameAddedText = tick + " ~ " + percentChange + "%   "
-                    const negativeAddedText = tick+ " - " + (-1 *percentChange) + "%   "
-                    if(percentChange > 0) {
-                      newTickerText = newTickerText + positiveAddedText
-                    }
-                    else if(percentChange == 0) {
-                      newTickerText = newTickerText + sameAddedText;
-                    }
-                    else {
-                      newTickerText = newTickerText + negativeAddedText;
-                    }
-      
-                  })
+  getTickerInfo() {
+    axios
+      .get("http://localhost:5000/ticker")
+      .then((res) => {
+        let newTickerText = "";
+        const data = res.data
+        data.forEach(stock => {
+          for (let i = 0; i < 100; i++) {
+            const tick = stock.results[i].ticker
+            console.log(tick)
+            var options = {
+              method: 'GET',
+              url: `https://yfapi.net/v6/finance/quote?region=US&lang=en&symbols=${tick}`,
+              params: { modules: 'defaultKeyStatistics,assetProfile' },
+              headers: {
+                'x-api-key': apiKey,
               }
-        }).catch(function (error) {
-            console.error(error);
+            };
+            axios.request(options).then((response) => {
+              const apiResponse = response.data.quoteResponse.result;
+              if (Array.isArray(apiResponse)) {
+                apiResponse.forEach(stockData => {
+                  const percentChange = stockData['regularMarketChangePercent'].toFixed(3)
+                  const positiveAddedText = tick + " + " + percentChange + "%   "
+                  const sameAddedText = tick + " ~ " + percentChange + "%   "
+                  const negativeAddedText = tick + " - " + (-1 * percentChange) + "%   "
+                  if (percentChange > 0) {
+                    newTickerText = newTickerText + positiveAddedText
+                  }
+                  else if (percentChange == 0) {
+                    newTickerText = newTickerText + sameAddedText;
+                  }
+                  else {
+                    newTickerText = newTickerText + negativeAddedText;
+                  }
+
+                })
+              }
+            }).catch(function (error) {
+              console.error(error);
+            });
+          }
+
         });
-         }
-        
-      });
-      this.setState((state) => {
-        return {
+        this.setState((state) => {
+          return {
             tickerText: newTickerText,
           };
-    })
-      
-    }
-    )
+        })
 
-}
-  render(){
-    return(
+      }
+      )
+
+  }
+  render() {
+    return (
       <View style={styles.header_large}>
         <TextTicker
           style={styles.stockTickerTextUp}

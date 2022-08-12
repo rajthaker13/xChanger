@@ -1,4 +1,4 @@
-import {StyleSheet} from 'react-native';
+import { StyleSheet } from 'react-native';
 import './global';
 
 const styles = StyleSheet.create({
@@ -7,7 +7,7 @@ const styles = StyleSheet.create({
         margin: 12,
         borderWidth: 1,
         padding: 10,
-      },
+    },
     backgroundVideo: {
         height: height,
         position: "absolute",
@@ -21,77 +21,77 @@ const styles = StyleSheet.create({
         padding: 20,
         alignItems: 'center',
         justifyContent: 'space-between',
-        flexDirection:'column'
+        flexDirection: 'column'
     },
     start_screen_logo: {
         maxWidth: 100,
-        width:100,
-        height:100,
+        width: 100,
+        height: 100,
         marginTop: height * .1
     },
     start_screen_description_text: {
-        letterSpacing:3,
+        letterSpacing: 3,
         color: '#f4f4f4',
-        textAlign:'center',
+        textAlign: 'center',
         textTransform: 'uppercase',
         marginTop: height * .01
     },
     start_screen_button_wrapper: {
-        justifyContent:'center',
-        flexDirection:'column',
-        alignItems:'center',
-        marginTop:100
+        justifyContent: 'center',
+        flexDirection: 'column',
+        alignItems: 'center',
+        marginTop: 100
     },
     start_screen_logo_text: {
-        color:'#f4f4f4',
-        fontSize:30,
-        textAlign:'center',
-        fontWeight:'300',
-        textTransform:'uppercase',
-        letterSpacing:3,
+        color: '#f4f4f4',
+        fontSize: 30,
+        textAlign: 'center',
+        fontWeight: '300',
+        textTransform: 'uppercase',
+        letterSpacing: 3,
         marginTop: height * .12,
         right: width * .06
     },
     start_screen_title: {
-        color:'#f4f4f4',
-        fontSize:30,
-        textAlign:'center',
-        fontWeight:'bold',
-        textTransform:'uppercase',
-        letterSpacing:3,
+        color: '#f4f4f4',
+        fontSize: 30,
+        textAlign: 'center',
+        fontWeight: 'bold',
+        textTransform: 'uppercase',
+        letterSpacing: 3,
         marginTop: height * .12,
     },
     start_screen_styled_button_normal: {
         width: 250,
-        backgroundColor:'#f3f8ff',
-        padding:15,
-        justifyContent:'center',
-        marginBottom:20,
-        borderRadius:24,
+        backgroundColor: '#f3f8ff',
+        padding: 15,
+        justifyContent: 'center',
+        marginBottom: 20,
+        borderRadius: 24,
     },
     start_screen_styled_button_transparent: {
         width: 250,
-        backgroundColor:'transparent',
-        padding:15,
-        borderWidth:1,
-        borderColor:'#f3f8ff',
-        justifyContent:'center',
-        marginBottom:20,
-        borderRadius:24,
+        backgroundColor: 'transparent',
+        padding: 15,
+        borderWidth: 1,
+        borderColor: '#f3f8ff',
+        justifyContent: 'center',
+        marginBottom: 20,
+        borderRadius: 24,
     },
     start_screen_styled_title_normal: {
-        textTransform:'uppercase',
-        textAlign:'center',
-        fontWeight:"bold",
-        letterSpacing:3,
-        color:'#666'
+        textTransform: 'uppercase',
+        textAlign: 'center',
+        fontWeight: "bold",
+        letterSpacing: 3,
+        color: '#666'
     },
     start_screen_styled_title_transparent: {
-        textTransform:'uppercase',
-        textAlign:'center',
-        fontWeight:"bold",
-        letterSpacing:3,
-        color:'#f3f8ff'
+        textTransform: 'uppercase',
+        textAlign: 'center',
+        fontWeight: "bold",
+        letterSpacing: 3,
+        color: '#f3f8ff'
     },
 
 
@@ -102,32 +102,32 @@ const styles = StyleSheet.create({
         alignItems: 'center',
     },
     view: {
-        flex: 1, 
+        flex: 1,
         height: height,
         width: width,
-        justifyContent:'center',
+        justifyContent: 'center',
         alignItems: 'center',
     },
     stockTickerTextUp: {
-        fontSize: 15, 
-        color:'white',
-        fontWeight:'200',
+        fontSize: 15,
+        color: 'white',
+        fontWeight: '200',
     },
     stockTickerTextDown: {
-        fontSize: 15, 
-        color:'red',
-        fontWeight:'200',
+        fontSize: 15,
+        color: 'red',
+        fontWeight: '200',
     },
     stockCard: {
-        marginTop: height*.2,
+        marginTop: height * .2,
         width: width * .9,
         height: height * .62,
         backgroundColor: '#0A0909',
         borderRadius: 20,
         flexDirection: 'column',
-        position:'absolute',
-        left: -width*.45,
-        bottom: -height*.05
+        position: 'absolute',
+        left: -width * .45,
+        bottom: -height * .05
     },
     header_large: {
         marginTop: 0,
@@ -135,23 +135,23 @@ const styles = StyleSheet.create({
         width: width,
         backgroundColor: '#0A0909',
         flexDirection: 'row',
-        alignItems:'center'
+        alignItems: 'center'
     },
     header_medium: {
         marginTop: 0,
         height: height * .06,
         width: width,
         backgroundColor: '#0A0909',
-        alignContent:'center',
-        alignItems:'center'
+        alignContent: 'center',
+        alignItems: 'center'
     },
     header_medium_black: {
         marginTop: 0,
         height: height * .06,
         width: width,
         backgroundColor: 'black',
-        alignContent:'center',
-        alignItems:'center'
+        alignContent: 'center',
+        alignItems: 'center'
     },
     headerText: {
         color: 'white',
@@ -159,7 +159,7 @@ const styles = StyleSheet.create({
         textAlign: 'center',
         fontWeight: '200',
         marginTop: '3%',
-        marginLeft:'35%'
+        marginLeft: '35%'
     },
     stockCardLogoContainer: {
         marginTop: 10,
@@ -180,10 +180,10 @@ const styles = StyleSheet.create({
         fontSize: 30,
         color: 'white',
         fontWeight: '200',
-        textAlign:'center'
+        textAlign: 'center'
     },
     stockCardPrice: {
-        textAlign:'center',
+        textAlign: 'center',
         marginTop: '2%',
         fontSize: 45,
         color: 'white',
@@ -195,17 +195,17 @@ const styles = StyleSheet.create({
         alignItems: "center",
         flexDirection: "row",
         width: "95%",
-    
-      },
-      searchBar__unclicked: {
+
+    },
+    searchBar__unclicked: {
         padding: 10,
         flexDirection: "row",
         width: "95%",
         backgroundColor: "#d9dbda",
         borderRadius: 15,
         alignItems: "center",
-      },
-      searchBar__clicked: {
+    },
+    searchBar__clicked: {
         padding: 10,
         flexDirection: "row",
         width: "80%",
@@ -213,96 +213,98 @@ const styles = StyleSheet.create({
         borderRadius: 15,
         alignItems: "center",
         justifyContent: "space-evenly",
-      },
-      input: {
+    },
+    input: {
         fontSize: 20,
         marginLeft: 10,
         width: "90%",
-      },
-      list__container: {
+    },
+    list__container: {
         margin: 10,
         height: "85%",
         width: "100%",
-      },
-      list_item: {
-        margin: 30,
+    },
+    list_item: {
+        backgroundColor: "#989898",
+        width: "100%",
+        margin: 1,
         borderBottomWidth: 2,
         borderBottomColor: "lightgrey"
-      },
-      list_title: {
+    },
+    list_title: {
         fontSize: 20,
         fontWeight: "bold",
         marginBottom: 5,
         fontStyle: "italic",
-      },
-      searchbar_title: {
+    },
+    searchbar_title: {
         width: "100%",
         marginTop: 20,
         fontSize: 25,
         fontWeight: "bold",
         marginLeft: "10%",
-      },
-      news_header: {
+    },
+    news_header: {
         marginTop: 0,
         height: height * .06,
         width: width,
         backgroundColor: '#0A0909',
-        flexDirection:'row',
+        flexDirection: 'row',
         borderColor: 'white',
         borderBottomWidth: 1,
         alignItems: 'center'
-      },
-      news_header_logo: {
-        width: height*.04, 
-        height: height*.04,
+    },
+    news_header_logo: {
+        width: height * .04,
+        height: height * .04,
         marginLeft: width * .05,
-      },
-      news_header_text: {
-          fontSize: 20,
-          color: 'white',
-          fontWeight:'200',
-          right: width * .02
-      },
-      button_sel: {
-        backgroundColor:'grey', 
-        height:'15%', 
-        width:'20%', 
-        alignItems:'center', 
-        borderRadius:10
-      },
-      button_unSel: {
-        height:'15%', 
-        alignItems:'center', 
-        borderRadius:10
-      },
-      news_slide: {
+    },
+    news_header_text: {
+        fontSize: 20,
+        color: 'white',
+        fontWeight: '200',
+        right: width * .02
+    },
+    button_sel: {
+        backgroundColor: 'grey',
+        height: '15%',
+        width: '20%',
+        alignItems: 'center',
+        borderRadius: 10
+    },
+    button_unSel: {
+        height: '15%',
+        alignItems: 'center',
+        borderRadius: 10
+    },
+    news_slide: {
         marginTop: 0,
         height: height * .15,
         width: width,
         backgroundColor: 'black',
-        flexDirection:'row',
+        flexDirection: 'row',
         borderColor: 'white',
         borderBottomWidth: 1,
 
-      },
-      news_slide_text_view: {
-          flexDirection: 'column'
+    },
+    news_slide_text_view: {
+        flexDirection: 'column'
 
-      },
-      news_slide_title: {
-          color: 'white',
-          fontWeight:'bold',
-          fontSize: 20,
-          textAlign:'center',
-          width: undefined,
-          marginTop: height * .02
-      },
-      news_slide_text: {
+    },
+    news_slide_title: {
+        color: 'white',
+        fontWeight: 'bold',
+        fontSize: 20,
+        textAlign: 'center',
+        width: undefined,
+        marginTop: height * .02
+    },
+    news_slide_text: {
         color: 'white',
         fontSize: 15,
-        textAlign:'center',
+        textAlign: 'center',
         width: width * .6,
-        flex:1,
+        flex: 1,
         marginTop: height * .02
     },
     news_slide_pic_container: {
@@ -310,23 +312,23 @@ const styles = StyleSheet.create({
         width: width * .3,
         height: width * .3,
         marginLeft: width * .1,
-        borderRadius:20
+        borderRadius: 20
     },
-      button_text: {
-          color:'white',
-          fontWeight:'bold',
-      },
-      stockSlideContainer: {
-        backgroundColor:'black', 
-        width: '100%', 
-        height: 70, 
+    button_text: {
+        color: 'white',
+        fontWeight: 'bold',
+    },
+    stockSlideContainer: {
+        backgroundColor: 'black',
+        width: '100%',
+        height: 70,
         borderColor: 'white',
-        borderTopWidth:2, 
+        borderTopWidth: 2,
         borderBottomWidth: 2,
         flex: 1,
         flexDirection: 'row',
     },
-      stockSlideLogoContainer: {
+    stockSlideLogoContainer: {
         backgroundColor: '#0A0909',
         width: height * .06,
         height: height * .06,
@@ -361,7 +363,7 @@ const styles = StyleSheet.create({
         top: '1%'
     },
     tournamentsHeader: {
-        color:'white',
+        color: 'white',
         fontWeight: '600',
         fontSize: 25,
         marginTop: '5%',
@@ -370,14 +372,14 @@ const styles = StyleSheet.create({
     tournamentCards: {
         backgroundColor: '#0A0909',
         height: height * .2,
-        width: width * .4, 
-        marginRight: width * .1, 
+        width: width * .4,
+        marginRight: width * .1,
         marginTop: height * .01,
-        marginLeft:width * .02,
+        marginLeft: width * .02,
         marginBottom: height * .02
     },
     tournamentCardLogo: {
-        flex:1,
+        flex: 1,
         height: null,
         resizeMode: 'contain',
         width: null,
@@ -385,19 +387,19 @@ const styles = StyleSheet.create({
     tournamentCardName: {
         color: 'white',
         fontSize: 13,
-        fontWeight:'bold'
+        fontWeight: 'bold'
     },
     tournamentCardInfo: {
         color: '#18FE04',
         fontSize: 15,
-        fontWeight:'200',
+        fontWeight: '200',
         marginTop: height * .005,
         marginLeft: width * .01
     },
     tournamentCardNumUsers: {
         color: 'white',
         fontSize: 15,
-        fontWeight:'200',
+        fontWeight: '200',
         marginTop: height * .005,
         marginLeft: width * .01
     },
@@ -406,13 +408,13 @@ const styles = StyleSheet.create({
         height: 55,
         width: width * .96,
         backgroundColor: '#0A0909',
-        alignContent:'center',
-        alignItems:'center',
-        flexDirection:'row',
+        alignContent: 'center',
+        alignItems: 'center',
+        flexDirection: 'row',
     },
     hubPost: {
         height: 640,
-        backgroundColor:'black',
+        backgroundColor: 'black',
         marginBottom: height * .03
     },
     hubPostImage: {
@@ -423,63 +425,63 @@ const styles = StyleSheet.create({
     hubPostProfilePic: {
         width: 40,
         height: 40,
-        backgroundColor:'black',
-        borderRadius:40,
+        backgroundColor: 'black',
+        borderRadius: 40,
         marginTop: 5,
         marginLeft: 10
     },
     profilePicImage: {
-        flex:1,
+        flex: 1,
         height: null,
         resizeMode: 'cover',
         width: null,
         borderRadius: 40
     },
     profileNamePost: {
-        color:'white',
-        fontWeight:'bold',
-        fontSize:15,
+        color: 'white',
+        fontWeight: 'bold',
+        fontSize: 15,
         marginLeft: 10
     },
     levelContainerPost: {
         backgroundColor: '#18FE04',
-        marginLeft:width*.05,
-        width: width*.2,
-        height:height*.03,
-        borderRadius:20,
-        alignItems:'center',
+        marginLeft: width * .05,
+        width: width * .2,
+        height: height * .03,
+        borderRadius: 20,
+        alignItems: 'center',
     },
     levelTextPost: {
-        color:'black',
-        fontSize:15,
+        color: 'black',
+        fontSize: 15,
         marginTop: height * .005
     },
     hubPostProfilePicSmall: {
         width: width * .05,
-        height: height*.025,
-        backgroundColor:'black',
-        borderRadius:40,
+        height: height * .025,
+        backgroundColor: 'black',
+        borderRadius: 40,
         marginTop: 5,
         marginLeft: 10
     },
     hubPostLikedByText: {
-        color:'white',
-        fontSize:10,
+        color: 'white',
+        fontSize: 10,
         marginTop: 8,
-        fontWeight:'400',
+        fontWeight: '400',
         marginLeft: width * .003
     },
     hubPostLikedByTextBold: {
-        color:'white',
-        fontSize:10,
-        fontWeight:'bold',
+        color: 'white',
+        fontSize: 10,
+        fontWeight: 'bold',
         marginTop: 8,
         marginLeft: width * .003
     },
     commentPostHeader: {
         marginTop: 0,
         height: height * .045,
-        width: width* .96,
+        width: width * .96,
         backgroundColor: '#0A0909',
         marginTop: height * .01,
         flexDirection: 'row'
@@ -487,22 +489,22 @@ const styles = StyleSheet.create({
     hubPostProfilePicMedium: {
         width: 25,
         height: 25,
-        backgroundColor:'black',
-        borderRadius:40,
+        backgroundColor: 'black',
+        borderRadius: 40,
         marginTop: 5,
         marginLeft: width * .05
     },
     addCommentTextPost: {
-        color:'white',
+        color: 'white',
         fontSize: 15,
-        fontWeight:'100',
+        fontWeight: '100',
         marginLeft: width * .03,
         marginTop: 10,
     },
     postTimeText: {
-        color:'white',
+        color: 'white',
         fontSize: 9,
-        fontWeight:'200',
+        fontWeight: '200',
         marginLeft: width * .03,
     },
     profile_header: {
@@ -512,10 +514,10 @@ const styles = StyleSheet.create({
         backgroundColor: '#0A0909',
     },
     profileHeaderText: {
-        color:'white',
-        fontWeight:'bold',
-        fontSize:25,
-        marginLeft:width*.05,
+        color: 'white',
+        fontWeight: 'bold',
+        fontSize: 25,
+        marginLeft: width * .05,
         marginTop: height * .01
     },
     trophyButtonProfile: {
@@ -531,7 +533,7 @@ const styles = StyleSheet.create({
         height: undefined,
         aspectRatio: 1,
         borderRadius: height,
-        marginLeft:width*.25,
+        marginLeft: width * .25,
         marginTop: height * .03
     },
     profileStats: {
@@ -539,14 +541,14 @@ const styles = StyleSheet.create({
         justifyContent: 'space-between',
     },
     profileStatsText: {
-        color:'white',
-        fontWeight:'bold',
+        color: 'white',
+        fontWeight: 'bold',
         fontSize: 20,
         marginHorizontal: width * .2
     },
     profileStatsLabelText: {
-        color:'white',
-        fontWeight:'200',
+        color: 'white',
+        fontWeight: '200',
         fontSize: 20,
         marginHorizontal: width * .15
     },
@@ -554,84 +556,84 @@ const styles = StyleSheet.create({
         marginTop: 20,
         width: width * .45,
         height: height * .12,
-        marginLeft: width *.26,
+        marginLeft: width * .26,
         backgroundColor: '#0A0909',
-        borderRadius:30,
+        borderRadius: 30,
         flexDirection: 'column',
         alignItems: 'center',
     },
     profileLevelLabelText: {
-        color:'white',
-        fontWeight:'200',
+        color: 'white',
+        fontWeight: '200',
         fontSize: 15,
         marginTop: height * .025
     },
     profileLevelNumberText: {
-        color:'#18FE04',
-        fontWeight:'200',
+        color: '#18FE04',
+        fontWeight: '200',
         fontSize: 30,
         marginTop: height * .01
     },
     profilePortfolioHeader: {
         marginTop: height * .02,
-        flexDirection:'row',
+        flexDirection: 'row',
         justifyContent: 'space-between',
         marginBottom: height * .025,
     },
     profilePortfolioHeaderText: {
-        color:'white',
-        fontWeight:'400',
+        color: 'white',
+        fontWeight: '400',
         fontSize: 30,
         marginLeft: width * .1
     },
     profilePortfolioViewAllContainer: {
         backgroundColor: "#0E6ACE",
-        opacity:74,
+        opacity: 74,
         height: height * .04,
         width: width * .3,
         marginRight: width * .1,
         borderRadius: 20
     },
     profilePortfolioSelection: {
-        flexDirection:'row', 
-        justifyContent:'space-between', 
-        marginHorizontal: '2%', 
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        marginHorizontal: '2%',
         height: height * .05
     },
     profilePortfolioButtonTextSelected: {
-        color:'white',
-        fontWeight:'300',
+        color: 'white',
+        fontWeight: '300',
         fontSize: 20
     },
     profilePortfolioButtonTextUnselected: {
-        color:'white',
-        fontWeight:'100',
+        color: 'white',
+        fontWeight: '100',
         fontSize: 20
     },
     profilePortfolioSlideContainer: {
-        backgroundColor:'#0A0909',
+        backgroundColor: '#0A0909',
         width: width,
-        height: height*.1,
+        height: height * .1,
         borderBottomWidth: 1,
-        borderColor:'white',
-        flexDirection:'row',
+        borderColor: 'white',
+        flexDirection: 'row',
     },
     profilePortfolioSlideInfo: {
-        height: height*.1,
+        height: height * .1,
         width: width * .3,
-        marginLeft: width *.01,
+        marginLeft: width * .01,
         alignContent: 'center',
-        alignItems:'center',
-        textAlign:'center'
+        alignItems: 'center',
+        textAlign: 'center'
     },
     profilePortfolioSlideTradeName: {
-        color:'white',
+        color: 'white',
         fontSize: 20,
         fontWeight: '400',
         marginTop: height * .02
     },
     profilePortfolioSlideNumShares: {
-        color:'white',
+        color: 'white',
         fontSize: 15,
         fontWeight: '200',
     },
@@ -645,25 +647,25 @@ const styles = StyleSheet.create({
         borderRadius: 20,
         marginLeft: width * .04,
         marginTop: height * .025,
-        alignItems:'center'
+        alignItems: 'center'
     },
     profilePortfolioSlidePriceText: {
-        fontWeight:'bold',
+        fontWeight: 'bold',
         fontSize: 18,
-        marginTop: height *.005
+        marginTop: height * .005
     },
     walletHeader: {
         marginTop: 0,
         height: height * .06,
         width: width,
         backgroundColor: 'black',
-        flexDirection:'row'
+        flexDirection: 'row'
     },
     walletHeaderText: {
-        color:'white',
+        color: 'white',
         fontSize: 25,
-        fontWeight:'300',
-        marginLeft:width * .05,
+        fontWeight: '300',
+        marginLeft: width * .05,
         marginTop: height * .01
     },
     walletHeaderAddFundsButton: {
@@ -673,67 +675,67 @@ const styles = StyleSheet.create({
         width: width * .25,
         marginTop: height * .013,
         marginLeft: width * .05,
-        alignItems:'center',
+        alignItems: 'center',
     },
     walletHeaderAddFundsButtonText: {
-        color:'white',
-        fontWeight:'bold',
-        marginTop:height * .007
+        color: 'white',
+        fontWeight: 'bold',
+        marginTop: height * .007
     },
     walletChartTotalAmountText: {
-        color:'#18FE04',
-        fontSize:30,
-        fontWeight:'300',
-        marginLeft:width * .05,
+        color: '#18FE04',
+        fontSize: 30,
+        fontWeight: '300',
+        marginLeft: width * .05,
         marginTop: height * .01
     },
     walletChartTotalAmountArrow: {
-        left:width * .055,
+        left: width * .055,
         top: height * .01
     },
     walletChartTotalAmountDetailsText: {
-        color:'#18FE04',
-        fontSize:15,
-        fontWeight:'300',
-        marginLeft:width * .07,
+        color: '#18FE04',
+        fontSize: 15,
+        fontWeight: '300',
+        marginLeft: width * .07,
         marginTop: height * .01
     },
     walletChartTotalAmountTimeText: {
-        color:'white',
-        fontSize:15,
-        fontWeight:'100',
-        marginLeft:width * .02,
+        color: 'white',
+        fontSize: 15,
+        fontWeight: '100',
+        marginLeft: width * .02,
         marginTop: height * .01
     },
     walletChartLabelContainer: {
-        flex:1, 
-        flexDirection:'row', 
-        justifyContent:'space-between',
-         marginHorizontal: '15%',
-         marginHorizontal: width * .1,
-         height: height * .15,
-         marginTop: -height * .04
+        flex: 1,
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        marginHorizontal: '15%',
+        marginHorizontal: width * .1,
+        height: height * .15,
+        marginTop: -height * .04
     },
     walletButton_sel: {
-        backgroundColor:'grey', 
-        height:'15%', 
-        width:'15%', 
-        alignItems:'center', 
-        borderRadius:10
-      },
+        backgroundColor: 'grey',
+        height: '15%',
+        width: '15%',
+        alignItems: 'center',
+        borderRadius: 10
+    },
     walletTourneyHeader: {
         marginTop: 0,
         height: height * .08,
         width: width,
         backgroundColor: '#0A0909',
         flexDirection: 'row',
-        marginTop:-height*.1,
-        alignItems:'center'
+        marginTop: -height * .1,
+        alignItems: 'center'
     },
     walletTourneyHeaderText: {
-        color:'white',
+        color: 'white',
         fontSize: 20,
-        marginLeft:width * .2,
+        marginLeft: width * .2,
         fontSize: 30,
         fontWeight: '200'
     },
@@ -744,36 +746,36 @@ const styles = StyleSheet.create({
         height: height * .08,
         borderRadius: height,
         marginLeft: width * .05,
-        backgroundColor:'white'
+        backgroundColor: 'white'
     },
     walletTournySlideNameText: {
-        color:'white',
-        fontSize:15,
-        fontWeight:'bold'
+        color: 'white',
+        fontSize: 15,
+        fontWeight: 'bold'
     },
     walletTournySlideBuyInText: {
-        color:'#18FE04',
-        fontSize:15,
-        fontWeight:'200',
+        color: '#18FE04',
+        fontSize: 15,
+        fontWeight: '200',
         marginTop: height * .005
     },
     walletTournySlideWinningsPosText: {
-        color:'#18FE04',
-        fontSize:15,
-        fontWeight:'200',
+        color: '#18FE04',
+        fontSize: 15,
+        fontWeight: '200',
         marginTop: height * .005,
         marginLeft: width * .02
     },
     walletTournySlideWinningsNegText: {
-        color:'red',
-        fontSize:15,
-        fontWeight:'200',
+        color: 'red',
+        fontSize: 15,
+        fontWeight: '200',
         marginTop: height * .005,
         marginLeft: width * .02,
     },
     walletTournySlideArrow: {
-        marginLeft:width * .15,
-        marginTop:height * .04
+        marginLeft: width * .15,
+        marginTop: height * .04
 
     },
     textInputContainer: {
@@ -789,36 +791,36 @@ const styles = StyleSheet.create({
         fontSize: 13,
         color: '#f13a59',
         paddingTop: 8,
-      },
-      registerRow: {
+    },
+    registerRow: {
         flexDirection: 'row',
         marginTop: 4,
-      },
-      registerLink: {
+    },
+    registerLink: {
         fontWeight: 'bold',
         color: '#560CCE',
-      },
-      tournamnetInfoPicContainer: {
-          height: width * .4,
-          width: width * .4,
-          backgroundColor: 'white',
-          marginTop: 30,
-          borderRadius: 30
-      },
-      tournamentInfoHeaderName: {
-          color: 'white',
-          fontSize: 30,
-          textAlign: 'center',
-          fontWeight:'bold',
-          marginTop: 30
-      },
-      tournamentInfoMoneyContainer: {
+    },
+    tournamnetInfoPicContainer: {
+        height: width * .4,
+        width: width * .4,
+        backgroundColor: 'white',
+        marginTop: 30,
+        borderRadius: 30
+    },
+    tournamentInfoHeaderName: {
+        color: 'white',
+        fontSize: 30,
+        textAlign: 'center',
+        fontWeight: 'bold',
+        marginTop: 30
+    },
+    tournamentInfoMoneyContainer: {
         marginTop: 20,
         width: width * .4,
         height: height * .12,
         marginHorizontal: width * .05,
         backgroundColor: '#0A0909',
-        borderRadius:20,
+        borderRadius: 20,
         flexDirection: 'column',
         alignItems: 'center',
     },
@@ -826,9 +828,9 @@ const styles = StyleSheet.create({
         marginTop: 20,
         width: width * .8,
         height: height * .12,
-        alignSelf:'center',
+        alignSelf: 'center',
         backgroundColor: '#0A0909',
-        borderRadius:20,
+        borderRadius: 20,
         flexDirection: 'column',
         alignItems: 'center',
     },
@@ -836,59 +838,59 @@ const styles = StyleSheet.create({
         color: 'white',
         fontSize: 30,
         textAlign: 'center',
-        fontWeight:'bold',
+        fontWeight: 'bold',
         marginTop: 30
     },
     tournamentInfoLeaderboard: {
         backgroundColor: '#0A0909',
         flex: 1,
         marginTop: 20,
-        width: width* .95,
+        width: width * .95,
         borderRadius: 20
     },
     tournamentInfoLeaderboardSlide: {
         height: height * .1,
-        backgroundColor:'#0A0909',
+        backgroundColor: '#0A0909',
         borderRadius: 20,
         marginTop: 20,
-        flexDirection:'row',
-        alignItems:'center',
+        flexDirection: 'row',
+        alignItems: 'center',
         borderBottomWidth: 1,
         borderColor: 'white'
     },
     tournamentInfoLeaderboardSlideRank: {
-        color:'#18FE04',
+        color: '#18FE04',
         fontSize: 35,
-        fontWeight:'200',
+        fontWeight: '200',
         marginLeft: width * .05
     },
     tournamentLeaderboardProfilePic: {
         width: 60,
         height: 60,
-        backgroundColor:'black',
-        borderRadius:60,
+        backgroundColor: 'black',
+        borderRadius: 60,
         marginLeft: width * .05
     },
     tournamentLeaderboardName: {
-        color:'white',
+        color: 'white',
         fontSize: 15,
-        fontWeight:'bold',
+        fontWeight: 'bold',
         marginLeft: width * .05,
         marginRight: width * .1,
         width: width * .4,
-        flex:1
+        flex: 1
     },
     watchListChoiceTextSelected: {
-        color:'#0A0909',
-        fontSize:18,
-        fontWeight:'bold',
+        color: '#0A0909',
+        fontSize: 18,
+        fontWeight: 'bold',
         marginHorizontal: width * .07,
         marginTop: height * .01
     },
     watchListChoiceTextUnselected: {
-        color:'white',
-        fontSize:18,
-        fontWeight:'bold',
+        color: 'white',
+        fontSize: 18,
+        fontWeight: 'bold',
         marginHorizontal: width * .07,
         marginTop: height * .01
     },
@@ -897,42 +899,42 @@ const styles = StyleSheet.create({
         width: width * .5,
         height: width * .1,
         borderRadius: width * .2,
-        alignItems:'center',
+        alignItems: 'center',
     },
     watchListChoiceContainerUnselected: {
         backgroundColor: '#0A0909',
         width: width * .5,
         height: width * .1,
         borderRadius: width * .2,
-        alignItems:'center',
+        alignItems: 'center',
     },
     watchListTourneyHeader: {
         backgroundColor: '#18FE04',
         width: width,
         height: width * .15,
-        flexDirection:'row',
-        borderBottomWidth:1,
-        borderColor:'white'
+        flexDirection: 'row',
+        borderBottomWidth: 1,
+        borderColor: 'white'
     },
     watchListTourneyProfileContainer: {
         width: 50,
         height: 50,
-        backgroundColor:'white',
-        borderRadius:40,
+        backgroundColor: 'white',
+        borderRadius: 40,
         marginTop: height * .005,
         marginLeft: width * .05
     },
     watchListTourneyName: {
-        fontWeight:'500',
-        fontSize:15,
+        fontWeight: '500',
+        fontSize: 15,
         color: '#0A0909',
         marginLeft: width * .05,
         marginTop: height * .02,
         width: width * .5
     },
     watchListTourneyRank: {
-        fontWeight:'bold',
-        fontSize:12,
+        fontWeight: 'bold',
+        fontSize: 12,
         color: '#0A0909',
         marginTop: height * .025
     },
@@ -940,21 +942,21 @@ const styles = StyleSheet.create({
         backgroundColor: '#0A0909',
         width: width,
         height: width * .15,
-        flexDirection:'row',
-        borderBottomWidth:1,
-        borderColor:'white'
+        flexDirection: 'row',
+        borderBottomWidth: 1,
+        borderColor: 'white'
     },
     watchListStockName: {
-        fontWeight:'500',
-        fontSize:15,
+        fontWeight: '500',
+        fontSize: 15,
         color: 'white',
         marginLeft: width * .05,
         marginTop: height * .02,
-        flex:1
+        flex: 1
     },
     watchListStockInfo: {
-        fontWeight:'300',
-        fontSize:12,
+        fontWeight: '300',
+        fontSize: 12,
         color: '#18FE04',
         marginLeft: width * .02,
         marginTop: height * .023,
@@ -966,7 +968,7 @@ const styles = StyleSheet.create({
         marginLeft: width * .1,
         marginTop: height * .02,
         borderRadius: 20,
-        justifyContent:'center',
+        justifyContent: 'center',
     },
     watchListAddButton: {
         backgroundColor: "#18FE04",
@@ -975,11 +977,11 @@ const styles = StyleSheet.create({
         marginLeft: width * .1,
         marginTop: height * .02,
         borderRadius: 20,
-        justifyContent:'center',
+        justifyContent: 'center',
     },
     watchListEditButtonText: {
-        color:'white',
-        fontWeight:'bold',
+        color: 'white',
+        fontWeight: 'bold',
         fontSize: 12,
         marginLeft: width * .045
     },
@@ -987,4 +989,4 @@ const styles = StyleSheet.create({
 
 });
 
-export {styles}
+export { styles }
