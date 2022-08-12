@@ -220,21 +220,25 @@ const styles = StyleSheet.create({
         width: "90%",
     },
     list__container: {
-        margin: 10,
+        margin: 0,
         height: "85%",
-        width: "100%",
+        width: "90%",
+        alignItems: 'center',
     },
     list_item: {
-        backgroundColor: "#989898",
+        backgroundColor: "#FFFFFF",
+        flexDirection: "row",
         width: "100%",
         margin: 1,
         borderBottomWidth: 2,
-        borderBottomColor: "lightgrey"
+        borderBottomColor: "lightgrey",
+        alignItems: 'stretch',
     },
     list_title: {
         fontSize: 20,
         fontWeight: "bold",
         marginBottom: 5,
+        marginRight: 10,
         fontStyle: "italic",
     },
     searchbar_title: {

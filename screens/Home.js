@@ -6,6 +6,7 @@ import ProfileScreen from './ProfileScreen';
 import SearchScreen from './SearchScreen';
 import WalletScreen from './WalletScreen';
 import OnboardingScreen from './OnboardingScreen';
+import StockProfileScreen from './StockProfileScreen';
 import { NavigationContainer } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import Ionicons from 'react-native-vector-icons/Ionicons';
@@ -74,6 +75,8 @@ export default function Home() {
       <Tab.Screen name="Wallet" component={WalletScreen} />
       <Tab.Screen name="Profile" component={ProfileScreen} />
       <Tab.Screen name="Onboarding" component={OnboardingScreen} />
+      <Tab.Screen name="StockProfile" component={StockProfileScreen} />
+
     </Tab.Navigator>
   );
 }

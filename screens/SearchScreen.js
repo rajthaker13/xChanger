@@ -27,7 +27,7 @@ export default function SearchScreen() {
 
       finnhubClient.symbolSearch(searchPhrase, (error, data, response) => {
         const symbols = data.result
-        console.log(symbols)
+        //console.log(symbols)
         setData(symbols)
       });
     };

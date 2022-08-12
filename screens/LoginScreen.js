@@ -73,7 +73,7 @@ function LoginScreen({ navigation }) {
             navigation.navigate('OnboardingScreen');
         }
         else {
-            navigation.navigate('HomeScreen')
+            navigation.navigate('HomeScreen');
         }
     }
 
