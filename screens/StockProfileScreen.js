@@ -6,8 +6,11 @@ import {
     SafeAreaView,
     TouchableOpacity,
 } from "react-native";
+import CompanyHeader from "../components/stockProfile/CompanyHeader";
+import { styles } from "../Styles";
 
 export default function StockProfileScreen({ route, navigation }) {
+    const [companyProfile, setCompanyProfile] = useState();
     //const { stockName } = route.params;
     useEffect(() => {
         const getData = () => {
@@ -17,15 +20,16 @@ export default function StockProfileScreen({ route, navigation }) {
             const finnhubClient = new finnhub.DefaultApi()
             finnhubClient.companyProfile({ 'symbol': 'AAPL' }, (error, data, response) => {
                 console.log(data)
+                setCompanyProfile(data);
             });
         }
         getData();
     }, []);
 
     return (
-        <SafeAreaView>
+        <SafeAreaView style={styles.stockProfilePage}>
             <View>
-                <Text>This is the stock profile screen.</Text>
+                <CompanyHeader data={companyProfile} />
             </View>
         </SafeAreaView>
     )

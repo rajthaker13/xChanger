@@ -989,6 +989,11 @@ const styles = StyleSheet.create({
         fontSize: 12,
         marginLeft: width * .045
     },
+    stockProfilePage: {
+        backgroundColor: 'rgb(64,64,64)',
+        width: '100%',
+        height: '100%',
+    }
 
 
 });
