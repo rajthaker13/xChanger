@@ -10,6 +10,7 @@ import CompanyHeader from "../components/stockProfile/CompanyHeader";
 import CompanyDescription from "../components/stockProfile/CompanyDescription";
 import { styles } from "../Styles";
 import { ScrollView } from "react-native-gesture-handler";
+import CompanyInfoDropdown from "../components/stockProfile/CompanyInfoDropdown";
 
 export default function StockProfileScreen({ route, navigation }) {
     const [companyProfile, setCompanyProfile] = useState();
@@ -44,6 +45,7 @@ export default function StockProfileScreen({ route, navigation }) {
                 <View>
                     <CompanyHeader data={companyProfile} quote={quote} />
                     <CompanyDescription data={companyProfile} />
+                    <CompanyInfoDropdown />
                 </View>
             </ScrollView>
         </SafeAreaView>
