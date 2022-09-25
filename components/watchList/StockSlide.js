@@ -43,7 +43,7 @@ export default class StockSlide extends React.Component {
             method: 'GET',
             url: `https://api.brandfetch.io/v2/brands/${domain}.com`,
             headers: {
-              Authorization: `Bearer ${brandAPI2}`
+              Authorization: `Bearer ${brandAPI}`
 
             }
           };

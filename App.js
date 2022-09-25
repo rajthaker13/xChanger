@@ -7,6 +7,8 @@ import LoginScreen from './screens/LoginScreen';
 import RegisterScreen from './screens/RegisterScreen'
 import awsExports from './src/aws-exports';
 import { Amplify } from 'aws-amplify';
+import './global';
+
 Amplify.configure(awsExports);
 
 const Stack = createStackNavigator();

@@ -1,6 +1,6 @@
-import {Dimensions} from 'react-native';
+import { Dimensions } from 'react-native';
 
-const {width, height} = Dimensions.get('window');
+const { width, height } = Dimensions.get('window');
 
 global.width = width;
 global.height = height;
@@ -13,3 +13,4 @@ global.logoAPI = 'sk_274058af1bcb8b03b8d9413cd6478840';
 global.graphQLAPIKey = 'da2-bslee7dtqnbfjlf3jvtdb77bfy';
 global.riteKitKey = 'b181cd10c0b9983bc238556d41cb3e3238768e4bb908';
 global.brandAPI2 = 'ZRQrV6D328cksri0O4xE++3RUJTdG8POJ32iXm98a9E=';
+global.financeAPIKey = 'cbpmtp2ad3ieg7fassc0';

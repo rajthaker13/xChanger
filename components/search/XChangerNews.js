@@ -1,8 +1,10 @@
-import React, {useEffect} from 'react';
-import {Image, Text, View} from 'react-native';
-import {styles} from '../../Styles';
+import React, { useEffect } from 'react';
+import { Image, Text, View } from 'react-native';
+import { styles } from '../../Styles';
 import axios from 'axios';
 import '../../global';
+
+
 
 export default class XChangerNews extends React.Component {
     constructor(props) {
@@ -11,30 +13,34 @@ export default class XChangerNews extends React.Component {
             articles: []
         }
     }
-    componentDidMount() {
-        this.getNews()
+    async componentDidMount() {
+        await this.getNews()
     }
-    getNews() {
-        axios.get(`https://stocknewsapi.com/api/v1/category?section=general&items=50&token=${newsAPI}`).then((response) => {
-            const responseArray = response.data.data
-            let articlesArray = []
-            responseArray.forEach((res,index) => {
-                if(res.title != null) {
-                    const title = res.title
-                    const src = res.image_url
-                    const source = res.source_name
-                    const newArticle = {title: title, src: src, source: source}
-                    articlesArray.push(newArticle)
+    async getNews() {
 
-                }
+        // const finnhub = require('finnhub');
+        // const api_key = finnhub.ApiClient.instance.authentications['api_key'];
+        // api_key.apiKey = financeAPIKey
+        // const finnhubClient = new finnhub.DefaultApi()
+        let articlesArray = this.state.articles
+
+        finnhubClient.marketNews("general", {}, (error, data, response) => {
+            console.log(data)
+            data.forEach((res, index) => {
+                const title = res.headline
+                const src = res.image
+                const source = res.source
+                const newArticle = { key: index, title: title, src: src, source: source }
+                articlesArray.push(newArticle)
 
             })
-            this.setState((state) => {
-                return {
-                    articles: articlesArray
-                }
-            })
+        });
+        this.setState((state) => {
+            return {
+                articles: articlesArray
+            }
         })
+
     }
     render() {
         return (
@@ -52,7 +58,7 @@ export default class XChangerNews extends React.Component {
                                 <Text style={styles.news_slide_text}>{article.title}</Text>
                             </View>
                             <View style={styles.news_slide_pic_container}>
-                                <Image source={{uri: `${article.src}`}} resizeMode='contain' style={styles.stockCardLogo}></Image>
+                                <Image source={{ uri: `${article.src}` }} resizeMode='contain' style={styles.stockCardLogo}></Image>
                             </View>
                         </View>
                     );
